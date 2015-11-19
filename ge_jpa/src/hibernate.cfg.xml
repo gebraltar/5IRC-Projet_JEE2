@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/sql496886</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.default_schema">sql496886</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.search.autoregister_listeners">false</property>
+        <property name="hibernate.validator.apply_to_ddl">false</property>
+        <mapping class="ge_jpa.entities.TypeEcole" />
+        <mapping class="ge_jpa.entities.Coordonnees" />
+        <mapping class="ge_jpa.entities.Niveau" />
+        <mapping class="ge_jpa.entities.Salle" />
+        <mapping class="ge_jpa.entities.Cours" />
+        <mapping class="ge_jpa.entities.Cycle" />
+        <mapping class="ge_jpa.entities.FraisInscription" />
+        <mapping class="ge_jpa.entities.Role" />
+        <mapping class="ge_jpa.entities.Ecole" />
+        <mapping class="ge_jpa.entities.Eleve" />
+        <mapping class="ge_jpa.entities.Civilite" />
+        <mapping class="ge_jpa.entities.Professeur" />
+        <mapping class="ge_jpa.entities.Classe" />
+        <mapping class="ge_jpa.entities.Responsable" />
+        <mapping class="ge_jpa.entities.Cheque" />
+        <mapping class="ge_jpa.entities.Utilisateur" />
+        <mapping class="ge_jpa.entities.SituationFamiliale" />
+        <mapping class="ge_jpa.entities.CrenauHoraire" />
+        <mapping class="ge_jpa.entities.ModeDePaiement" />
+    </session-factory>
+</hibernate-configuration>

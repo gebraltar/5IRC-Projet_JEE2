@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="ge_ear">
+        <wb-resource deploy-path="/" source-path="/EarContent"/>
+        <dependent-module archiveName="ge_jpa.jar" deploy-path="/lib" handle="module:/resource/ge_jpa/ge_jpa">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ge_ejb.jar" deploy-path="/" handle="module:/resource/ge_ejb/ge_ejb">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ge_ejbClient.jar" deploy-path="/lib" handle="module:/resource/ge_ejbClient/ge_ejbClient">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ge_web.war" deploy-path="/" handle="module:/resource/ge_web/ge_web">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+    </wb-module>
+</project-modules>
