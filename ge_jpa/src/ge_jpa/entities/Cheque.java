@@ -70,7 +70,7 @@ public class Cheque implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "FRI_ID_FK", nullable = false)
+	@JoinColumn(name = "FRI_ID", nullable = false)
 	public FraisInscription getFraisInscription() {
 		return this.fraisInscription;
 	}

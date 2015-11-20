@@ -32,6 +32,7 @@ public class Ecole implements java.io.Serializable {
 	private Integer eclNombreSalle;
 	private String eclNomResponsable;
 	private Set<Classe> classes = new HashSet<Classe>(0);
+	private Set<Salle> salles = new HashSet<Salle>(0);
 
 	public Ecole() {
 	}
@@ -43,7 +44,7 @@ public class Ecole implements java.io.Serializable {
 	}
 
 	public Ecole(Coordonnees coordonnees, TypeEcole typeEcole, String eclNom, Float eclSurface, Integer eclNombreSalle,
-			String eclNomResponsable, Set<Classe> classes) {
+			String eclNomResponsable, Set<Classe> classes, Set<Salle> salles) {
 		this.coordonnees = coordonnees;
 		this.typeEcole = typeEcole;
 		this.eclNom = eclNom;
@@ -51,6 +52,7 @@ public class Ecole implements java.io.Serializable {
 		this.eclNombreSalle = eclNombreSalle;
 		this.eclNomResponsable = eclNomResponsable;
 		this.classes = classes;
+		this.salles = salles;
 	}
 
 	@Id
@@ -66,7 +68,7 @@ public class Ecole implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ECL_Coordonnees_idCoordonnees", nullable = false)
+	@JoinColumn(name = "CRD_ID", nullable = false)
 	public Coordonnees getCoordonnees() {
 		return this.coordonnees;
 	}
@@ -129,5 +131,16 @@ public class Ecole implements java.io.Serializable {
 	public void setClasses(Set<Classe> classes) {
 		this.classes = classes;
 	}
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ecole")
+	public Set<Salle> getSalles() {
+		return salles;
+	}
+
+	public void setSalles(Set<Salle> salles) {
+		this.salles = salles;
+	}
+	
+	
 
 }

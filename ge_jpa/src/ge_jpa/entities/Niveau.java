@@ -26,7 +26,7 @@ public class Niveau implements java.io.Serializable {
 
 	private Integer nivId;
 	private Cycle cycle;
-	private String nivNiveauLabel;
+	private String nivLabel;
 	private Set<Classe> classes = new HashSet<Classe>(0);
 
 	public Niveau() {
@@ -34,12 +34,12 @@ public class Niveau implements java.io.Serializable {
 
 	public Niveau(Cycle cycle, String nivNiveauLabel) {
 		this.cycle = cycle;
-		this.nivNiveauLabel = nivNiveauLabel;
+		this.nivLabel = nivNiveauLabel;
 	}
 
 	public Niveau(Cycle cycle, String nivNiveauLabel, Set<Classe> classes) {
 		this.cycle = cycle;
-		this.nivNiveauLabel = nivNiveauLabel;
+		this.nivLabel = nivNiveauLabel;
 		this.classes = classes;
 	}
 
@@ -56,7 +56,7 @@ public class Niveau implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "CCL_ID_PK", nullable = false)
+	@JoinColumn(name = "CCL_ID", nullable = false)
 	public Cycle getCycle() {
 		return this.cycle;
 	}
@@ -65,13 +65,13 @@ public class Niveau implements java.io.Serializable {
 		this.cycle = cycle;
 	}
 
-	@Column(name = "NIV_Niveau_Label", nullable = false, length = 45)
+	@Column(name = "NIV_Label", nullable = false, length = 45)
 	public String getNivNiveauLabel() {
-		return this.nivNiveauLabel;
+		return this.nivLabel;
 	}
 
 	public void setNivNiveauLabel(String nivNiveauLabel) {
-		this.nivNiveauLabel = nivNiveauLabel;
+		this.nivLabel = nivNiveauLabel;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "niveau")
