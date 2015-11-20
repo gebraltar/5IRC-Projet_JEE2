@@ -1,0 +1,73 @@
+body {
+	margin: 0px;
+	padding: 0px;
+	background: #F1F1F1;
+	    font-family: verdana;
+	
+}
+
+.top {
+	background: #4d7397;
+	height: 70px;
+	width: 100%;
+}
+.top h1
+{
+	    margin: 0;
+    color: white;
+    padding: 10px 20%;
+    font-weight: normal;
+}
+.homeBox {
+	width: 60%;
+	min-width: 500px;
+}
+button#j_idt10 {
+    background: #3589C9;
+    color: white;
+    width: 100%;
+    border: none;
+}
+
+.mainBox {
+	min-height: 500px;
+	background: #f9f9f9;
+	margin: 5% auto;
+	box-shadow: 0px 0px 21px -2px #4D7397;
+}
+
+.mainBox h2 {
+	padding: 25px;
+	color: gray;
+	font-size: large;
+}
+
+.authentification input {
+	background: #F1F1F1;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+
+.authentification {
+    margin: 0 auto;
+    width: inherit;
+}
+
+.authentification img {
+	float: left;
+}
+.leftSide
+{
+	  float: left;
+    margin: 90px 0px;
+    background: #f9f9f9;
+    height: 500px;
+    border: 1px solid #ABABAB;
+}
+h3.ui-widget.ui-panelmenu-header.ui-state-default.ui-corner-all {
+    background: white;
+    border: none;
+    padding: 6px;
+    border-bottom: 1px solid #DEDEDE;
+}
