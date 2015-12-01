@@ -27,6 +27,8 @@ public class Role implements java.io.Serializable {
 	private Set<Utilisateur> utilisateurs = new HashSet<Utilisateur>(0);
 
 	public Role() {
+		rolId = null;
+		rolLabel = null;
 	}
 
 	public Role(String rolLabel, Set<Utilisateur> utilisateurs) {
