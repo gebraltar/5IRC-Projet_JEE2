@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <ui:include  src="header.xhtml"/>
+    <h:head>
+		<title>Administration</title>
+	</h:head>
+    <h:body>
+    	<div class='homeBox mainBox'>
+    	<p:growl id="msgs" showDetail="true" />
+ 
+    	<h3>Administration des références</h3>
+   
+    		<p:accordionPanel id="adminTabs">
+    			<p:tab title="Types d'école">
+    				<h:panelGroup>
+	            		<h:panelGrid columns="2" cellpadding="5">
+	            			<p:panel header="Liste des types d'école" id="typeEcoleListPanel">
+								<h:form id="typeEcoleTableForm">
+	            					<p:dataTable var="typeEcole" value="#{typeEcoleController.listTypeEcole()}"
+	            						tableStyle="table-layout: auto; text-align: center;"
+										paginator="true"
+										paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+										rowsPerPageTemplate="10,15">
+										<p:column headerText="Libellé">
+		        							<h:outputText value="#{typeEcole.tecLabel}" />
+		    							</p:column>
+		    							<p:column headerText="Modifier">
+											<p:commandButton icon="ui-icon-wrench" title="Modifier"
+												update=":adminTabs:typeEcoleTableForm :adminTabs:typeEcoleDetailsPanel">
+											<f:setPropertyActionListener value="#{typeEcole}"
+												target="#{typeEcoleController.selectedTypeEcole}" />
+											</p:commandButton>
+										</p:column>
+		    							<p:column headerText="Supprimer">
+		        							<p:commandButton icon="ui-icon-trash" title="Supprimer"
+												ajax="true"
+												actionListener="#{typeEcoleController.removeTypeEcole(typeEcole)}"
+												update=":adminTabs:typeEcoleTableForm :adminTabs:typeEcoleDetailsPanel">
+											<p:confirm header="Confirmation" message="Êtes-vous sûr de vouloir supprimer ce type d'école ?"
+											icon="ui-icon-alert" />
+											</p:commandButton>		
+		    							</p:column>
+									</p:dataTable>
+									<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+										<p:commandButton value="Yes" type="button"
+											styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+										<p:commandButton value="No" type="button"
+											styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+									</p:confirmDialog>
+								</h:form>
+							</p:panel>
+							
+							<p:panel header="Détails d'un type d'école" id="typeEcoleDetailsPanel">
+								<!-- Update TypeEcole form -->
+								<h:form id="typeEcoleUpdateForm" rendered="#{not empty typeEcoleController.selectedTypeEcole}">
+									<h2>Mise à jour du type d'école</h2>
+									<h:panelGrid columns="3">
+										<p:outputLabel for="typeEcoleLabelUpdate">Libellé :</p:outputLabel>
+										<p:inputText id="typeEcoleLabelUpdate"
+											value="#{typeEcoleController.selectedTypeEcole.tecLabel}"
+											required="true" requiredMessage="Le label du type d'école est requis."
+											size="30" maxlength="30" />
+										<p:message showDetail="true" for="typeEcoleLabelUpdate" errorClass="error" />
+									</h:panelGrid>
+									<div class="TypeEcoleAdminButtons">
+										<p:commandButton icon="ui-icon-close" value="Annuler" ajax="true"
+											immediate="true" update=":adminTabs:typeEcoleDetailsPanel"
+											actionListener="#{typeEcoleController.resetSelectedTypeEcole()}" />
+	
+										<p:commandButton value="Sauvegarder"
+											action="#{typeEcoleController.updateTypeEcole()}"
+											ajax="false" icon="ui-icon-check" validateClient="true" />
+									</div>
+									
+								</h:form>
+								
+								<!-- Add TypeEcole form -->
+								<h:form id="typeEcoleAddForm" rendered="#{empty typeEcoleController.selectedTypeEcole}">
+									<h2>Ajout d'un type d'école</h2>
+									<h:panelGrid columns="3">
+										<p:outputLabel for="typeEcoleLabelAdd">Libellé :</p:outputLabel>
+										<p:inputText id="typeEcoleLabelAdd"
+											value="#{typeEcoleController.typeEcoleToAdd.tecLabel}" required="true"
+											requiredMessage="Le label du type d'école est requis." size="30"
+											maxlength="30">
+										</p:inputText>
+										<p:message showDetail="true" for="typeEcoleLabelAdd" errorClass="error" />
+									</h:panelGrid>
+								
+									<div class="typeEcoleAdminButtons">
+										<p:commandButton icon="ui-icon-close" value="Annuler" ajax="true"
+											immediate="true">
+											<p:ajax update=":adminTabs:typeEcoleDetailsPanel" resetValues="true" />
+										</p:commandButton>
+
+										<p:commandButton value="Ajouter"
+											action="#{typeEcoleController.addTypeEcole()}"
+											ajax="false" icon="ui-icon-check" validateClient="true" />
+									</div>
+								</h:form>
+								
+							</p:panel>
+	            		</h:panelGrid>
+            		</h:panelGroup>
+					<!--<h:panelGroup rendered="#{empty loggedUser or !loggedUser.isAdmin}">
+						<h1>You can't access this page.</h1>
+					</h:panelGroup>-->
+            		
+    			</p:tab>
+    			<p:tab title="Cycles scolaire">
+            		<h:panelGrid columns="2" cellpadding="10">
+            		</h:panelGrid>
+            	</p:tab>
+            	<p:tab title="Niveaux scolaires">
+            		<h:panelGrid columns="2" cellpadding="10">
+            		</h:panelGrid>
+            	</p:tab>
+            	
+    		</p:accordionPanel>
+    	</div>
+    </h:body>
+    <ui:include  src="footer.xhtml"/>
+</html>
