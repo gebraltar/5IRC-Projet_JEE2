@@ -37,33 +37,27 @@ public class UtilisateurController extends HttpServlet {
 	public String Check_User()
 	{
 		String res="";
-		connecte=false;
-		//List<Utilisateur> liste=dao.list("SELECT u FROM Utilisateur u WHERE u.utiLogin=:login AND u.utiPass=:mdp");
 		List<Utilisateur> liste=dao.list("SELECT u FROM Utilisateur u");
-		if(liste.isEmpty())
-		{
-			//rediriger vers une autre page d'erreur (Login ou mdp n'existe pas dans la BDD)
-			connecte=false;
-		}
-		else
-		{	//Si on récupere un utilisateur dans notre liste
+		if(!liste.isEmpty())
+		{	
 			
 			Iterator<Utilisateur> i = liste.iterator();
 			while(i.hasNext()){
 				Utilisateur temp = i.next();
-				System.out.println(temp.getUtiLogin());
 				
 				if(temp.getUtiLogin().equals(login) && temp.getUtiPass().equals(mdp))
 				{
 				    this.utilisateur = temp;
 					UserSessionBean user = new UserSessionBean(temp, new Date());
-					res="index.xhtml";
-					connecte=true;
+					res="Home.xhtml";
 					break;
 				}
 			}		
 		}
-		
+		if(res==""){
+			///TODO afficher message erreur
+			res="index.xhtml";
+		}
 		return res;	
 	}
 
@@ -73,7 +67,6 @@ public class UtilisateurController extends HttpServlet {
 
 	public void setMdp(String mdp) {
 		this.mdp = mdp;
-		System.out.println("Set mdp !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+mdp);
 	}
 
 	public String getLogin() {
@@ -82,7 +75,6 @@ public class UtilisateurController extends HttpServlet {
 
 	public void setLogin(String login) {
 		this.login = login;
-		System.out.println("Set login !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+login);
 	}
 
 	public boolean isConnecte() {

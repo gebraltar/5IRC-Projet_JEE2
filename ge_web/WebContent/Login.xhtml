@@ -19,7 +19,7 @@
                         <p:outputLabel value="Password" />
                         <p:password value="#{utilisateurController.mdp}" required="true"/>
                         <p:commandButton value="Connect" action="#{utilisateurController.Check_User()}"></p:commandButton>
-                        <p:commandButton value="Mot de passe perdue" onclick="alert('Veuillez contacter le responsable du site')"></p:commandButton>
+                        <p:commandButton value="Mot de passe oublié ?" onclick="alert('Veuillez contacter l\'administrateur du site'')"></p:commandButton>
                 </h:panelGrid>
              
         </h:form>
