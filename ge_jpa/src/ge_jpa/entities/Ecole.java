@@ -37,6 +37,8 @@ public class Ecole implements java.io.Serializable {
 	private Set<Salle> salles = new HashSet<Salle>(0);
 
 	public Ecole() {
+		this.coordonnees = new Coordonnees();
+		this.typeEcole = new TypeEcole();
 	}
 
 	public Ecole(Coordonnees coordonnees, TypeEcole typeEcole, String eclNom) {
@@ -69,7 +71,7 @@ public class Ecole implements java.io.Serializable {
 		this.eclId = eclId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+	@ManyToOne(fetch = FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 	@JoinColumn(name = "CRD_ID", nullable = false)
 	public Coordonnees getCoordonnees() {
 		return this.coordonnees;
@@ -79,7 +81,7 @@ public class Ecole implements java.io.Serializable {
 		this.coordonnees = coordonnees;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "TEC_ID", nullable = false)
 	public TypeEcole getTypeEcole() {
 		return this.typeEcole;
