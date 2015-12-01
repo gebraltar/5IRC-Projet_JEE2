@@ -6,6 +6,8 @@ package ge_jpa.entities;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -67,7 +69,7 @@ public class Ecole implements java.io.Serializable {
 		this.eclId = eclId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 	@JoinColumn(name = "CRD_ID", nullable = false)
 	public Coordonnees getCoordonnees() {
 		return this.coordonnees;
