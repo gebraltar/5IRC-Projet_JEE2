@@ -32,6 +32,9 @@ public class Classe implements java.io.Serializable {
 	private Set<Eleve> eleves = new HashSet<Eleve>(0);
 
 	public Classe() {
+		ecole = new Ecole();
+		niveau=new Niveau();
+		
 	}
 
 	public Classe(Ecole ecole, Niveau niveau, int clsNumero) {
@@ -60,7 +63,7 @@ public class Classe implements java.io.Serializable {
 		this.clsId = clsId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ECL_ID", nullable = false)
 	public Ecole getEcole() {
 		return this.ecole;
@@ -70,7 +73,7 @@ public class Classe implements java.io.Serializable {
 		this.ecole = ecole;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "NIV_ID", nullable = false)
 	public Niveau getNiveau() {
 		return this.niveau;
@@ -89,7 +92,7 @@ public class Classe implements java.io.Serializable {
 		this.clsNumero = clsNumero;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "classe")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "classe")
 	public Set<Cours> getCourses() {
 		return this.courses;
 	}
@@ -98,7 +101,7 @@ public class Classe implements java.io.Serializable {
 		this.courses = courses;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "classe")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "classe")
 	public Set<Eleve> getEleves() {
 		return this.eleves;
 	}
