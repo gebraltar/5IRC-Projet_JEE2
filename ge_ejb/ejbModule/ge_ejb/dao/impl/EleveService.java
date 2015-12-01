@@ -44,7 +44,8 @@ public class EleveService implements DaoInterface<Eleve>{
 	public void remove(Eleve persistentInstance) {
 		log.debug("removing Eleve instance");
 		try {
-			entityManager.remove(persistentInstance);
+			Eleve e = this.findById(persistentInstance.getElvId());
+			entityManager.remove(e);
 			log.debug("remove successful");
 		} catch (RuntimeException re) {
 			log.error("remove failed", re);

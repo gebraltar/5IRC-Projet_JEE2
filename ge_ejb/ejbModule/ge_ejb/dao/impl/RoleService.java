@@ -44,7 +44,8 @@ public class RoleService implements DaoInterface<Role> {
 	public void remove(Role persistentInstance) {
 		log.debug("removing Role instance");
 		try {
-			entityManager.remove(persistentInstance);
+			Role r = this.findById(persistentInstance.getRolId());
+			entityManager.remove(r);
 			log.debug("remove successful");
 		} catch (RuntimeException re) {
 			log.error("remove failed", re);

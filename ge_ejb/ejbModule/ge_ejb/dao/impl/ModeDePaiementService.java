@@ -44,7 +44,8 @@ public class ModeDePaiementService implements DaoInterface<ModeDePaiement> {
 	public void remove(ModeDePaiement persistentInstance) {
 		log.debug("removing ModeDePaiement instance");
 		try {
-			entityManager.remove(persistentInstance);
+			ModeDePaiement m = this.findById(persistentInstance.getMdpId());
+			entityManager.remove(m);
 			log.debug("remove successful");
 		} catch (RuntimeException re) {
 			log.error("remove failed", re);

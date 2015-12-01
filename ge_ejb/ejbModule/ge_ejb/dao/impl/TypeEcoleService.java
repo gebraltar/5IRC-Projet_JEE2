@@ -44,7 +44,8 @@ public class TypeEcoleService implements DaoInterface<TypeEcole> {
 	public void remove(TypeEcole persistentInstance) {
 		log.debug("removing TypeEcole instance");
 		try {
-			entityManager.remove(persistentInstance);
+			TypeEcole t = this.findById(persistentInstance.getTecId());
+			entityManager.remove(t);
 			log.debug("remove successful");
 		} catch (RuntimeException re) {
 			log.error("remove failed", re);

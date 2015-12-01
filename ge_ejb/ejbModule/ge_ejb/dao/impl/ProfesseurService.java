@@ -44,7 +44,8 @@ public class ProfesseurService implements DaoInterface<Professeur> {
 	public void remove(Professeur persistentInstance) {
 		log.debug("removing Professeur instance");
 		try {
-			entityManager.remove(persistentInstance);
+			Professeur p = this.findById(persistentInstance.getPrfId());
+			entityManager.remove(p);
 			log.debug("remove successful");
 		} catch (RuntimeException re) {
 			log.error("remove failed", re);

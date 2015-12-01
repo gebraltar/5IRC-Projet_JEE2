@@ -47,7 +47,8 @@ public class ChequeService implements DaoInterface<Cheque> {
 	public void remove(Cheque persistentInstance) {
 		log.debug("removing Cheque instance");
 		try {
-			entityManager.remove(persistentInstance);
+			Cheque c = this.findById(persistentInstance.getChqId());
+			entityManager.remove(c);
 			log.debug("remove successful");
 		} catch (RuntimeException re) {
 			log.error("remove failed", re);

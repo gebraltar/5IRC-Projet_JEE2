@@ -44,7 +44,8 @@ public class SituationFamilialeService implements DaoInterface<SituationFamilial
 	public void remove(SituationFamiliale persistentInstance) {
 		log.debug("removing SituationFamiliale instance");
 		try {
-			entityManager.remove(persistentInstance);
+			SituationFamiliale s = this.findById(persistentInstance.getSfaId());
+			entityManager.remove(s);
 			log.debug("remove successful");
 		} catch (RuntimeException re) {
 			log.error("remove failed", re);

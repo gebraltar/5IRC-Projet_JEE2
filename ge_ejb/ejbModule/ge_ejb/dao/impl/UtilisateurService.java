@@ -10,9 +10,11 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.validator.constraintvalidation.HibernateConstraintValidatorContext;
 
 import dao.DaoInterface;
 import ge_jpa.entities.*;
@@ -40,11 +42,12 @@ public class UtilisateurService implements DaoInterface<Utilisateur>{
 			throw re;
 		}
 	}
-
+	
 	public void remove(Utilisateur persistentInstance) {
 		log.debug("removing Utilisateur instance");
 		try {
-			entityManager.remove(persistentInstance);
+			Utilisateur u = this.findById(persistentInstance.getUtiId());
+			entityManager.remove(u);
 			log.debug("remove successful");
 		} catch (RuntimeException re) {
 			log.error("remove failed", re);

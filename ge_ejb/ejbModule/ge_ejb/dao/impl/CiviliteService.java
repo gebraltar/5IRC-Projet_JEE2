@@ -44,7 +44,8 @@ public class CiviliteService implements DaoInterface<Civilite> {
 	public void remove(Civilite persistentInstance) {
 		log.debug("removing Civilite instance");
 		try {
-			entityManager.remove(persistentInstance);
+			Civilite c = this.findById(persistentInstance.getCivId());
+			entityManager.remove(c);
 			log.debug("remove successful");
 		} catch (RuntimeException re) {
 			log.error("remove failed", re);
