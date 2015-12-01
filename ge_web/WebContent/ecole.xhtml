@@ -13,7 +13,10 @@
 		<h:panelGrid columns="2" id="ecolePanelGrid" columnClasses="customColumns">
 				<p:panel header="Liste des écoles" id="ecoleListPanel">
 					<h:form id="ecoleTableForm">
-						<p:dataTable id="tableEcole" var="ecole" value="#{ecoleController.listEcole()}">
+						<p:dataTable id="tableEcole" tableStyle="table-layout: auto; text-align: center;" paginator="true"
+							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="10,15"
+							var="ecole" value="#{ecoleController.listEcole()}">
 						    <p:column headerText="Nom">
 						        <h:outputText value="#{ecole.eclNom}" />
 						    </p:column>
@@ -21,9 +24,15 @@
 						    <p:column headerText="Type">
 						        <h:outputText value="#{ecole.typeEcole.tecLabel}" />
 						    </p:column>
-	    
-	    					<p:column headerText="Supprimer">
-								<p:commandButton icon="ui-icon-trash" title="Delete this user"
+							<p:column headerText="Modifier">
+								<p:commandButton icon="ui-icon-wrench" title="Modifier cette école"
+									update=":ecoleDetailsPanel" ajax="true">
+									<f:setPropertyActionListener value="#{ecole}"
+										target="#{ecoleController.selectedEcole}" />
+								</p:commandButton>
+							</p:column>
+							<p:column headerText="Supprimer">
+								<p:commandButton icon="ui-icon-trash" title="Supprimer cette école"
 									ajax="true"
 									actionListener="#{ecoleController.delete(ecole)}"
 									update=":ecoleTableForm :ecoleDetailsPanel">
@@ -31,13 +40,15 @@
 										icon="ui-icon-alert" />
 								</p:commandButton>
 							</p:column>
-
-							<p:column headerText="Modifier">
-								<p:commandButton icon="ui-icon-wrench" title="Modifier cette école"
-									update=":ecoleDetailsPanel" ajax="true">
-									<f:setPropertyActionListener value="#{ecole}"
-										target="#{ecoleController.selectedEcole}" />
+							<p:column headerText="Afficher les salles">
+								<p:commandButton title="Salles"
+									ajax="false">
 								</p:commandButton>
+							</p:column>
+							<p:column headerText="Afficher les classes">
+								<p:commandLink value="Classes"
+									action="#{classeController.gererClasses(ecole)}">
+								</p:commandLink>
 							</p:column>
 						</p:dataTable>
 						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
@@ -67,8 +78,7 @@
 				            <h:message id="adresseLigne1Message" for="adresseLigne1" errorClass="erreur" />
 				            <br />
 				            <h:outputLabel for="adresseLigne2">Adresse Ligne 2</h:outputLabel>
-				            <h:inputText id="adresseLigne2" value="#{ecoleController.ecole.coordonnees.crdAdresseLigne2}" required="true" size="20" maxlength="60" />
-				            <h:message id="adresseLigne2Message" for="adresseLigne2" errorClass="erreur" />
+				            <h:inputText id="adresseLigne2" value="#{ecoleController.ecole.coordonnees.crdAdresseLigne2}" size="20" maxlength="60" />
 				            <br />
 				            <h:outputLabel for="codePostal">Code Postal<span class="requis">*</span></h:outputLabel>
 				            <h:inputText id="codePostal" value="#{ecoleController.ecole.coordonnees.crdCodePostal}" required="true" size="20" maxlength="60" />
@@ -83,16 +93,13 @@
 				            <h:message id="telephoneMessage" for="telephone" errorClass="erreur" />
 				            <br />
 				            <h:outputLabel for="surface">Surface</h:outputLabel>
-				            <h:inputText id="surface" value="#{ecoleController.ecole.eclSurface}" required="true" size="20" maxlength="60" />
-				            <h:message id="surfaceMessage" for="surface" errorClass="erreur" />
+				            <h:inputText id="surface" value="#{ecoleController.ecole.eclSurface}" size="20" maxlength="60" />
 				            <br />
 				            <h:outputLabel for="nbSalle">Nombre de salle</h:outputLabel>
-				            <h:inputText id="nbSalle" value="#{ecoleController.ecole.eclNombreSalle}" required="true" size="20" maxlength="60" />
-				            <h:message id="nbSalleMessage" for="nbSalle" errorClass="erreur" />
+				            <h:inputText id="nbSalle" value="#{ecoleController.ecole.eclNombreSalle}"  size="20" maxlength="60" />
 				            <br />
 				            <h:outputLabel for="nomResponsable">Nom du Responsable</h:outputLabel>
-				            <h:inputText id="nomResponsable" value="#{ecoleController.ecole.eclNomResponsable}" required="true" size="20" maxlength="60" />
-				            <h:message id="nomResponsableMessage" for="nomResponsable" errorClass="erreur" />
+				            <h:inputText id="nomResponsable" value="#{ecoleController.ecole.eclNomResponsable}" size="20" maxlength="60" />
 				            <br />
 				            <div class="ecoleButtons">
 							<p:commandButton icon="ui-icon-close" value="Réinitialiser" ajax="true"
@@ -124,8 +131,7 @@
 				            <h:message id="adresseLigne1Message" for="adresseLigne1" errorClass="erreur" />
 				            <br />
 				            <h:outputLabel for="adresseLigne2">Adresse Ligne 2</h:outputLabel>
-				            <h:inputText id="adresseLigne2" value="#{ecoleController.selectedEcole.coordonnees.crdAdresseLigne2}" required="true" size="20" maxlength="60" />
-				            <h:message id="adresseLigne2Message" for="adresseLigne2" errorClass="erreur" />
+				            <h:inputText id="adresseLigne2" value="#{ecoleController.selectedEcole.coordonnees.crdAdresseLigne2}" size="20" maxlength="60" />
 				            <br />
 				            <h:outputLabel for="codePostal">Code Postal<span class="requis">*</span></h:outputLabel>
 				            <h:inputText id="codePostal" value="#{ecoleController.selectedEcole.coordonnees.crdCodePostal}" required="true" size="20" maxlength="60" />
@@ -140,23 +146,20 @@
 				            <h:message id="telephoneMessage" for="telephone" errorClass="erreur" />
 				            <br />
 				            <h:outputLabel for="surface">Surface</h:outputLabel>
-				            <h:inputText id="surface" value="#{ecoleController.selectedEcole.eclSurface}" required="true" size="20" maxlength="60" />
-				            <h:message id="surfaceMessage" for="surface" errorClass="erreur" />
+				            <h:inputText id="surface" value="#{ecoleController.selectedEcole.eclSurface}" size="20" maxlength="60" />
 				            <br />
 				            <h:outputLabel for="nbSalle">Nombre de salle</h:outputLabel>
-				            <h:inputText id="nbSalle" value="#{ecoleController.selectedEcole.eclNombreSalle}" required="true" size="20" maxlength="60" />
-				            <h:message id="nbSalleMessage" for="nbSalle" errorClass="erreur" />
+				            <h:inputText id="nbSalle" value="#{ecoleController.selectedEcole.eclNombreSalle}" size="20" maxlength="60" />
 				            <br />
 				            <h:outputLabel for="nomResponsable">Nom du Responsable</h:outputLabel>
-				            <h:inputText id="nomResponsable" value="#{ecoleController.selectedEcole.eclNomResponsable}" required="true" size="20" maxlength="60" />
-				            <h:message id="nomResponsableMessage" for="nomResponsable" errorClass="erreur" />
+				            <h:inputText id="nomResponsable" value="#{ecoleController.selectedEcole.eclNomResponsable}" size="20" maxlength="60" />
 				            <br />
 				            <div class="ecoleButtons">
 							<p:commandButton icon="ui-icon-close" value="Annuler" ajax="true"
 								immediate="true" update=":ecoleDetailsPanel"
 								actionListener="#{ecoleController.resetSelectedEcole()}" />
 
-							<p:commandButton value="Modifier"
+							<p:commandButton value="Sauvegarder"
 								action="#{ecoleController.updateEcole}"
 								update=":ecoleTableForm" icon="ui-icon-check" />
 							</div>
