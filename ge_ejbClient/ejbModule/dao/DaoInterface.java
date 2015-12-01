@@ -4,6 +4,7 @@
 
 package dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.ejb.Local;
@@ -20,5 +21,6 @@ public interface DaoInterface<T> {
 	
 	public T findById(Integer id);
 	
-	public List<T> list(String query);
+	public List<T> list(String query,HashMap<String, Object> params);
+
 }

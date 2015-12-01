@@ -4,7 +4,9 @@
 
 package ge_ejb.dao.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -79,10 +81,16 @@ public class ResponsableService implements DaoInterface<Responsable> {
 	}
 	
 	@Override
-	public List<Responsable> list(String query) {
+	public List<Responsable> list(String query,HashMap<String, Object> params) {
 		log.debug("getting list of "+this.getClass().toString()+" with query ["+query+"]");
 		try {
 			Query queryToExecute = entityManager.createQuery(query);
+			if(params != null){
+				for (Map.Entry<String, Object> item : params.entrySet()) {
+					queryToExecute.setParameter(item.getKey(), item.getValue());
+					log.debug("params["+item.getKey()+"]["+item.getValue()+"]");
+				}
+			}
 			return queryToExecute.getResultList();
 		} catch (RuntimeException re) {
 			log.error("get failed", re);

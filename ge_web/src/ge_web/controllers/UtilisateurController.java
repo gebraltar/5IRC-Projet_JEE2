@@ -1,12 +1,15 @@
 package ge_web.controllers;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.ejb.LocalBean;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
+import javax.persistence.Parameter;
 import javax.servlet.http.HttpServlet;
 
 import dao.DaoInterface;
@@ -23,7 +26,7 @@ public class UtilisateurController extends HttpServlet {
 	private String login;
 	private String mdp;
 	private boolean connecte=false;
-	
+
 	private Utilisateur utilisateur ;
     
     public UtilisateurController() {
@@ -37,22 +40,15 @@ public class UtilisateurController extends HttpServlet {
 	public String Check_User()
 	{
 		String res="";
-		List<Utilisateur> liste=dao.list("SELECT u FROM Utilisateur u");
-		if(!liste.isEmpty())
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("login", login);
+		params.put("password", mdp);
+		List<Utilisateur> result=dao.list("SELECT u FROM Utilisateur u WHERE UTI_Login = :login AND UTI_Pass = :password",params);
+		if(!result.isEmpty() && result.size() == 1)
 		{	
-			
-			Iterator<Utilisateur> i = liste.iterator();
-			while(i.hasNext()){
-				Utilisateur temp = i.next();
-				
-				if(temp.getUtiLogin().equals(login) && temp.getUtiPass().equals(mdp))
-				{
-				    this.utilisateur = temp;
-					UserSessionBean user = new UserSessionBean(temp, new Date());
-					res="Home.xhtml";
-					break;
-				}
-			}		
+		    this.utilisateur = result.get(0);
+			UserSessionBean user = new UserSessionBean(utilisateur, new Date());
+			res="Home.xhtml";	
 		}
 		if(res==""){
 			///TODO afficher message erreur

@@ -56,7 +56,7 @@ public class TypeEcoleController {
 	}
 	
 	public List<TypeEcole> listTypeEcole(){
-		return dao.list("SELECT t FROM TypeEcole t");	 
+		return dao.list("SELECT t FROM TypeEcole t",null);	 
 	}
 	
 	 public void addTypeEcole() {
