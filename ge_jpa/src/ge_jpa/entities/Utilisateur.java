@@ -28,6 +28,8 @@ public class Utilisateur implements java.io.Serializable {
 	private String utiMail;
 
 	public Utilisateur() {
+		utiLogin = null;
+		role = new Role();
 	}
 
 	public Utilisateur(Role role) {
