@@ -66,11 +66,11 @@ public class Niveau implements java.io.Serializable {
 	}
 
 	@Column(name = "NIV_Label", nullable = false, length = 45)
-	public String getNivNiveauLabel() {
+	public String getNiveauLabel() {
 		return this.nivLabel;
 	}
 
-	public void setNivNiveauLabel(String nivNiveauLabel) {
+	public void setNiveauLabel(String nivNiveauLabel) {
 		this.nivLabel = nivNiveauLabel;
 	}
 

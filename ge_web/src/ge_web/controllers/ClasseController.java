@@ -5,6 +5,7 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServlet;
@@ -15,7 +16,7 @@ import ge_jpa.entities.Ecole;
 import ge_jpa.entities.Niveau;
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class ClasseController extends HttpServlet {
 
 	@Inject
@@ -27,9 +28,11 @@ public class ClasseController extends HttpServlet {
 	private Classe classe;
 	private Classe selectedClasse;
 	private Ecole ecole;
+	private Niveau niveau;
 
 	public ClasseController() {
 		classe = new Classe();
+		niveau= new Niveau();
 	}
 
 	public Classe getSelectedClasse() {
@@ -47,7 +50,13 @@ public class ClasseController extends HttpServlet {
 	public void setClasse(Classe classe) {
 		this.classe = classe;
 	}
+	public Niveau getNiveau() {
+		return niveau;
+	}
 
+	public void setNiveau(Niveau niveau) {
+		this.niveau = niveau;
+	}
 	public List<Classe> listClasse() {
 		try {
 			return daoClasse.list("SELECT c FROM Classe c",null);
@@ -75,6 +84,7 @@ public class ClasseController extends HttpServlet {
 
 	public void updateClasse() {
 		System.out.println(selectedClasse.getClsNumero());
+		selectedClasse.setNiveau(niveau);
 		daoClasse.merge(selectedClasse);
 		FacesMessage message = new FacesMessage("Modification sauvegarder !");
 		FacesContext.getCurrentInstance().addMessage(null, message);
@@ -90,6 +100,6 @@ public class ClasseController extends HttpServlet {
 
 	public String gererClasses(Ecole ecole) {
 		this.ecole = ecole;
-		return "ListeClasse.xhtml";
+		return "ListeClasse.xhtml?faces-redirect=true";
 	}
 }

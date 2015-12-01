@@ -71,10 +71,10 @@
 								class="requis">*</span>
 						</h:outputLabel>
 						<h:selectOneMenu id="niveau"
-							value="#{classeController.selectedClasse.niveau.nivId}">
+							value="#{classeController.niveau.nivId}">
 							<f:selectItems value="#{classeController.listNiveau()}"
 								var="niveau" itemValue="#{niveau.nivId}"
-								
+								itemValueAsString="#{niveau.nivId}"
 								itemLabel="#{niveau.niveauLabel}" />
 						</h:selectOneMenu>
 						<br />
