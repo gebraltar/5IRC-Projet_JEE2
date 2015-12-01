@@ -26,15 +26,17 @@ public class Cours implements java.io.Serializable {
 	private CrenauHoraire crenauHoraire;
 	private Professeur professeur;
 	private Salle salle;
-
+	private String nom;
+	
 	public Cours() {
 	}
 
-	public Cours(Classe classe, CrenauHoraire crenauHoraire, Professeur professeur, Salle salle) {
+	public Cours(Classe classe, CrenauHoraire crenauHoraire, Professeur professeur, Salle salle, String nom) {
 		this.classe = classe;
 		this.crenauHoraire = crenauHoraire;
 		this.professeur = professeur;
 		this.salle = salle;
+		this.nom = nom;
 	}
 
 	@Id
@@ -47,6 +49,15 @@ public class Cours implements java.io.Serializable {
 
 	public void setCrsId(Integer crsId) {
 		this.crsId = crsId;
+	}
+	
+	@Column(name = "CRS_Nom", nullable = true, length = 45)
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)

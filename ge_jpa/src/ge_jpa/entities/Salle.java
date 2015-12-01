@@ -12,6 +12,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -23,6 +25,7 @@ import javax.persistence.Table;
 public class Salle implements java.io.Serializable {
 
 	private Integer salId;
+	private Ecole ecole;
 	private String salLabel;
 	private Set<Cours> courses = new HashSet<Cours>(0);
 
@@ -33,9 +36,10 @@ public class Salle implements java.io.Serializable {
 		this.salLabel = salLabel;
 	}
 
-	public Salle(String salLabel, Set<Cours> courses) {
+	public Salle(String salLabel, Set<Cours> courses, Ecole ecole) {
 		this.salLabel = salLabel;
 		this.courses = courses;
+		this.ecole = ecole;
 	}
 
 	@Id
@@ -48,6 +52,17 @@ public class Salle implements java.io.Serializable {
 
 	public void setSalId(Integer salId) {
 		this.salId = salId;
+	}
+	
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ECL_ID", nullable = false)
+	public Ecole getEcole() {
+		return ecole;
+	}
+
+	public void setEcole(Ecole ecole) {
+		this.ecole = ecole;
 	}
 
 	@Column(name = "SAL_Label", nullable = false, length = 45)

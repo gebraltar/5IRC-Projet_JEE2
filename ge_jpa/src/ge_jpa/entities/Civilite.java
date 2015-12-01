@@ -25,7 +25,6 @@ public class Civilite implements java.io.Serializable {
 	private Integer civId;
 	private String civLabel;
 	private Set<Professeur> professeurs = new HashSet<Professeur>(0);
-	private Set<Eleve> eleves = new HashSet<Eleve>(0);
 	private Set<Responsable> responsables = new HashSet<Responsable>(0);
 
 	public Civilite() {
@@ -35,10 +34,9 @@ public class Civilite implements java.io.Serializable {
 		this.civLabel = civLabel;
 	}
 
-	public Civilite(String civLabel, Set<Professeur> professeurs, Set<Eleve> eleves, Set<Responsable> responsables) {
+	public Civilite(String civLabel, Set<Professeur> professeurs, Set<Responsable> responsables) {
 		this.civLabel = civLabel;
 		this.professeurs = professeurs;
-		this.eleves = eleves;
 		this.responsables = responsables;
 	}
 
@@ -72,14 +70,6 @@ public class Civilite implements java.io.Serializable {
 		this.professeurs = professeurs;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "civilite")
-	public Set<Eleve> getEleves() {
-		return this.eleves;
-	}
-
-	public void setEleves(Set<Eleve> eleves) {
-		this.eleves = eleves;
-	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "civilite")
 	public Set<Responsable> getResponsables() {

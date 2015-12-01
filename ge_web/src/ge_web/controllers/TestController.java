@@ -20,12 +20,12 @@ public class TestController extends HttpServlet {
 		Coordonnees c = new Coordonnees("rue des chats", null, "69100", "Villeurbanne", null, null, "0651245896", "test@test.fr");
 	
 		try{
-			//dao.persist(c);
+			dao.persist(c);
 			//List<Coordonnees> l = dao.list("Select c from Coordonnees c");
 			//c.setCrdAdresseLigne1("rue jean jean");
 			//dao.merge(c);
-			c = dao.findById(8);
-			dao.remove(c);
+			//c = dao.findById(8);
+			//dao.remove(c);
 			}catch(Exception e){
 				System.out.println(e.getMessage());
 			}

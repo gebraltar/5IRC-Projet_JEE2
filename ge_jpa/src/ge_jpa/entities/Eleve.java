@@ -25,7 +25,6 @@ import javax.persistence.Table;
 public class Eleve implements java.io.Serializable {
 
 	private Integer elvId;
-	private Civilite civilite;
 	private Classe classe;
 	private String elvNom;
 	private String elvPrenom;
@@ -37,14 +36,12 @@ public class Eleve implements java.io.Serializable {
 	public Eleve() {
 	}
 
-	public Eleve(Civilite civilite, Classe classe) {
-		this.civilite = civilite;
+	public Eleve(Classe classe) {
 		this.classe = classe;
 	}
 
-	public Eleve(Civilite civilite, Classe classe, String elvNom, String elvPrenom, String elvSexe,
+	public Eleve(Classe classe, String elvNom, String elvPrenom, String elvSexe,
 			String elvDateNaissance, Set<FraisInscription> fraisInscriptions, Set<Responsable> responsables) {
-		this.civilite = civilite;
 		this.classe = classe;
 		this.elvNom = elvNom;
 		this.elvPrenom = elvPrenom;
@@ -64,16 +61,6 @@ public class Eleve implements java.io.Serializable {
 
 	public void setElvId(Integer elvId) {
 		this.elvId = elvId;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "CIV_ID", nullable = false)
-	public Civilite getCivilite() {
-		return this.civilite;
-	}
-
-	public void setCivilite(Civilite civilite) {
-		this.civilite = civilite;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)

@@ -23,18 +23,18 @@ import javax.persistence.Table;
 public class Cycle implements java.io.Serializable {
 
 	private Integer cclId;
-	private String cclCycleLabel;
+	private String cclLabel;
 	private Set<Niveau> niveaus = new HashSet<Niveau>(0);
 
 	public Cycle() {
 	}
 
 	public Cycle(String cclCycleLabel) {
-		this.cclCycleLabel = cclCycleLabel;
+		this.cclLabel = cclCycleLabel;
 	}
 
 	public Cycle(String cclCycleLabel, Set<Niveau> niveaus) {
-		this.cclCycleLabel = cclCycleLabel;
+		this.cclLabel = cclCycleLabel;
 		this.niveaus = niveaus;
 	}
 
@@ -50,13 +50,13 @@ public class Cycle implements java.io.Serializable {
 		this.cclId = cclId;
 	}
 
-	@Column(name = "CCL_Cycle_Label", nullable = false, length = 45)
+	@Column(name = "CCL_Label", nullable = false, length = 45)
 	public String getCclCycleLabel() {
-		return this.cclCycleLabel;
+		return this.cclLabel;
 	}
 
 	public void setCclCycleLabel(String cclCycleLabel) {
-		this.cclCycleLabel = cclCycleLabel;
+		this.cclLabel = cclCycleLabel;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cycle")
