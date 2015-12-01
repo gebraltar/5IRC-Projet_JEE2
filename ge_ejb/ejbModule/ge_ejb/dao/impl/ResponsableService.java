@@ -47,6 +47,7 @@ public class ResponsableService implements DaoInterface<Responsable> {
 			Responsable r = this.findById(persistentInstance.getRspId());
 			entityManager.remove(r);
 			log.debug("remove successful");
+			
 		} catch (RuntimeException re) {
 			log.error("remove failed", re);
 			throw re;

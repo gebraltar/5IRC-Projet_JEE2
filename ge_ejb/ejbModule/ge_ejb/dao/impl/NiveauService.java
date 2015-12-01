@@ -46,6 +46,7 @@ public class NiveauService implements DaoInterface<Niveau> {
 		try {
 			Niveau n = this.findById(persistentInstance.getNivId());
 			entityManager.remove(n);
+			
 			log.debug("remove successful");
 		} catch (RuntimeException re) {
 			log.error("remove failed", re);

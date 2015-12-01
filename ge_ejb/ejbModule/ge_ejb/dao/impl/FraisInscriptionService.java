@@ -46,6 +46,7 @@ public class FraisInscriptionService implements DaoInterface<FraisInscription> {
 		try {
 			FraisInscription f = this.findById(persistentInstance.getFriId());
 			entityManager.remove(f);
+			
 			log.debug("remove successful");
 		} catch (RuntimeException re) {
 			log.error("remove failed", re);

@@ -46,6 +46,7 @@ public class CycleService implements DaoInterface<Cycle> {
 		try {
 			Cycle c = this.findById(persistentInstance.getCclId());
 			entityManager.remove(c);
+			
 			log.debug("remove successful");
 		} catch (RuntimeException re) {
 			log.error("remove failed", re);

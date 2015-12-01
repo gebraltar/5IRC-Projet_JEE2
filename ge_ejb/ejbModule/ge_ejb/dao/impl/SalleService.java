@@ -46,6 +46,7 @@ public class SalleService implements DaoInterface<Salle>{
 		try {
 			Salle s = this.findById(persistentInstance.getSalId());
 			entityManager.remove(s);
+			
 			log.debug("remove successful");
 		} catch (RuntimeException re) {
 			log.error("remove failed", re);

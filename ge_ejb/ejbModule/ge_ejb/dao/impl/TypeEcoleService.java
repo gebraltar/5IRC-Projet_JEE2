@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.Parameter;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -46,6 +47,7 @@ public class TypeEcoleService implements DaoInterface<TypeEcole> {
 		try {
 			TypeEcole t = this.findById(persistentInstance.getTecId());
 			entityManager.remove(t);
+			
 			log.debug("remove successful");
 		} catch (RuntimeException re) {
 			log.error("remove failed", re);

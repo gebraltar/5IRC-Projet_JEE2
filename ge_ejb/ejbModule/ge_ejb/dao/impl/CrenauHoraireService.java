@@ -46,6 +46,7 @@ public class CrenauHoraireService implements DaoInterface<CrenauHoraire> {
 		try {
 			CrenauHoraire c = this.findById(persistentInstance.getCrhId());
 			entityManager.remove(c);
+			
 			log.debug("remove successful");
 		} catch (RuntimeException re) {
 			log.error("remove failed", re);
