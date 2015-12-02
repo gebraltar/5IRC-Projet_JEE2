@@ -41,6 +41,11 @@
 									action="#{inscriptionEleveController.gererEleves(classe)}">
 								</p:commandLink>
 							</p:column>
+							<p:column headerText="Afficher le planning">
+								<p:commandLink value="Planning"
+									action="#{planningController.afficherPlanning(classe)}">
+								</p:commandLink>
+							</p:column>
 
 							<p:column headerText="Supprimer">
 								<p:commandButton icon="ui-icon-trash"
@@ -102,7 +107,7 @@
 								required="true"
 								requiredMessage="Vous devez renseigner le numero de classe."
 								size="5" maxlength="5">
-								<f:validateLongRange maximum="99999" minimum="0"/>
+								<f:validateLongRange maximum="99999" minimum="0" />
 							</p:inputText>
 							<p:message showDetail="true" for="clsNumero" errorClass="error" />
 						</h:panelGrid>
@@ -142,7 +147,7 @@
 								value="#{classeController.classe.clsNumero}" required="true"
 								requiredMessage="Vous devez renseigner le numero de classe."
 								size="5" maxlength="5">
-								<f:validateLongRange maximum="99999" minimum="0"/>
+								<f:validateLongRange maximum="99999" minimum="0" />
 							</p:inputText>
 							<p:message showDetail="true" for="clsNumero" errorClass="error" />
 

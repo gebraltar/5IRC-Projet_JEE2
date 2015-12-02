@@ -7,7 +7,7 @@ body {
 .left
 {
 	float: left;
-}
+} 	
 .top {
 	background: #4d7397;
 	height: 70px;
@@ -94,7 +94,7 @@ footer {
 	padding: 20px;
 	min-height: 60px;
 	position: absolute;
-	bottom: 0;
+	
 	left: 0;
 	right: 0;
 }
