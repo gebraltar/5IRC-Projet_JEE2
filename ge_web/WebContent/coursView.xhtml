@@ -16,7 +16,7 @@
 			<h:panelGrid columns="2" id="classePanelGrid"
 				columnClasses="customColumns">
 				<p:panel
-					header="Listes des cours pour la classe : #{coursController.classe.niveau} #{coursController.classe.clsNumero}"
+					header="Listes des cours pour la classe : #{coursController.classe.niveau.niveauLabel} #{coursController.classe.clsNumero}"
 					id="CoursListPanel">
 					<h:form id="CoursTableForm">
 						<p:dataTable var="cours" value="#{coursController.listCours()}"
