@@ -65,7 +65,6 @@ public class EcoleController extends HttpServlet {
 	}
 	
 	public void addEcole() {
-		ecole.setTypeEcole(daoTypeEcole.findById(ecole.getTypeEcole().getTecId()));
         dao.persist(ecole);
         FacesMessage message = new FacesMessage( "Ajout réussi !" );
         FacesContext.getCurrentInstance().addMessage( null, message );
@@ -73,7 +72,6 @@ public class EcoleController extends HttpServlet {
     }
 	
 	public void updateEcole() {
-		selectedEcole.setTypeEcole(daoTypeEcole.findById(selectedEcole.getTypeEcole().getTecId()));
         dao.merge(selectedEcole);
         FacesMessage message = new FacesMessage( "Modification réussie !" );
         FacesContext.getCurrentInstance().addMessage( null, message );
@@ -88,6 +86,6 @@ public class EcoleController extends HttpServlet {
 	}
 	
 	public String gererEcoles() {
-		return "ecole.xhtml?faces-redirect=true";
+		return "ecoleView.xhtml?faces-redirect=true";
 	}
 }
