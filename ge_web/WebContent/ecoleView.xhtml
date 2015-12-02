@@ -67,19 +67,19 @@
 					<h:form id="ecoleAddForm" rendered="#{empty ecoleController.selectedEcole}">
 						<h2>Ajouter d'une école</h2>
 						<h:panelGrid columns="3">
-				            <p:outputLabel for="nom">Nom<span class="requis">*</span></p:outputLabel>
+				            <p:outputLabel for="nom">Nom</p:outputLabel>
 				            <p:inputText id="nom" value="#{ecoleController.ecole.eclNom}" required="true" size="20" maxlength="60" />
 				            <p:message id="nomMessage" for="nom" errorClass="erreur" />
 				       	</h:panelGrid>
 				       	<h:panelGrid columns="3">
-				            <p:outputLabel for="typeEcoleId">Type<span class="requis">*</span></p:outputLabel>
+				            <p:outputLabel for="typeEcoleId">Type</p:outputLabel>
 				            <h:selectOneMenu id="typeEcoleId" value="#{ecoleController.ecole.typeEcole.tecId}">
 					            <f:selectItems value="#{ecoleController.listTypeEcole()}" var="typeEcole" itemValue="#{typeEcole.tecId}" itemValueAsString="#{typeEcole.tecId}" itemLabel="#{typeEcole.tecLabel}" />
 				        	</h:selectOneMenu>
 				            <p:message id="typeEcoleMessage" for="typeEcoleId" errorClass="erreur" />
 				         </h:panelGrid>
 				         <h:panelGrid columns="3">
-				            <p:outputLabel for="adresseLigne1">Adresse Ligne 1<span class="requis">*</span></p:outputLabel>
+				            <p:outputLabel for="adresseLigne1">Adresse Ligne 1</p:outputLabel>
 				            <p:inputText id="adresseLigne1" value="#{ecoleController.ecole.coordonnees.crdAdresseLigne1}" required="true" size="20" maxlength="60" />
 				            <p:message id="adresseLigne1Message" for="adresseLigne1" errorClass="erreur" />
 				         </h:panelGrid>
@@ -88,17 +88,19 @@
 				            <p:inputText id="adresseLigne2" value="#{ecoleController.ecole.coordonnees.crdAdresseLigne2}" size="20" maxlength="60" />
 				         </h:panelGrid>
 				         <h:panelGrid columns="3">
-				            <p:outputLabel for="codePostal">Code Postal<span class="requis">*</span></p:outputLabel>
-				            <p:inputText id="codePostal" value="#{ecoleController.ecole.coordonnees.crdCodePostal}" required="true" size="20" maxlength="60" />
+				            <p:outputLabel for="codePostal">Code Postal</p:outputLabel>
+				            <p:inputText id="codePostal" value="#{ecoleController.ecole.coordonnees.crdCodePostal}" required="true" size="5" maxlength="5" >
+				            	<f:validateLongRange maximum="99999" minimum="0"/>
+				            </p:inputText>
 				            <p:message id="codePostalMessage" for="codePostal" errorClass="erreur" />
 				         </h:panelGrid>
 				         <h:panelGrid columns="3">
-				            <p:outputLabel for="ville">Ville<span class="requis">*</span></p:outputLabel>
+				            <p:outputLabel for="ville">Ville</p:outputLabel>
 				            <p:inputText id="ville" value="#{ecoleController.ecole.coordonnees.crdVille}" required="true" size="20" maxlength="60" />
 				            <p:message id="villeMessage" for="ville" errorClass="erreur" />
 				         </h:panelGrid>
 				         <h:panelGrid columns="3">
-				            <p:outputLabel for="telephone">Telephone<span class="requis">*</span></p:outputLabel>
+				            <p:outputLabel for="telephone">Telephone</p:outputLabel>
 				             <p:inputText id="telephone" value="#{ecoleController.ecole.coordonnees.crdTelephone}" required="true" size="20" maxlength="60">
 				            	<f:validator validatorId="validators.telephone"></f:validator>
 				            </p:inputText>
@@ -131,7 +133,7 @@
 					<h:form id="ecoleUpdateForm" rendered="#{not empty ecoleController.selectedEcole}">
 						<h2>Modification d'une école</h2>
 				         <h:panelGrid columns="3"> 
-				            <p:outputLabel for="nom">Nom<span class="requis">*</span></p:outputLabel>
+				            <p:outputLabel for="nom">Nom</p:outputLabel>
 				            <p:inputText id="nom" value="#{ecoleController.selectedEcole.eclNom}" required="true" size="20" maxlength="60" />
 				            <p:message id="nomMessage" for="nom" errorClass="erreur" />
 				         </h:panelGrid>
@@ -143,7 +145,7 @@
 				            <p:message id="typeEcoleMessage" for="typeEcoleId" errorClass="erreur" />
 				         </h:panelGrid>
 				         <h:panelGrid columns="3"> 
-				            <p:outputLabel for="adresseLigne1">Adresse Ligne 1<span class="requis">*</span></p:outputLabel>
+				            <p:outputLabel for="adresseLigne1">Adresse Ligne 1</p:outputLabel>
 				            <p:inputText id="adresseLigne1" value="#{ecoleController.selectedEcole.coordonnees.crdAdresseLigne1}" required="true" size="20" maxlength="60" />
 				            <p:message id="adresseLigne1Message" for="adresseLigne1" errorClass="erreur" />
 				         </h:panelGrid>
@@ -152,17 +154,19 @@
 				            <p:inputText id="adresseLigne2" value="#{ecoleController.selectedEcole.coordonnees.crdAdresseLigne2}" size="20" maxlength="60" />
 				         </h:panelGrid>
 				         <h:panelGrid columns="3"> 
-				            <p:outputLabel for="codePostal">Code Postal<span class="requis">*</span></p:outputLabel>
-				            <p:inputText id="codePostal" value="#{ecoleController.selectedEcole.coordonnees.crdCodePostal}" required="true" size="20" maxlength="60" />
+				            <p:outputLabel for="codePostal">Code Postal</p:outputLabel>
+				            <p:inputText id="codePostal" value="#{ecoleController.selectedEcole.coordonnees.crdCodePostal}" required="true" size="5" maxlength="5" >
+				            	<f:validateLongRange maximum="99999" minimum="0"/>
+				            </p:inputText>
 				            <p:message id="codePostalMessage" for="codePostal" errorClass="erreur" />
 				         </h:panelGrid>
 				         <h:panelGrid columns="3"> 
-				            <p:outputLabel for="ville">Ville<span class="requis">*</span></p:outputLabel>
+				            <p:outputLabel for="ville">Ville</p:outputLabel>
 				            <p:inputText id="ville" value="#{ecoleController.selectedEcole.coordonnees.crdVille}" required="true" size="20" maxlength="60" />
 				            <p:message id="villeMessage" for="ville" errorClass="erreur" />
 				         </h:panelGrid>
 				         <h:panelGrid columns="3"> 
-				            <p:outputLabel for="telephone">Telephone<span class="requis">*</span></p:outputLabel>
+				            <p:outputLabel for="telephone">Telephone</p:outputLabel>
 				            <p:inputText id="telephone" value="#{ecoleController.selectedEcole.coordonnees.crdTelephone}" required="true" size="20" maxlength="60">
 				            	<f:validator validatorId="validators.telephone"></f:validator>
 				            </p:inputText>

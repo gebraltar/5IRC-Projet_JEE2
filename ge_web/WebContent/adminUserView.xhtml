@@ -6,16 +6,17 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<link rel="stylesheet" type="text/css" href="./css/style.css" />
+	<title>Adminstration des références</title>
+</h:head>
+<c:if test="${not empty loggedUser and loggedUser.user.role.rolId == 1}">
+<h:body>
+	<ui:include src="header.xhtml" />
 	
-	<c:if test="${not empty loggedUser and loggedUser.user.role.rolId == 1}">
-	    <ui:include  src="header.xhtml"/>
-	    <h:head>
-			<title>Administration</title>
-			<link rel="stylesheet" type="text/css" href="./css/style.css" />
-		</h:head>
-	    <h:body>
-	    	<div class='homeBox mainBox'>
-	    	<p:growl id="msgs" showDetail="true" />
+	<div class='homeBox mainBox'>
+		<p:growl id="msgs" showDetail="true" />
 	 
 	    	<h3>Administration des utilisateurs</h3>
 	   
@@ -82,7 +83,9 @@
 											<p:inputText id="userMailUpdate"
 												value="#{adminUtilisateurController.selectedUser.utiMail}"
 												required="true" requiredMessage="Le mail est requis."
-												size="30" maxlength="30"/>
+												size="50" maxlength="50">
+												<f:validator validatorId="validators.mail"/>
+											</p:inputText>
 											<p:message showDetail="true" for="userMailUpdate" errorClass="error" />
 											
 											<h:outputLabel for="RoleUpdate">Role : *</h:outputLabel>
@@ -133,7 +136,9 @@
 											<p:inputText id="userMailAdd"
 												value="#{adminUtilisateurController.userToAdd.utiMail}"
 												required="true" requiredMessage="Le mail est requis."
-												size="30" maxlength="30"/>
+												size="50" maxlength="50">
+												<f:validator validatorId="validators.mail"/>
+											</p:inputText>
 											<p:message showDetail="true" for="userMailAdd" errorClass="error" />
 											
 											<h:outputLabel for="RoleAdd">Role : *</h:outputLabel>

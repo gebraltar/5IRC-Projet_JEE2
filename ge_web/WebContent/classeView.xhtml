@@ -96,7 +96,8 @@
 								value="#{classeController.selectedClasse.clsNumero}"
 								required="true"
 								requiredMessage="Vous devez renseigner le numero de classe."
-								size="30" maxlength="30">
+								size="5" maxlength="5">
+								<f:validateLongRange maximum="99999" minimum="0"/>
 							</p:inputText>
 							<p:message showDetail="true" for="clsNumero" errorClass="error" />
 						</h:panelGrid>
@@ -135,7 +136,8 @@
 							<p:inputText id="clsNumero"
 								value="#{classeController.classe.clsNumero}" required="true"
 								requiredMessage="Vous devez renseigner le numero de classe."
-								size="30" maxlength="30">
+								size="5" maxlength="5">
+								<f:validateLongRange maximum="99999" minimum="0"/>
 							</p:inputText>
 							<p:message showDetail="true" for="clsNumero" errorClass="error" />
 
