@@ -8,6 +8,7 @@ body {
 {
 	float: left;
 } 	
+ 
 .top {
 	background: #4d7397;
 	height: 70px;
@@ -106,16 +107,13 @@ footer {
 
 .ui-panel .ui-panel-titlebar {
 	padding: 0.5em 1em 0.3em;
-	border: none;
 	background: #F2F5F9;
 	color: #4D7397;
 	text-shadow: none;
 	border-left: 4px solid #4D7397;
 }
 
-.ui-widget .ui-widget {
-	border: none;
-}
+ 
 
 .ui-state-default, .ui-widget-content .ui-state-default,
 	.ui-widget-header .ui-state-default {

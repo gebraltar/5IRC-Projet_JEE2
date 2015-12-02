@@ -4,7 +4,8 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:h="http://xmlns.jcp.org/jsf/html">
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 <h:head>
 	<link rel="stylesheet" type="text/css" href="./css/style.css" />
 	<title>Gestion des salles de l'établissement: #{salleController.ecole.eclNom}</title>
@@ -13,6 +14,8 @@
 	<ui:include src="header.xhtml" />
 	<div class='homeBox mainBox'>
 		<p:growl id="msgs" showDetail="true" />
+    <p:accordionPanel id="adminTabs" activeIndex="0">
+	<p:tab title="Gestion des salles">
 	<h:panelGroup>
 		<h:panelGrid columns="2" id="sallePanelGrid"
 			columnClasses="customColumns">
@@ -31,7 +34,7 @@
 							<p:commandButton icon="ui-icon-trash"
 								title="Suprimer cette classe" ajax="true"
 								actionListener="#{salleController.deleteSalle(salle)}"
-								update=":SalleTableForm :SalleListPanel">
+								update=":adminTabs:SalleTableForm :adminTabs:SalleListPanel">
 								<p:confirm header="Confirmation" message="Are you sure?"
 									icon="ui-icon-alert" />
 							</p:commandButton>
@@ -39,7 +42,7 @@
 
 						<p:column headerText="Modifier">
 							<p:commandButton icon="ui-icon-wrench"
-								title="Modifier cette salle" update=":salleDetailsPanel"
+								title="Modifier cette salle" update=":adminTabs:salleDetailsPanel"
 								ajax="true">
 								<f:setPropertyActionListener value="#{salle}"
 									target="#{salleController.selectedSalle}" />
@@ -77,7 +80,7 @@
 							ajax="false" icon="ui-icon-check" validateClient="true" />
 
 						<p:commandButton icon="ui-icon-close" value="Annuler" ajax="true"
-							immediate="true" update=":salleDetailsPanel"
+							immediate="true" update=":adminTabs:salleDetailsPanel"
 							actionListener="#{salleController.resetSalleSelected()}" />
 					</div>
 				</h:form>
@@ -103,7 +106,7 @@
 							
 						<p:commandButton icon="ui-icon-close" value="Réinitialiser" ajax="true"
 							immediate="true">
-							<p:ajax update=":salleDetailsPanel" resetValues="true" />
+							<p:ajax update=":adminTabs:salleDetailsPanel" resetValues="true" />
 						</p:commandButton>
 
 					</div>
@@ -115,6 +118,8 @@
 		</h:panelGrid>
 
 	</h:panelGroup>
+	</p:tab>
+	</p:accordionPanel>
 	</div>
 	<ui:include src="footer.xhtml" />
 </h:body>

@@ -1,5 +1,6 @@
 package ge_web.controllers;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
@@ -79,10 +80,19 @@ public class AdminUtilisateurController {
 	 public void addUser() {
 		 FacesMessage message;
 		 if(this.verifPass != null && this.verifPass == userToAdd.getUtiPass()){
-	         dao.persist(this.userToAdd);
-	         this.userToAdd = new Utilisateur();    
-	         message = new FacesMessage( "Ajout réussi !" );
-	         message.setDetail("");
+			 HashMap<String, Object> params = new HashMap<String, Object>();
+			 params.put("login", userToAdd.getUtiLogin());
+			 List<Utilisateur> exists = dao.list("SELECT u FROM Utilisateur u WHERE UTI_Login= :login",params);
+			 if(exists != null && exists.isEmpty()){
+				 dao.persist(this.userToAdd);
+		         this.userToAdd = new Utilisateur();    
+		         message = new FacesMessage( "Ajout réussi !" );
+		         message.setDetail("");
+			 }else{
+				 message = new FacesMessage( "Un utilisateur avec ce login existe déjà !" );
+		         message.setDetail("");
+		         message.setSeverity(javax.faces.application.FacesMessage.SEVERITY_ERROR);
+			 }
 		 }else{
 			 message = new FacesMessage("Les 2 mots de passe ne sont pas identiques");
 			 message.setDetail("");

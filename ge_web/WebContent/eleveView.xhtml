@@ -4,17 +4,19 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <ui:include  src="header.xhtml"/>
-    <h:head>
-		<title>Eleve</title>
-		<link rel="stylesheet" type="text/css" href="./css/style.css" />
-	</h:head>
-    <h:body>
-    	<div class='homeBox mainBox'>
-    	<p:growl id="msgs" showDetail="true" />
- 
-    	<h3>Administration des eleves</h3>
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<link rel="stylesheet" type="text/css" href="./css/style.css" />
+	<title>Gestion des élèves</title>
+</h:head>
+<h:body>
+	<ui:include src="header.xhtml" />
+	
+	<div class='homeBox mainBox'>
+		<p:growl id="msgs" showDetail="true" />
+    	<h3>Gestion des élèves</h3>
    
     		<p:accordionPanel id="adminTabs" activeIndex="0">
     			<p:tab title="Eleves">
@@ -365,10 +367,6 @@
 							</p:panel>
 	            		</h:panelGrid>
             		</h:panelGroup>
-					<!--<h:panelGroup rendered="#{empty loggedUser or !loggedUser.isAdmin}">
-						<h1>You can't access this page.</h1>
-					</h:panelGroup>-->
-            		
     			</p:tab>
             	
     		</p:accordionPanel>

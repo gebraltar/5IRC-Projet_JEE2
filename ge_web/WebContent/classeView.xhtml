@@ -4,7 +4,8 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:h="http://xmlns.jcp.org/jsf/html">
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 <h:head>
 	<ui:include src="header.xhtml" />
 	<title>Gestion des classes</title>
@@ -12,6 +13,8 @@
 <h:body>
 
 	<div class='homeBox mainBox'>
+		<p:accordionPanel id="adminTabs" activeIndex="0">
+	    <p:tab title="Gestion des classes">
 		<h:panelGroup>
 			<h:panelGrid columns="2" id="classePanelGrid"
 				columnClasses="customColumns">
@@ -51,7 +54,7 @@
 								<p:commandButton icon="ui-icon-trash"
 									title="Suprimer cette classe" ajax="true"
 									actionListener="#{classeController.deleteClasse(classe)}"
-									update=":ClasseTableForm :ClasseListPanel">
+									update=":adminTabs:ClasseTableForm :adminTabs:ClasseListPanel">
 									<p:confirm header="Confirmation"
 										message="Êtes vous sûr de vouloir supprimer cette classe ?"
 										icon="ui-icon-alert" />
@@ -60,7 +63,7 @@
 
 							<p:column headerText="Modifier">
 								<p:commandButton icon="ui-icon-wrench"
-									title="Modifier cette classe" update=":classeDetailsPanel"
+									title="Modifier cette classe" update=":adminTabs:classeDetailsPanel"
 									ajax="true">
 									<f:setPropertyActionListener value="#{classe}"
 										target="#{classeController.selectedClasse}" />
@@ -118,7 +121,7 @@
 								icon="ui-icon-check" validateClient="true" />
 
 							<p:commandButton icon="ui-icon-close" value="Cancel" ajax="true"
-								immediate="true" update=":classeDetailsPanel"
+								immediate="true" update=":adminTabs:classeDetailsPanel"
 								actionListener="#{classeController.resetClasseSelected()}" />
 
 
@@ -159,7 +162,7 @@
 
 							<p:commandButton icon="ui-icon-close" value="Reset" ajax="true"
 								immediate="true">
-								<p:ajax update=":classeDetailsPanel" resetValues="true" />
+								<p:ajax update=":adminTabs:classeDetailsPanel" resetValues="true" />
 							</p:commandButton>
 
 						</div>
@@ -168,6 +171,8 @@
 			</h:panelGrid>
 
 		</h:panelGroup>
+		</p:tab>
+		</p:accordionPanel>
 	</div>
 </h:body>
 <ui:include src="footer.xhtml" />
