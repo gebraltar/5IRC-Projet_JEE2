@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <ui:include  src="header.xhtml"/>
+    <h:head>
+		<title>Eleve</title>
+		<link rel="stylesheet" type="text/css" href="./css/style.css" />
+	</h:head>
+    <h:body>
+    	<div class='homeBox mainBox'>
+    	<p:growl id="msgs" showDetail="true" />
+ 
+    	<h3>Administration des eleves</h3>
+   
+    		<p:accordionPanel id="adminTabs" activeIndex="0">
+    			<p:tab title="Eleves">
+    				<h:panelGroup>
+	            		<h:panelGrid columns="2" cellpadding="5">
+	            			<p:panel header="Liste des eleves" id="userListPanel">
+								<h:form id="userTableForm">
+	            					<p:dataTable var="eleve" value="#{inscriptionEleveController.listEleves()}"
+	            						tableStyle="table-layout: auto; text-align: center;"
+										paginator="true"
+										paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+										rowsPerPageTemplate="10,15">
+										<p:column headerText="Nom">
+		        							<h:outputText value="#{eleve.elvNom}" />
+		    							</p:column>
+		    							<p:column headerText="Prenom">
+		        							<h:outputText value="#{eleve.elvPrenom}" />
+		    							</p:column>
+		    							<p:column headerText="Date de Naissance">
+		        							<h:outputText value="#{eleve.elvDateNaissance}" />
+		    							</p:column>
+		    							<p:column headerText="Modifier">
+											<p:commandButton icon="ui-icon-wrench" title="Modifier"
+												update=":adminTabs:userUpdateForm :adminTabs:userDetailsPanel">
+											<f:setPropertyActionListener value="#{eleve}" target="#{inscriptionEleveController.selectedEleve}" />
+											<f:setPropertyActionListener value="#{inscriptionEleveController.getResponsablebyIdEleve(eleve.elvId)}"
+												target="#{inscriptionEleveController.selectedResponsable}" />
+											<f:setPropertyActionListener value="#{inscriptionEleveController.getRCoordonneesbyIdRes(inscriptionEleveController.selectedResponsable.rspId)}"
+												target="#{inscriptionEleveController.selectedCoordonnees}" />
+												
+											</p:commandButton>
+										</p:column>
+		    							<p:column headerText="Supprimer">
+		        							<p:commandButton icon="ui-icon-trash" title="Supprimer"
+												ajax="true"
+												actionListener="#{inscriptionEleveController.removeEleve(eleve)}"
+												update=":adminTabs:userTableForm :adminTabs:userDetailsPanel">
+											<p:confirm header="Confirmation" message="Êtes-vous sûr de vouloir supprimer cet eleve ?"
+											icon="ui-icon-alert" />
+											</p:commandButton>		
+		    							</p:column>
+									</p:dataTable>
+									<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+										<p:commandButton value="Yes" type="button"
+											styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+										<p:commandButton value="No" type="button"
+											styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+									</p:confirmDialog>
+								</h:form>
+							</p:panel>
+							
+							<p:panel header="Détails d'un eleve" id="userDetailsPanel">
+								<!-- Update TypeEcole form -->
+								<h:form id="userUpdateForm" rendered="#{not empty inscriptionEleveController.selectedEleve}">
+									<h2>Mise à jour de l'eleve</h2>
+									<h3>Eleve</h3>
+									<h:panelGrid columns="3">
+										<p:outputLabel for="userNomUpdate">Nom :</p:outputLabel>
+										<p:inputText id="userNomUpdate"
+											value="#{inscriptionEleveController.selectedEleve.elvNom}"
+											required="true" requiredMessage="Le Nom est requis."
+											size="30" maxlength="30" />
+										<p:message showDetail="true" for="userNomUpdate" errorClass="error" />
+										
+										<p:outputLabel for="userPrenomUpdate">Prenom :</p:outputLabel>
+										<p:inputText id="userPrenomUpdate"
+											value="#{inscriptionEleveController.selectedEleve.elvPrenom}"
+											required="true" requiredMessage="Le Prenom est requis."
+											size="30" maxlength="30" />
+										<p:message showDetail="true" for="userPrenomUpdate" errorClass="error" />
+										
+										<p:outputLabel for="userSexUpdate">Sexe :</p:outputLabel>
+										<p:inputText id="userSexUpdate"
+											value="#{inscriptionEleveController.selectedEleve.elvSexe}"
+											required="true" requiredMessage="Le Sexe est requis."
+											size="30" maxlength="30" />
+										<p:message showDetail="true" for="userSexUpdate" errorClass="error" />
+									
+										
+										<p:outputLabel for="userDateUpdate">Date de naissance :</p:outputLabel>
+										<p:inputText id="userDateUpdate"
+											value="#{inscriptionEleveController.selectedEleve.elvDateNaissance}"
+											required="true" requiredMessage="La date est requise."
+											size="30" maxlength="30"/>
+										<p:message showDetail="true" for="userDateUpdate" errorClass="error" />
+										
+										<h:outputLabel for="ClasseUpdate">Classe : *</h:outputLabel>
+							            <h:selectOneMenu id="ClasseUpdate" value="#{inscriptionEleveController.selectedEleve.classe.clsId}">
+								            <f:selectItems value="#{inscriptionEleveController.listClasse()}" var="classe" itemValue="#{classe.clsId}" itemValueAsString="#{classe.clsId}" itemLabel="#{classe.clsNumero}" />
+							        	</h:selectOneMenu>
+							        
+							        </h:panelGrid>
+									
+									<h3>Responsable</h3>
+									<h:panelGrid columns="3">
+									
+										<h:outputLabel for="CiviliteUpdate">Civilité : *</h:outputLabel>
+							            <h:selectOneMenu id="CiviliteUpdate" value="#{inscriptionEleveController.selectedResponsable.civilite.civId}">
+								            <f:selectItems value="#{inscriptionEleveController.listCivilite()}" var="c" itemValue="#{c.civId}" itemValueAsString="#{c.civId}" itemLabel="#{c.civLabel}" />
+							        	</h:selectOneMenu>
+									<br/>
+									<p:outputLabel for="responsableNomUpdate">Nom Responsable:*</p:outputLabel>
+										<p:inputText id="responsableNomUpdate"
+											value="#{inscriptionEleveController.selectedResponsable.rspNom}" required="true"
+											requiredMessage="Le Nom du Responsable est requis." size="30"
+											maxlength="30">
+										</p:inputText>
+										<p:message showDetail="true" for="responsableNomUpdate" errorClass="error" />
+										
+										<p:outputLabel for="responsablePrenomUpdate">Prenom Responsable:*</p:outputLabel>
+										<p:inputText id="responsablePrenomUpdate"
+											value="#{inscriptionEleveController.selectedResponsable.rspPrenom}" required="true"
+											requiredMessage="Le Prenom du Responsable est requis." size="30"
+											maxlength="30">
+										</p:inputText>
+										<p:message showDetail="true" for="responsablePrenomUpdate" errorClass="error" />
+										
+										<p:outputLabel for="responsableNumeroSecuUpdate">N° Securité sociale Responsable:</p:outputLabel>
+										<p:inputText id="responsableNumeroSecuUpdate"
+											value="#{inscriptionEleveController.selectedResponsable.rspNumSecu}" size="30"
+											maxlength="30">
+										</p:inputText>
+										<p:message showDetail="true" for="responsableNumeroSecuUpdate" errorClass="error" />
+										
+										<h:outputLabel for="FamilialeAdd">Situation Familiale Responsable : *</h:outputLabel>
+							            <h:selectOneMenu id="FamilialeAdd" value="#{inscriptionEleveController.selectedResponsable.situationFamiliale.sfaId}">
+								            <f:selectItems value="#{inscriptionEleveController.listSituationFamiliale()}" var="fam" itemValue="#{fam.sfaId}" itemValueAsString="#{fam.sfaId}" itemLabel="#{fam.sfaLabel}" />
+							        	</h:selectOneMenu>
+							        	<br/>
+							        	<p:outputLabel for="Address1Update">Adresse 1 Responsable:*</p:outputLabel>
+										<p:inputText id="Address1Update"
+											value="#{inscriptionEleveController.selectedCoordonnees.crdAdresseLigne1}" required="true"
+											requiredMessage="L'adresse du Responsable est requis." size="30"
+											maxlength="30">
+										</p:inputText>
+										<p:message showDetail="true" for="Address1Update" errorClass="error" />
+										
+										<p:outputLabel for="Address2AUpdate">Adresse 2 Responsable:</p:outputLabel>
+										<p:inputText id="Address2AUpdate"
+											value="#{inscriptionEleveController.selectedCoordonnees.crdAdresseLigne2}" 
+											maxlength="30">
+										</p:inputText>
+										<p:message showDetail="true" for="Address2AUpdate" errorClass="error" />
+										
+										<p:outputLabel for="CPUpdate">CP Responsable:*</p:outputLabel>
+										<p:inputText id="CPUpdate"
+											value="#{inscriptionEleveController.selectedCoordonnees.crdCodePostal}" required="true"
+											requiredMessage="Le CP du Responsable est requis." size="30"
+											maxlength="30">
+										</p:inputText>
+										<p:message showDetail="true" for="CPUpdate" errorClass="error" />
+										
+										<p:outputLabel for="VilleUpdate">Ville Responsable:*</p:outputLabel>
+										<p:inputText id="VilleUpdate"
+											value="#{inscriptionEleveController.selectedCoordonnees.crdVille}" required="true"
+											requiredMessage="La Ville du Responsable est requis." size="30"
+											maxlength="30">
+										</p:inputText>
+										<p:message showDetail="true" for="VilleUpdate" errorClass="error" />
+										
+										<p:outputLabel for="TlUpdate">Telephone Responsable:</p:outputLabel>
+										<p:inputText id="TlUpdate"
+											value="#{inscriptionEleveController.selectedCoordonnees.crdTelephone}" 
+											maxlength="30">
+										</p:inputText>
+										<p:message showDetail="true" for="TlUpdate" errorClass="error" />
+										
+										<p:outputLabel for="FaxUpdate">Fax Responsable:</p:outputLabel>
+										<p:inputText id="FaxUpdate"
+											value="#{inscriptionEleveController.selectedCoordonnees.crdFax}"
+											maxlength="30">
+										</p:inputText>
+										<p:message showDetail="true" for="FaxUpdate" errorClass="error" />
+										
+										<p:outputLabel for="PortableUpdate">Portable Responsable:</p:outputLabel>
+										<p:inputText id="PortableUpdate"
+											value="#{inscriptionEleveController.selectedCoordonnees.crdPortable}" 
+											maxlength="30">
+										</p:inputText>
+										<p:message showDetail="true" for="PortableUpdate" errorClass="error" />
+										
+										<p:outputLabel for="MailUpdate">Mail Responsable:</p:outputLabel>
+										<p:inputText id="MailUpdate"
+											value="#{inscriptionEleveController.selectedCoordonnees.crdMail}" 
+											maxlength="30">
+										</p:inputText>
+										<p:message showDetail="true" for="MailUpdate" errorClass="error" />
+							        	
+							        	
+									</h:panelGrid>
+									<div class="UserAdminButtons">
+										<p:commandButton icon="ui-icon-close" value="Annuler" ajax="true"
+											immediate="true" update=":adminTabs:userDetailsPanel"
+											actionListener="#{inscriptionEleveController.resetSelectedEleve()}" />
+	
+										<p:commandButton value="Sauvegarder"
+											action="#{inscriptionEleveController.updateEleve()}"
+											 icon="ui-icon-check" validateClient="true" 
+											 update=":adminTabs:userTableForm :adminTabs:userDetailsPanel"/>
+									</div>
+									
+								</h:form>
+								
+								<!-- Add Eleve form -->
+								<h:form id="userAddForm" rendered="#{empty inscriptionEleveController.selectedEleve}">
+									<h2>Ajout d'un eleve</h2>
+									<h3>Eleve</h3>
+									<h:panelGrid columns="3">
+										<p:outputLabel for="eleveNomAdd">Nom :</p:outputLabel>
+										<p:inputText id="eleveNomAdd"
+											value="#{inscriptionEleveController.eleveToAdd.elvNom}" required="true"
+											requiredMessage="Le Nom est requis." size="30"
+											maxlength="30">
+										</p:inputText>
+										<p:message showDetail="true" for="eleveNomAdd" errorClass="error" />
+										
+										<p:outputLabel for="elevePrenomAdd">Prenom :</p:outputLabel>
+										<p:inputText id="elevePrenomAdd"
+											value="#{inscriptionEleveController.eleveToAdd.elvPrenom}" required="true"
+											requiredMessage="Le Prenom est requis." size="30"
+											maxlength="30">
+										</p:inputText>
+										<p:message showDetail="true" for="elevePrenomAdd" errorClass="error" />
+																													
+										<p:outputLabel for="eleveSexAdd">Sexe :</p:outputLabel>
+										<p:inputText id="eleveSexAdd"
+											value="#{inscriptionEleveController.eleveToAdd.elvSexe}"
+											required="true" requiredMessage="Le sexe est requis."
+											size="30" maxlength="30"/>
+										<p:message showDetail="true" for="eleveSexAdd" errorClass="error" />
+										
+										<p:outputLabel for="eleveDateAdd">Date de naissance :</p:outputLabel>
+										<p:calendar id="eleveDateAdd"
+											value="#{inscriptionEleveController.eleveToAdd.elvDateNaissance}"
+											required="true" requiredMessage="La date est requise."
+											size="30" maxlength="30"/>
+										<p:message showDetail="true" for="eleveDateAdd" errorClass="error" />
+										
+										<h:outputLabel for="ClasseAdd">Classe : *</h:outputLabel>
+							            <h:selectOneMenu id="ClasseAdd" value="#{inscriptionEleveController.eleveToAdd.classe.clsId}">
+								            <f:selectItems value="#{inscriptionEleveController.listClasse()}" var="classe" itemValue="#{classe.clsId}" itemValueAsString="#{classe.clsId}" itemLabel="#{classe.clsNumero}" />
+							        	</h:selectOneMenu>
+																			
+									</h:panelGrid>
+									
+									<h3>Responsable</h3>
+									<h:panelGrid columns="3">
+									
+										<h:outputLabel for="CiviliteAdd">Civilité : *</h:outputLabel>
+							            <h:selectOneMenu id="CiviliteAdd" value="#{inscriptionEleveController.responsableToAdd.civilite.civId}">
+								            <f:selectItems value="#{inscriptionEleveController.listCivilite()}" var="civilite" itemValue="#{civilite.civId}" itemValueAsString="#{civilite.civId}" itemLabel="#{civilite.civLabel}" />
+							        	</h:selectOneMenu>
+									<br/>
+									<p:outputLabel for="responsableNomAdd">Nom Responsable:</p:outputLabel>
+										<p:inputText id="responsableNomAdd"
+											value="#{inscriptionEleveController.responsableToAdd.rspNom}" required="true"
+											requiredMessage="Le Nom du Responsable est requis." size="30"
+											maxlength="30">
+										</p:inputText>
+										<p:message showDetail="true" for="responsableNomAdd" errorClass="error" />
+										
+										<p:outputLabel for="responsablePrenomAdd">Prenom Responsable:</p:outputLabel>
+										<p:inputText id="responsablePrenomAdd"
+											value="#{inscriptionEleveController.responsableToAdd.rspPrenom}" required="true"
+											requiredMessage="Le Prenom du Responsable est requis." size="30"
+											maxlength="30">
+										</p:inputText>
+										<br/>
+										<p:outputLabel for="responsableNumeroSecuAdd">N° Securité sociale Responsable:*</p:outputLabel>
+										<p:inputText id="responsableNumeroSecuAdd"
+											value="#{inscriptionEleveController.responsableToAdd.rspNumSecu}" required="true"
+											requiredMessage="Le N° Securité du Responsable est requis." size="30"
+											maxlength="30">
+										</p:inputText>
+										<br/>
+										<h:outputLabel for="FamilialeAdd">Situation Familiale Responsable : *</h:outputLabel>
+							            <h:selectOneMenu id="FamilialeAdd" value="#{inscriptionEleveController.responsableToAdd.situationFamiliale.sfaId}">
+								            <f:selectItems value="#{inscriptionEleveController.listSituationFamiliale()}" var="fam" itemValue="#{fam.sfaId}" itemValueAsString="#{fam.sfaId}" itemLabel="#{fam.sfaLabel}" />
+							        	</h:selectOneMenu>
+							        	<br/>
+							        	<p:outputLabel for="Address1Add">Adresse 1 Responsable:*</p:outputLabel>
+										<p:inputText id="Address1Add"
+											value="#{inscriptionEleveController.coordonneesToAdd.crdAdresseLigne1}" required="true"
+											requiredMessage="L'adresse du Responsable est requis." size="30"
+											maxlength="30">
+										</p:inputText>
+										<p:message showDetail="true" for="Address1Add" errorClass="error" />
+										
+										<p:outputLabel for="Address2Add">Adresse 2 Responsable:</p:outputLabel>
+										<p:inputText id="Address2Add"
+											value="#{inscriptionEleveController.coordonneesToAdd.crdAdresseLigne2}" 
+											maxlength="30">
+										</p:inputText>
+										<p:message showDetail="true" for="Address2Add" errorClass="error" />
+										
+										<p:outputLabel for="CPAdd">CP Responsable:</p:outputLabel>
+										<p:inputText id="CPAdd"
+											value="#{inscriptionEleveController.coordonneesToAdd.crdCodePostal}" required="true"
+											requiredMessage="Le CP du Responsable est requis." size="30"
+											maxlength="30">
+										</p:inputText>
+										<p:message showDetail="true" for="CPAdd" errorClass="error" />
+										
+										<p:outputLabel for="VilleAdd">Ville Responsable:</p:outputLabel>
+										<p:inputText id="VilleAdd"
+											value="#{inscriptionEleveController.coordonneesToAdd.crdVille}" required="true"
+											requiredMessage="La Ville du Responsable est requis." size="30"
+											maxlength="30">
+										</p:inputText>
+										<p:message showDetail="true" for="VilleAdd" errorClass="error" />
+										
+										<p:outputLabel for="TlAdd">Telephone Responsable:</p:outputLabel>
+										<p:inputText id="TlAdd"
+											value="#{inscriptionEleveController.coordonneesToAdd.crdTelephone}" 
+											maxlength="30">
+										</p:inputText>
+										<p:message showDetail="true" for="TlAdd" errorClass="error" />
+										
+										<p:outputLabel for="FaxAdd">Fax Responsable:</p:outputLabel>
+										<p:inputText id="FaxAdd"
+											value="#{inscriptionEleveController.coordonneesToAdd.crdFax}" 
+											maxlength="30">
+										</p:inputText>
+										<p:message showDetail="true" for="FaxAdd" errorClass="error" />
+										
+										<p:outputLabel for="PortableAdd">Portable Responsable:</p:outputLabel>
+										<p:inputText id="PortableAdd"
+											value="#{inscriptionEleveController.coordonneesToAdd.crdPortable}" 
+											maxlength="30">
+										</p:inputText>
+										<p:message showDetail="true" for="PortableAdd" errorClass="error" />
+										
+										<p:outputLabel for="MailAdd">Mail Responsable:</p:outputLabel>
+										<p:inputText id="MailAdd"
+											value="#{inscriptionEleveController.coordonneesToAdd.crdMail}" 
+											maxlength="30">
+										</p:inputText>
+										<p:message showDetail="true" for="MailAdd" errorClass="error" />
+				
+									</h:panelGrid>
+									<div class="userAdminButtons">
+										<p:commandButton icon="ui-icon-close" value="Annuler" ajax="true"
+											immediate="true">
+											<p:ajax update=":adminTabs:userDetailsPanel" resetValues="true" />
+										</p:commandButton>
+
+										<p:commandButton value="Ajouter"
+											action="#{inscriptionEleveController.addEleve()}"
+										    icon="ui-icon-check" validateClient="true" 
+										    update=":adminTabs:userTableForm :adminTabs:userDetailsPanel"/>
+									</div>
+								</h:form>
+								
+							</p:panel>
+	            		</h:panelGrid>
+            		</h:panelGroup>
+					<!--<h:panelGroup rendered="#{empty loggedUser or !loggedUser.isAdmin}">
+						<h1>You can't access this page.</h1>
+					</h:panelGroup>-->
+            		
+    			</p:tab>
+            	
+    		</p:accordionPanel>
+    	</div>
+    </h:body>
+    <ui:include  src="footer.xhtml"/>
+</html>
