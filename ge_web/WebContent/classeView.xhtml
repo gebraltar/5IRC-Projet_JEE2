@@ -71,7 +71,7 @@
 								class="requis">*</span>
 						</h:outputLabel>
 						<h:selectOneMenu id="niveau"
-							value="#{classeController.niveau.nivId}">
+							value="#{classeController.selectedClasse.niveau.nivId}">
 							<f:selectItems value="#{classeController.listNiveau()}"
 								var="niveau" itemValue="#{niveau.nivId}"
 								itemValueAsString="#{niveau.nivId}"
@@ -90,7 +90,7 @@
 					</h:panelGrid>
 					<div class="classeButton">
 						<p:commandButton value="Save"
-							action="#{classeController.updateClasse(classeController.selectedClasse)}"
+							action="#{classeController.updateClasse()}"
 							ajax="false" icon="ui-icon-check" validateClient="true" />
 
 						<p:commandButton icon="ui-icon-close" value="Cancel" ajax="true"
