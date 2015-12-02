@@ -36,6 +36,11 @@
 									action="#{coursController.gererCours(classe)}">
 								</p:commandLink>
 							</p:column>
+							<p:column headerText="Afficher les eleves">
+								<p:commandLink value="Eleves"
+									action="#{inscriptionEleveController.gererEleves(classe)}">
+								</p:commandLink>
+							</p:column>
 
 							<p:column headerText="Supprimer">
 								<p:commandButton icon="ui-icon-trash"
