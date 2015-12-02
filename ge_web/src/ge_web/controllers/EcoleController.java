@@ -83,6 +83,8 @@ public class EcoleController extends HttpServlet {
 	
 	public void delete(Ecole e){
 		dao.remove(e);
+		FacesMessage message = new FacesMessage( "Suppression réussie !" );
+        FacesContext.getCurrentInstance().addMessage( null, message );
 	}
 	
 	public String gererEcoles() {
