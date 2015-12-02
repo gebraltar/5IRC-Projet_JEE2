@@ -27,8 +27,8 @@ public class TelephoneValidator implements Validator, Serializable {
 	public void validate(FacesContext arg0, UIComponent component, Object value) throws ValidatorException {
 		matcher = pattern.matcher(value.toString()); 
 		if(!matcher.matches()){
-			FacesMessage msg = new FacesMessage("le numÃ©ro de tÃ©lÃ©phone n'ai pas bon",
-					"Entrez un nombre Ã  10 chiffres commenÃ§ant par 0"); 
+			FacesMessage msg = new FacesMessage("le numéro de téléphone n'est pas bon",
+					"Entrez un nombre à 10 chiffres commençant par 0"); 
 			msg.setSeverity(FacesMessage.SEVERITY_ERROR); 
 			throw new ValidatorException(msg);
 		}
