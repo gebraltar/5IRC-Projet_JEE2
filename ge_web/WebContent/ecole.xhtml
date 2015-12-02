@@ -41,9 +41,9 @@
 								</p:commandButton>
 							</p:column>
 							<p:column headerText="Afficher les salles">
-								<p:commandButton title="Salles"
-									ajax="false">
-								</p:commandButton>
+								<p:commandLink value="Salles"
+									action="#{salleController.gererSalles(ecole)}">
+								</p:commandLink>
 							</p:column>
 							<p:column headerText="Afficher les classes">
 								<p:commandLink value="Classes"
