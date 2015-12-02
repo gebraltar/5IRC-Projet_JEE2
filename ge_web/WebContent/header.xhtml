@@ -10,11 +10,12 @@
 	</div>
 
 </header>
+<h:panelGroup rendered="#{not empty loggedUser}">
 <div class='leftSide'>
 	<div class='identity'>
 		<img src="img/user.jpg" />
 
-		<p>Bonjour #{utilisateurController.utilisateur.utiLogin}</p>
+		<p>Bonjour #{loggedUser.user.utiLogin}</p>
 	</div>
 	<button id='menuMobile' onclick="menu();">Menu</button>
 	<h:form>
@@ -89,6 +90,7 @@
 		</div>
 	</h:form>
 </div>
+</h:panelGroup>
 <link rel="stylesheet" type="text/css" href="./css/style.css" />
 <script src="script.js"></script>
 </html>

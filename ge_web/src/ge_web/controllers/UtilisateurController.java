@@ -4,11 +4,17 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
+import javax.ejb.SessionContext;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.persistence.Parameter;
 import javax.servlet.http.HttpServlet;
 
@@ -28,6 +34,7 @@ public class UtilisateurController extends HttpServlet {
 	private boolean connecte=false;
 
 	private Utilisateur utilisateur ;
+
     
     public UtilisateurController() {
     	utilisateur = new Utilisateur();
@@ -35,6 +42,14 @@ public class UtilisateurController extends HttpServlet {
     
     public Utilisateur getUtilisateur() {
         return utilisateur;
+    }
+    
+    public String Deconnexion(){
+    	ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		
+		Map<String, Object> sessionMap = externalContext.getSessionMap();
+		sessionMap.remove("loggedUser");
+    	return "index.xhtml";
     }
 	
 	public String Check_User()
@@ -47,7 +62,13 @@ public class UtilisateurController extends HttpServlet {
 		if(!result.isEmpty() && result.size() == 1)
 		{	
 		    this.utilisateur = result.get(0);
-			UserSessionBean user = new UserSessionBean(utilisateur, new Date());
+			
+			// Retrieve the JSF memory space
+			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+			
+			Map<String, Object> sessionMap = externalContext.getSessionMap();
+			// Place the user in the JSF memory space
+			sessionMap.put("loggedUser", new UserSessionBean(utilisateur, new Date())); 
 			res="Home.xhtml";	
 		}
 		if(res==""){
@@ -80,8 +101,15 @@ public class UtilisateurController extends HttpServlet {
 	public void setConnecte(boolean connecte) {
 		this.connecte = connecte;
 	}
+	
+	public String redirectToIndex(){
+		return "index.xhtml";
+	}
 
-
+	public String redirectToHome(){
+		return "Home.xhtml";
+	}
+	
 	
 
 }
