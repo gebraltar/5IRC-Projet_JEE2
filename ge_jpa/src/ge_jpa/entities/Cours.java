@@ -29,6 +29,9 @@ public class Cours implements java.io.Serializable {
 	private String nom;
 	
 	public Cours() {
+		professeur=new Professeur();
+		salle=new Salle();
+		crenauHoraire=new CrenauHoraire();
 	}
 
 	public Cours(Classe classe, CrenauHoraire crenauHoraire, Professeur professeur, Salle salle, String nom) {
@@ -60,7 +63,7 @@ public class Cours implements java.io.Serializable {
 		this.nom = nom;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "CLS_ID", nullable = false)
 	public Classe getClasse() {
 		return this.classe;
@@ -70,7 +73,7 @@ public class Cours implements java.io.Serializable {
 		this.classe = classe;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "CRH_ID", nullable = false)
 	public CrenauHoraire getCrenauHoraire() {
 		return this.crenauHoraire;
@@ -80,7 +83,7 @@ public class Cours implements java.io.Serializable {
 		this.crenauHoraire = crenauHoraire;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "PRF_ID", nullable = false)
 	public Professeur getProfesseur() {
 		return this.professeur;
@@ -90,7 +93,7 @@ public class Cours implements java.io.Serializable {
 		this.professeur = professeur;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "SAL_ID", nullable = false)
 	public Salle getSalle() {
 		return this.salle;

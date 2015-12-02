@@ -59,7 +59,7 @@ public class Professeur implements java.io.Serializable {
 		this.prfId = prfId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "CIV_ID", nullable = false)
 	public Civilite getCivilite() {
 		return this.civilite;

@@ -6,150 +6,156 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:h="http://xmlns.jcp.org/jsf/html">
 <h:head>
-<ui:include src="header.xhtml" />
+	<ui:include src="header.xhtml" />
 	<title>Gestion des classes</title>
 </h:head>
 <h:body>
 
 	<div class='homeBox mainBox'>
-	<h:panelGroup>
-		<h:panelGrid columns="2" id="classePanelGrid"
-			columnClasses="customColumns">
-			<p:panel
-				header="Listes des classes pour l'établissement : #{classeController.ecole.eclNom}"
-				id="ClasseListPanel">
-				<h:form id="ClasseTableForm">
-					<p:dataTable var="classe" value="#{classeController.listClasse()}"
-						tableStyle="table-layout: auto; text-align: center;"
-						paginator="true"
-						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-						rowsPerPageTemplate="10,15">
-						<p:column headerText="Numero">
-							<h:outputText value="#{classe.clsNumero}" />
-						</p:column>
+		<h:panelGroup>
+			<h:panelGrid columns="2" id="classePanelGrid"
+				columnClasses="customColumns">
+				<p:panel
+					header="Listes des classes pour l'établissement : #{classeController.ecole.eclNom}"
+					id="ClasseListPanel">
+					<h:form id="ClasseTableForm">
+						<p:dataTable var="classe" value="#{classeController.listClasse()}"
+							tableStyle="table-layout: auto; text-align: center;"
+							paginator="true"
+							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="10,15">
+							<p:column headerText="Numero">
+								<h:outputText value="#{classe.clsNumero}" />
+							</p:column>
 
-						<p:column headerText="Niveau">
-							<h:outputText value="#{classe.niveau.niveauLabel}" />
-						</p:column>
+							<p:column headerText="Niveau">
+								<h:outputText value="#{classe.niveau.niveauLabel}" />
+							</p:column>
+							<p:column headerText="Afficher les cours">
+								<p:commandLink value="Cours"
+									action="#{coursController.gererCours(classe)}">
+								</p:commandLink>
+							</p:column>
 
-						<p:column headerText="Supprimer">
-							<p:commandButton icon="ui-icon-trash"
-								title="Suprimer cette classe" ajax="true"
-								actionListener="#{classeController.deleteClasse(classe)}"
-								update=":ClasseTableForm :ClasseListPanel">
-								<p:confirm header="Confirmation" message="Are you sure?"
-									icon="ui-icon-alert" />
+							<p:column headerText="Supprimer">
+								<p:commandButton icon="ui-icon-trash"
+									title="Suprimer cette classe" ajax="true"
+									actionListener="#{classeController.deleteClasse(classe)}"
+									update=":ClasseTableForm :ClasseListPanel">
+									<p:confirm header="Confirmation"
+										message="Êtes vous sûr de vouloir supprimer cette classe ?"
+										icon="ui-icon-alert" />
+								</p:commandButton>
+							</p:column>
+
+							<p:column headerText="Modifier">
+								<p:commandButton icon="ui-icon-wrench"
+									title="Modifier cette classe" update=":classeDetailsPanel"
+									ajax="true">
+									<f:setPropertyActionListener value="#{classe}"
+										target="#{classeController.selectedClasse}" />
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>
+
+						<div class="classeButton">
+							<p:commandButton value="Retour"
+								action="#{ecoleController.gererEcoles()}" ajax="false"
+								icon="ui-icon-arrowthick-1-w" validateClient="true" />
+						</div>
+
+						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+							<p:commandButton value="Yes" type="button"
+								styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+							<p:commandButton value="No" type="button"
+								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+						</p:confirmDialog>
+					</h:form>
+				</p:panel>
+				<p:panel header="Classe details" id="classeDetailsPanel">
+
+					<h:form id="classeUpdateForm"
+						rendered="#{not empty classeController.selectedClasse}">
+						<h2>Modifier cette classe</h2>
+						<h:panelGrid columns="3">
+
+							<h:outputLabel for="niveau">Niveau:<span
+									class="requis">*</span>
+							</h:outputLabel>
+							<h:selectOneMenu id="niveau"
+								value="#{classeController.selectedClasse.niveau.nivId}">
+								<f:selectItems value="#{classeController.listNiveau()}"
+									var="niveau" itemValue="#{niveau.nivId}"
+									itemValueAsString="#{niveau.nivId}"
+									itemLabel="#{niveau.niveauLabel}" />
+							</h:selectOneMenu>
+							<br />
+
+							<p:outputLabel for="clsNumero">Numero de classe:</p:outputLabel>
+							<p:inputText id="clsNumero"
+								value="#{classeController.selectedClasse.clsNumero}"
+								required="true"
+								requiredMessage="Vous devez renseigner le numero de classe."
+								size="30" maxlength="30">
+							</p:inputText>
+							<p:message showDetail="true" for="clsNumero" errorClass="error" />
+						</h:panelGrid>
+
+						<div class="classeButton">
+							<p:commandButton value="Save"
+								action="#{classeController.updateClasse()}" ajax="false"
+								icon="ui-icon-check" validateClient="true" />
+
+							<p:commandButton icon="ui-icon-close" value="Cancel" ajax="true"
+								immediate="true" update=":classeDetailsPanel"
+								actionListener="#{classeController.resetClasseSelected()}" />
+
+
+						</div>
+					</h:form>
+
+					<!-- ADD USER FORM -->
+					<h:form id="classeAddForm"
+						rendered="#{empty classeController.selectedClasse}">
+						<h2>Ajouter une classe</h2>
+						<h:panelGrid columns="3">
+
+							<h:outputLabel for="niveau">Niveau:<span
+									class="requis">*</span>
+							</h:outputLabel>
+							<h:selectOneMenu id="niveau"
+								value="#{classeController.classe.niveau.nivId}">
+								<f:selectItems value="#{classeController.listNiveau()}"
+									var="niveau" itemValue="#{niveau.nivId}"
+									itemLabel="#{niveau.niveauLabel}" />
+							</h:selectOneMenu>
+							<br />
+
+							<p:outputLabel for="clsNumero">Numero de classe:</p:outputLabel>
+							<p:inputText id="clsNumero"
+								value="#{classeController.classe.clsNumero}" required="true"
+								requiredMessage="Vous devez renseigner le numero de classe."
+								size="30" maxlength="30">
+							</p:inputText>
+							<p:message showDetail="true" for="clsNumero" errorClass="error" />
+
+						</h:panelGrid>
+						<div class="classeButton">
+							<p:commandButton value="Add"
+								action="#{classeController.addClasse}" ajax="false"
+								icon="ui-icon-check" validateClient="true" />
+
+							<p:commandButton icon="ui-icon-close" value="Reset" ajax="true"
+								immediate="true">
+								<p:ajax update=":classeDetailsPanel" resetValues="true" />
 							</p:commandButton>
-						</p:column>
 
-						<p:column headerText="Modifier">
-							<p:commandButton icon="ui-icon-wrench"
-								title="Modifier cette classe" update=":classeDetailsPanel"
-								ajax="true">
-								<f:setPropertyActionListener value="#{classe}"
-									target="#{classeController.selectedClasse}" />
-							</p:commandButton>
-						</p:column>
-					</p:dataTable>
-					
-					<div class="classeButton">
-						<p:commandButton value="Retour"
-							action="#{ecoleController.gererEcoles()}" ajax="false"
-							icon="ui-icon-arrowthick-1-w" validateClient="true" />
-					</div>
-					
-					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-						<p:commandButton value="Yes" type="button"
-							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-						<p:commandButton value="No" type="button"
-							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-					</p:confirmDialog>
-				</h:form>
-			</p:panel>
-			<p:panel header="Classe details" id="classeDetailsPanel">
+						</div>
+					</h:form>
+				</p:panel>
+			</h:panelGrid>
 
-				<!-- UPDATE CLASSE FORM  C'EST ICI LA SUITE finir la modification de la classe user-->
-				<h:form id="classeUpdateForm"
-					rendered="#{not empty classeController.selectedClasse}">
-					<h2>Modifier cette classe</h2>
-					<h:panelGrid columns="3">
-
-						<h:outputLabel for="niveau">Niveau:<span
-								class="requis">*</span>
-						</h:outputLabel>
-						<h:selectOneMenu id="niveau"
-							value="#{classeController.selectedClasse.niveau.nivId}">
-							<f:selectItems value="#{classeController.listNiveau()}"
-								var="niveau" itemValue="#{niveau.nivId}"
-								itemValueAsString="#{niveau.nivId}"
-								itemLabel="#{niveau.niveauLabel}" />
-						</h:selectOneMenu>
-						<br />
-
-						<p:outputLabel for="clsNumero">Numero de classe:</p:outputLabel>
-						<p:inputText id="clsNumero"
-							value="#{classeController.selectedClasse.clsNumero}"
-							required="true"
-							requiredMessage="Vous devez renseigner le numero de classe."
-							size="30" maxlength="30">
-						</p:inputText>
-						<p:message showDetail="true" for="clsNumero" errorClass="error" />
-					</h:panelGrid>
-					<div class="classeButton">
-						<p:commandButton value="Save"
-							action="#{classeController.updateClasse()}" ajax="false"
-							icon="ui-icon-check" validateClient="true" />
-
-						<p:commandButton icon="ui-icon-close" value="Cancel" ajax="true"
-							immediate="true" update=":classeDetailsPanel"
-							actionListener="#{classeController.resetClasseSelected()}" />
-
-
-					</div>
-				</h:form>
-
-				<!-- ADD USER FORM -->
-				<h:form id="classeAddForm"
-					rendered="#{empty classeController.selectedClasse}">
-					<h2>Ajouter une classe</h2>
-					<h:panelGrid columns="3">
-
-						<h:outputLabel for="niveau">Niveau:<span
-								class="requis">*</span>
-						</h:outputLabel>
-						<h:selectOneMenu id="niveau"
-							value="#{classeController.classe.niveau.nivId}">
-							<f:selectItems value="#{classeController.listNiveau()}"
-								var="niveau" itemValue="#{niveau.nivId}"
-								itemLabel="#{niveau.niveauLabel}" />
-						</h:selectOneMenu>
-						<br />
-
-						<p:outputLabel for="clsNumero">Numero de classe:</p:outputLabel>
-						<p:inputText id="clsNumero"
-							value="#{classeController.classe.clsNumero}" required="true"
-							requiredMessage="Vous devez renseigner le numero de classe."
-							size="30" maxlength="30">
-						</p:inputText>
-						<p:message showDetail="true" for="clsNumero" errorClass="error" />
-
-					</h:panelGrid>
-					<div class="classeButton">
-						<p:commandButton value="Add"
-							action="#{classeController.addClasse}" ajax="false"
-							icon="ui-icon-check" validateClient="true" />
-
-						<p:commandButton icon="ui-icon-close" value="Reset" ajax="true"
-							immediate="true">
-							<p:ajax update=":classeDetailsPanel" resetValues="true" />
-						</p:commandButton>
-
-					</div>
-				</h:form>
-			</p:panel>
-		</h:panelGrid>
-
-	</h:panelGroup>
+		</h:panelGroup>
 	</div>
 </h:body>
 <ui:include src="footer.xhtml" />
