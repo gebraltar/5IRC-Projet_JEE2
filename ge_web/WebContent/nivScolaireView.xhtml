@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+<h:head>
+	<link rel="stylesheet" type="text/css" href="./css/style.css" />
+	<title>Administration des niveaux scolaires du cycle
+		#{nivScolaireController.cycleParent.cclCycleLabel}</title>
+</h:head>
+
+<h:body>
+	<ui:include src="header.xhtml" />
+	<div class='homeBox mainBox'>
+		<p:growl id="msgs" showDetail="true" />
+
+		<h3>Administration des niveaux scolaire du cycle
+			#{nivScolaireController.cycleParent.cclCycleLabel}</h3>
+
+		<h:panelGroup>
+			<h:panelGrid columns="2" cellpadding="5">
+				<p:panel
+					header="Liste des niveaux scolaires du cycle #{nivScolaireController.cycleParent.cclCycleLabel}"
+					id="nivScolaireListPanel">
+					<h:form id="nivScolaireTableForm">
+						<p:dataTable var="nivScolaire"
+							value="#{nivScolaireController.listNivScolaire()}"
+							tableStyle="table-layout: auto; text-align: center;"
+							paginator="true"
+							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="10,15">
+							<p:column headerText="Libellé">
+								<h:outputText value="#{nivScolaire.niveauLabel}" />
+							</p:column>
+							<p:column headerText="Modifier">
+								<p:commandButton icon="ui-icon-wrench" title="Modifier"
+									update=":nivScolaireTableForm :nivScolaireDetailsPanel">
+									<f:setPropertyActionListener value="#{nivScolaire}"
+										target="#{nivScolaireController.selectedNivScolaire}" />
+								</p:commandButton>
+							</p:column>
+							<p:column headerText="Supprimer">
+								<p:commandButton icon="ui-icon-trash" title="Supprimer"
+									ajax="true"
+									actionListener="#{nivScolaireController.removeNivScolaire(nivScolaire)}"
+									update=":nivScolaireTableForm :nivScolaireDetailsPanel">
+									<p:confirm header="Confirmation"
+										message="Êtes-vous sûr de vouloir supprimer ce niveau scolaire ?"
+										icon="ui-icon-alert" />
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>
+						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+							<p:commandButton value="Yes" type="button"
+								styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+							<p:commandButton value="No" type="button"
+								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+						</p:confirmDialog>
+					</h:form>
+				</p:panel>
+
+				<p:panel header="Détails d'un niveau scolaire"
+					id="nivScolaireDetailsPanel">
+					<!-- Update NiveauScolaire form -->
+					<h:form id="nivScolaireUpdateForm"
+						rendered="#{not empty nivScolaireController.selectedNivScolaire}">
+						<h2>Mise à jour du niveau scolaire</h2>
+						<h:panelGrid columns="3">
+							<p:outputLabel for="nivScolaireLabelUpdate">Libellé :</p:outputLabel>
+							<p:inputText id="nivScolaireLabelUpdate"
+								value="#{nivScolaireController.selectedNivScolaire.niveauLabel}"
+								required="true"
+								requiredMessage="Le label du niveau scolaire est requis."
+								size="30" maxlength="30" />
+							<p:message showDetail="true" for="nivScolaireLabelUpdate"
+								errorClass="error" />
+						</h:panelGrid>
+						<div class="niveauScolaireAdminButtons">
+							<p:commandButton icon="ui-icon-close" value="Annuler" ajax="true"
+								immediate="true" update=":nivScolaireDetailsPanel"
+								actionListener="#{nivScolaireController.resetSelectedNivScolaire()}" />
+
+							<p:commandButton value="Sauvegarder"
+								action="#{nivScolaireController.updateNivScolaire()}"
+								update=":nivScolaireTableForm :nivScolaireDetailsPanel"
+								icon="ui-icon-check" validateClient="true" />
+						</div>
+
+					</h:form>
+
+					<!-- Add NiveauScolaire form -->
+					<h:form id="nivScolaireAddForm"
+						rendered="#{empty nivScolaireController.selectedNivScolaire}">
+						<h2>Ajout d'un niveau scolaire</h2>
+						<h:panelGrid columns="3">
+							<p:outputLabel for="nivScolaireLabelAdd">Libellé :</p:outputLabel>
+							<p:inputText id="nivScolaireLabelAdd"
+								value="#{nivScolaireController.nivScolaireToAdd.niveauLabel}"
+								required="true"
+								requiredMessage="Le label du niveau scolaire est requis."
+								size="30" maxlength="30">
+							</p:inputText>
+							<p:message showDetail="true" for="nivScolaireLabelAdd"
+								errorClass="error" />
+						</h:panelGrid>
+
+						<div class="nivScolaireAdminButtons">
+							<p:commandButton icon="ui-icon-close" value="Réinitialiser"
+								ajax="true" immediate="true">
+								<p:ajax update=":nivScolaireDetailsPanel" resetValues="true" />
+							</p:commandButton>
+
+							<p:commandButton value="Ajouter"
+								action="#{nivScolaireController.addNivScolaire()}"
+								update=":nivScolaireTableForm :nivScolaireDetailsPanel"
+								icon="ui-icon-check" validateClient="true" />
+						</div>
+					</h:form>
+				</p:panel>
+				<p:commandButton value="Retour"
+								action="#{nivScolaireController.goToAdminRef()}"
+								icon="ui-icon-arrowthick-1-w" validateClient="true" />
+			</h:panelGrid>
+		</h:panelGroup>
+		<!--<h:panelGroup rendered="#{empty loggedUser or !loggedUser.isAdmin}">
+						<h1>You can't access this page.</h1>
+					</h:panelGroup>-->
+	</div>
+	<ui:include src="footer.xhtml" />
+</h:body>
+
+</html>

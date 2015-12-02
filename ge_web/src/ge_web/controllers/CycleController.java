@@ -62,5 +62,4 @@ public class CycleController {
          dao.persist(this.cycleToAdd);
          this.cycleToAdd = new Cycle();
 	 }
-
 }
