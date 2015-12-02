@@ -2,10 +2,8 @@ package ge_web.controllers;
 
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import dao.DaoInterface;
 import ge_jpa.entities.TypeEcole;
@@ -49,6 +47,7 @@ public class TypeEcoleController {
 
 	public void updateTypeEcole() {
 		dao.merge(this.selectedTypeEcole);
+		resetSelectedTypeEcole();
 	}
 	
 	public void removeTypeEcole(TypeEcole typeEcole) {
@@ -56,14 +55,12 @@ public class TypeEcoleController {
 	}
 	
 	public List<TypeEcole> listTypeEcole(){
-		return dao.list("SELECT t FROM TypeEcole t",null);	 
+		return dao.list("SELECT t FROM TypeEcole t", null);	 
 	}
 	
 	 public void addTypeEcole() {
          dao.persist(this.typeEcoleToAdd);
          this.typeEcoleToAdd = new TypeEcole();
-         FacesMessage message = new FacesMessage( "Ajout réussi !" );
-         FacesContext.getCurrentInstance().addMessage( null, message );
 	 }
 
 }
