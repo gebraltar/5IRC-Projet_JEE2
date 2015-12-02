@@ -86,4 +86,8 @@ public class EcoleController extends HttpServlet {
 	public void delete(Ecole e){
 		dao.remove(e);
 	}
+	
+	public String gererEcoles() {
+		return "ecole.xhtml?faces-redirect=true";
+	}
 }

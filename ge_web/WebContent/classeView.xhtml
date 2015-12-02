@@ -5,6 +5,7 @@
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:h="http://xmlns.jcp.org/jsf/html">
+<ui:include src="header.xhtml" />
 <h:head>
 	<title>Gestion des classes</title>
 </h:head>
@@ -12,7 +13,9 @@
 	<h:panelGroup>
 		<h:panelGrid columns="2" id="classePanelGrid"
 			columnClasses="customColumns">
-			<p:panel header="Classe list" id="ClasseListPanel">
+			<p:panel
+				header="Listes des classes pour l'établissement : #{classeController.ecole.eclNom}"
+				id="ClasseListPanel">
 				<h:form id="ClasseTableForm">
 					<p:dataTable var="classe" value="#{classeController.listClasse()}"
 						tableStyle="table-layout: auto; text-align: center;"
@@ -21,10 +24,6 @@
 						rowsPerPageTemplate="10,15">
 						<p:column headerText="Numero">
 							<h:outputText value="#{classe.clsNumero}" />
-						</p:column>
-
-						<p:column headerText="Ecole">
-							<h:outputText value="#{classe.ecole.eclNom}" />
 						</p:column>
 
 						<p:column headerText="Niveau">
@@ -50,7 +49,13 @@
 							</p:commandButton>
 						</p:column>
 					</p:dataTable>
-
+					
+					<div class="classeButton">
+						<p:commandButton value="Retour"
+							action="#{ecoleController.gererEcoles()}" ajax="false"
+							icon="ui-icon-arrowthick-1-w" validateClient="true" />
+					</div>
+					
 					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
 						<p:commandButton value="Yes" type="button"
 							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
@@ -90,8 +95,8 @@
 					</h:panelGrid>
 					<div class="classeButton">
 						<p:commandButton value="Save"
-							action="#{classeController.updateClasse()}"
-							ajax="false" icon="ui-icon-check" validateClient="true" />
+							action="#{classeController.updateClasse()}" ajax="false"
+							icon="ui-icon-check" validateClient="true" />
 
 						<p:commandButton icon="ui-icon-close" value="Cancel" ajax="true"
 							immediate="true" update=":classeDetailsPanel"
@@ -114,7 +119,6 @@
 							value="#{classeController.classe.niveau.nivId}">
 							<f:selectItems value="#{classeController.listNiveau()}"
 								var="niveau" itemValue="#{niveau.nivId}"
-								
 								itemLabel="#{niveau.niveauLabel}" />
 						</h:selectOneMenu>
 						<br />
@@ -132,7 +136,7 @@
 						<p:commandButton value="Add"
 							action="#{classeController.addClasse}" ajax="false"
 							icon="ui-icon-check" validateClient="true" />
-							
+
 						<p:commandButton icon="ui-icon-close" value="Reset" ajax="true"
 							immediate="true">
 							<p:ajax update=":classeDetailsPanel" resetValues="true" />
@@ -145,4 +149,5 @@
 
 	</h:panelGroup>
 </h:body>
+<ui:include src="footer.xhtml" />
 </html>

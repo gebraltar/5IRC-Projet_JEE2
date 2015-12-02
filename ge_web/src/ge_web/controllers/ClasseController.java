@@ -106,4 +106,13 @@ public class ClasseController extends HttpServlet {
 		this.ecole = ecole;
 		return "classeView.xhtml?faces-redirect=true";
 	}
+
+	public Ecole getEcole() {
+		return ecole;
+	}
+
+	public void setEcole(Ecole ecole) {
+		this.ecole = ecole;
+	}
+	
 }
