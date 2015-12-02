@@ -23,17 +23,13 @@
 
 		<p:panelMenu style="width:100%">
 			<p:submenu label="Menu" icon="fa-home">
-				<p:menuitem value="Accueil" actionListener="#{menuView.delete}"
-					ajax="false" icon="ui-icon-plus" />
+				<p:menuitem value="Accueil" url='Home.xhtml'
+					ajax="false" icon="ui-icon-clipboard" />
 
 			</p:submenu>
 			<p:submenu label="Gestion">
-				<p:menuitem value="Classe" actionListener="#{menuView.delete}"
-					ajax="false" icon="ui-icon-plus" />
-				<p:menuitem value="Eleve" url='eleveView.xhtml' ajax="false"
-					icon="ui-icon-clipboard" />
-				<p:menuitem value="Ecole" actionListener="#{menuView.delete}"
-					ajax="false" icon="ui-icon-close" />
+				<p:menuitem value="Ecole" url='ecoleView.xhtml'
+					ajax="false" icon="ui-icon-clipboard" />
 
 			</p:submenu>
 
@@ -44,11 +40,11 @@
 				<p:menuitem value="References" url='adminRefView.xhtml' ajax="false"
 					icon="ui-icon-clipboard" />
 				<p:menuitem value="Statistique" actionListener="#{menuView.delete}"
-					ajax="false" icon="ui-icon-plus" />
+					ajax="false" icon="ui-icon-clipboard" />
 
 				<p:menuitem value="Deconnexion"
 					actionListener="#{utilisateurController.Deconnexion()}"
-					ajax="false" icon="ui-icon-plus" />
+					ajax="false" icon="ui-icon-close" />
 
 			</p:submenu>
 
