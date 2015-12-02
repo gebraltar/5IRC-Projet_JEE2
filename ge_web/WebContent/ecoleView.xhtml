@@ -4,16 +4,20 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:h="http://xmlns.jcp.org/jsf/html">
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 <h:head>
 	<link rel="stylesheet" type="text/css" href="./css/style.css" />
 	<title>Gestion des écoles</title>
 </h:head>
+<c:if test="${not empty loggedUser}">
 <h:body>
 	<ui:include src="header.xhtml" />
 	<div class='homeBox mainBox'>
 		<p:growl id="msgs" showDetail="true" />
-	<h:panelGroup>
+	<p:accordionPanel id="adminTabs" activeIndex="0">
+	<p:tab title="Gestion des écoles">
+		<h:panelGroup>
 		<h:panelGrid columns="2" id="ecolePanelGrid" columnClasses="customColumns">
 				<p:panel header="Liste des écoles" id="ecoleListPanel">
 					<h:form id="ecoleTableForm">
@@ -28,22 +32,22 @@
 						    <p:column headerText="Type">
 						        <h:outputText value="#{ecole.typeEcole.tecLabel}" />
 						    </p:column>
-							<p:column headerText="Modifier">
-								<p:commandButton icon="ui-icon-wrench" title="Modifier cette école"
-									update=":ecoleDetailsPanel" ajax="true">
-									<f:setPropertyActionListener value="#{ecole}"
-										target="#{ecoleController.selectedEcole}" />
-								</p:commandButton>
-							</p:column>
-							<p:column headerText="Supprimer">
-								<p:commandButton icon="ui-icon-trash" title="Supprimer cette école"
-									ajax="true"
-									actionListener="#{ecoleController.delete(ecole)}"
-									update=":ecoleTableForm :ecoleDetailsPanel">
-									<p:confirm header="Confirmation" message="Voulez vous vraiment supprimer cette école ?"
-										icon="ui-icon-alert" />
-								</p:commandButton>
-							</p:column>
+								<p:column headerText="Modifier">
+									<p:commandButton icon="ui-icon-wrench" title="Modifier cette école"
+										update=":adminTabs:ecoleDetailsPanel" ajax="true">
+										<f:setPropertyActionListener value="#{ecole}"
+											target="#{ecoleController.selectedEcole}" />
+									</p:commandButton>
+								</p:column>
+								<p:column headerText="Supprimer">
+									<p:commandButton icon="ui-icon-trash" title="Supprimer cette école"
+										ajax="true"
+										actionListener="#{ecoleController.delete(ecole)}"
+										update=":adminTabs:ecoleTableForm :adminTabs:ecoleDetailsPanel">
+										<p:confirm header="Confirmation" message="Voulez vous vraiment supprimer cette école ?"
+											icon="ui-icon-alert" />
+									</p:commandButton>
+								</p:column>
 							<p:column headerText="Afficher les salles">
 								<p:commandLink value="Salles"
 									action="#{salleController.gererSalles(ecole)}">
@@ -121,12 +125,12 @@
 				         <h:panelGrid columns="3"> 
 				            <div class="ecoleButtons">
 							<p:commandButton icon="ui-icon-close" value="Réinitialiser" ajax="true"
-								immediate="true"> <p:ajax update=":ecoleDetailsPanel" resetValues="true" />
+								immediate="true"> <p:ajax update=":adminTabs:ecoleDetailsPanel" resetValues="true" />
 							</p:commandButton>
 
 							<p:commandButton value="Ajouter"
 								action="#{ecoleController.addEcole}"
-								update=":ecoleTableForm" icon="ui-icon-check" />
+								update=":adminTabs:ecoleTableForm" icon="ui-icon-check" />
 							</div>
 						</h:panelGrid> 
 					</h:form>
@@ -187,20 +191,27 @@
 				         <h:panelGrid columns="3"> 
 				            <div class="ecoleButtons">
 							<p:commandButton icon="ui-icon-close" value="Annuler" ajax="true"
-								immediate="true" update=":ecoleDetailsPanel"
+								immediate="true" update=":adminTabs:ecoleDetailsPanel"
 								actionListener="#{ecoleController.resetSelectedEcole()}" />
 
 							<p:commandButton value="Sauvegarder"
 								action="#{ecoleController.updateEcole}"
-								update=":ecoleTableForm" icon="ui-icon-check" />
+								update=":adminTabs:ecoleTableForm" icon="ui-icon-check" />
 							</div>
 						</h:panelGrid>
 					</h:form>
 				</p:panel>
 		</h:panelGrid>
 	</h:panelGroup>
-		
+	</p:tab>
+	</p:accordionPanel>
+	
 	</div>
+	</h:body>
 	<ui:include src="footer.xhtml" />
-</h:body>
+	</c:if>
+	<c:if test="${empty loggedUser or loggedUsed.user.role.rolId != 1}">
+		<ui:include  src="errorView.xhtml"/>
+	</c:if>
+
 </html>

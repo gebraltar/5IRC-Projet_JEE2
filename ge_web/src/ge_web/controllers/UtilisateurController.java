@@ -44,12 +44,11 @@ public class UtilisateurController {
         return utilisateur;
     }
     
-    public String Deconnexion(){
+    public void Deconnexion(){
     	ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 		
 		Map<String, Object> sessionMap = externalContext.getSessionMap();
 		sessionMap.remove("loggedUser");
-    	return "index.xhtml";
     }
 	
 	public String Check_User()
@@ -62,7 +61,6 @@ public class UtilisateurController {
 		if(!result.isEmpty() && result.size() == 1)
 		{	
 		    this.utilisateur = result.get(0);
-			
 			// Retrieve the JSF memory space
 			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 			

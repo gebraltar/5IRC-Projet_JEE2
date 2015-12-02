@@ -25,39 +25,29 @@
 			<p:submenu label="Menu" icon="fa-home">
 				<p:menuitem value="Accueil" url='Home.xhtml'
 					ajax="false" icon="ui-icon-clipboard" />
-
+				<p:menuitem value="Deconnexion" actionListener="#{utilisateurController.Deconnexion()}"
+						ajax="false" icon="ui-icon-close" />
 			</p:submenu>
 			<p:submenu label="Gestion">
 				<p:menuitem value="Ecole" url='ecoleView.xhtml'
 					ajax="false" icon="ui-icon-clipboard" />
-
+				<p:menuitem value="Statistiques" url='statistiqueView.xhtml'
+						ajax="false" icon="ui-icon-clipboard" />
 			</p:submenu>
 
 			<p:separator />
-			<p:submenu label="Administration">
-				<p:menuitem value="Utilisateurs" url='adminUserView.xhtml'
-					ajax="false" icon="ui-icon-clipboard" />
-				<p:menuitem value="References" url='adminRefView.xhtml' ajax="false"
-					icon="ui-icon-clipboard" />
-				<p:menuitem value="Statistiques" url='statistiqueView.xhtml'
-					ajax="false" icon="ui-icon-clipboard" />
-
-				<p:menuitem value="Deconnexion"
-					actionListener="#{utilisateurController.Deconnexion()}"
-					ajax="false" icon="ui-icon-close" />
-
-			</p:submenu>
-
+			<c:if test="${not empty loggedUser and loggedUser.user.role.rolId == 1}"> 
+				<p:submenu label="Administration">
+					<p:menuitem value="Utilisateurs" url='adminUserView.xhtml'
+						ajax="false" icon="ui-icon-clipboard" />
+					<p:menuitem value="References" url='adminRefView.xhtml' ajax="false"
+						icon="ui-icon-clipboard" />
+				</p:submenu>
+			</c:if>
 
 
 		</p:panelMenu>
 		<div class="ui-panelmenu-panel">
-			<h3
-				class="ui-widget ui-panelmenu-header ui-state-default ui-corner-all"
-				role="tab">
-				<span class="ui-icon ui-icon-triangle-1-e left"></span><a href="#"
-					tabindex="-1">Planning</a>
-			</h3>
 			<div class="ui-panelmenu-content ui-widget-content ui-helper-hidden"
 				role="tabpanel" id="j_idt6:j_idt8_j_idt16">
 				<ul class="ui-menu-list ui-helper-reset">

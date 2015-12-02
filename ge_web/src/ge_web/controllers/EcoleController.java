@@ -1,11 +1,14 @@
 package ge_web.controllers;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import dao.DaoInterface;
 import ge_jpa.entities.Ecole;
 import ge_jpa.entities.TypeEcole;
+import ge_web.sessionBeans.UserSessionBean;
 
 @ManagedBean
 @SessionScoped
