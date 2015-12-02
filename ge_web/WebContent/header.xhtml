@@ -11,38 +11,50 @@
 
 </header>
 <div class='leftSide'>
-<div class='identity'>
-<img src="img/user.jpg"/>
+	<div class='identity'>
+		<img src="img/user.jpg" />
 
-<p>Bonjour #{utilisateurController.utilisateur.utiLogin}</p>
+		<p>Bonjour #{utilisateurController.utilisateur.utiLogin}</p>
+	</div>
+	<button id='menuMobile' onclick="menu();">Menu</button>
+	<h:form>
+		<p:growl autoUpdate="true" />
 
+		<p:panelMenu style="width:100%">
+			<p:submenu label="Menu" icon="fa-home">
+				<p:menuitem value="Accueil" actionListener="#{menuView.delete}"
+					ajax="false" icon="ui-icon-plus" />
+
+			</p:submenu>
+			<p:submenu label="Gestion">
+				<p:menuitem value="Classe" actionListener="#{menuView.delete}"
+					ajax="false" icon="ui-icon-plus" />
+				<p:menuitem value="Eleve" url='eleveView.xhtml'
+					ajax="false" icon="ui-icon-clipboard" />
+				<p:menuitem value="Ecole" actionListener="#{menuView.delete}"
+					ajax="false" icon="ui-icon-close" />
+
+			</p:submenu>
+
+			<p:separator />
+			<p:submenu label="Administration">
+				<p:menuitem value="Utilisateurs" url='adminUserView.xhtml'
+					ajax="false" icon="ui-icon-clipboard" />
+				<p:menuitem value="References" url='adminRefView.xhtml'
+					ajax="false" icon="ui-icon-clipboard" />
+				<p:menuitem value="Statistique" actionListener="#{menuView.delete}"
+					ajax="false" icon="ui-icon-plus" />
+				<p:menuitem value="Planning" url='planning.xhtml'
+					ajax="false" icon="ui-icon-plus" />
+				<p:menuitem value="Deconnexion" actionListener="#{utilisateurController.Deconnexion()}"
+					ajax="false" icon="ui-icon-plus" />
+
+			</p:submenu>
+
+
+		</p:panelMenu>
+	</h:form>
 </div>
-<button id='menuMobile' onclick="menu();">Menu</button> 
-<h:form>
-    <p:growl autoUpdate="true"/>
- 
-    <p:panelMenu style="width:100%">
-        <p:submenu label="Menu" icon="fa-home">
-                    <p:menuitem value="Accueil" actionListener="#{menuView.delete}"  ajax="false" icon="ui-icon-plus"/>
-        
-        </p:submenu>
-        <p:submenu label="Gestion">
-            <p:menuitem value="Classe" actionListener="#{menuView.delete}"  ajax="false" icon="ui-icon-plus"/>
-            <p:menuitem value="Eleve" actionListener="#{menuView.delete}"  ajax="false" icon="ui-icon-clipboard"/>
-            <p:menuitem value="Ecole" actionListener="#{menuView.delete}"  ajax="false" icon="ui-icon-close"/>
-            
-        </p:submenu>
-        
-        <p:separator />
-          <p:submenu label="Administration">
-             <p:menuitem value="Statistique" actionListener="#{menuView.delete}"  ajax="false" icon="ui-icon-plus"/>
-            <p:menuitem value="Administration" actionListener="#{menuView.delete}"  ajax="false" icon="ui-icon-clipboard"/>
-        </p:submenu>
-     
-         
-    </p:panelMenu>
-</h:form>
-</div>
-	<link rel="stylesheet" type="text/css" href="./css/style.css" />
-	<script src="script.js"></script>
+<link rel="stylesheet" type="text/css" href="./css/style.css" />
+<script src="script.js"></script>
 </html>
