@@ -36,7 +36,7 @@
 			</p:submenu>
 
 			<p:separator />
-			<c:if test="${not empty loggedUser and loggedUser.user.role.rolId == 1}"> 
+			<c:if test="${not empty sessionScope.loggedUser and sessionScope.loggedUser.isAdmin == 1}">
 				<p:submenu label="Administration">
 					<p:menuitem value="Utilisateurs" url='adminUserView.xhtml'
 						ajax="false" icon="ui-icon-clipboard" />

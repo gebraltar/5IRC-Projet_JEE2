@@ -50,7 +50,7 @@ public class TypeEcoleController {
 	public void updateTypeEcole() {
 		dao.merge(this.selectedTypeEcole);
 		resetSelectedTypeEcole();
-        FacesMessage message = new FacesMessage( "Mise Ã  jour rÃ©ussie !" );
+        FacesMessage message = new FacesMessage( "Mise Ã  jour réussie !" );
         message.setDetail("");
 		//message.setSeverity(javax.faces.application.FacesMessage.SEVERITY_ERROR);
         FacesContext.getCurrentInstance().addMessage( null, message );
@@ -58,7 +58,7 @@ public class TypeEcoleController {
 	
 	public void removeTypeEcole(TypeEcole typeEcole) {
 		dao.remove(typeEcole);
-		FacesMessage message = new FacesMessage( "Suppression rÃ©ussie !" );
+		FacesMessage message = new FacesMessage( "Suppression réussie !" );
 		message.setDetail("");
 		//message.setSeverity(javax.faces.application.FacesMessage.SEVERITY_ERROR);
 		FacesContext.getCurrentInstance().addMessage( null, message );
@@ -72,7 +72,7 @@ public class TypeEcoleController {
          dao.persist(this.typeEcoleToAdd);
          this.typeEcoleToAdd = new TypeEcole();
          
-         FacesMessage message = new FacesMessage( "Ajout rÃ©ussie !" );
+         FacesMessage message = new FacesMessage( "Ajout réussie !" );
          message.setDetail("");
  		 //message.setSeverity(javax.faces.application.FacesMessage.SEVERITY_ERROR);
          FacesContext.getCurrentInstance().addMessage( null, message );

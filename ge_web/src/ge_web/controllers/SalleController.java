@@ -67,19 +67,19 @@ public class SalleController extends HttpServlet {
 		salle.setEcole(ecole);
 		daoSalle.persist(salle);
 		salle = new Salle();
-		FacesMessage message = new FacesMessage("Ajout rÃ©ussi !");
+		FacesMessage message = new FacesMessage("Ajout réussi !");
 		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 
 	public void updateSalle() {
 		daoSalle.merge(selectedSalle);
-		FacesMessage message = new FacesMessage("Modification rÃ©ussie !");
+		FacesMessage message = new FacesMessage("Modification réussie !");
 		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 
 	public void deleteSalle(Salle salle) {
 		daoSalle.remove(salle);
-		FacesMessage message = new FacesMessage( "Suppression rÃ©ussie !" );
+		FacesMessage message = new FacesMessage( "Suppression réussie !" );
         FacesContext.getCurrentInstance().addMessage( null, message );
 	}
 

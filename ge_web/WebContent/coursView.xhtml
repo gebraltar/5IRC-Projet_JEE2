@@ -10,8 +10,8 @@
 	<ui:include src="header.xhtml" />
 	<title>Gestion des cours</title>
 </h:head>
+<c:if test="${not empty sessionScope.loggedUser}">
 <h:body>
-
 	<div class='homeBox mainBox'>
 		<p:accordionPanel id="adminTabs" activeIndex="0">
 		<p:tab title="Gestion des cours">
@@ -217,6 +217,10 @@
 		</p:tab>
 		</p:accordionPanel>
 	</div>
+	<ui:include src="footer.xhtml" />
 </h:body>
-<ui:include src="footer.xhtml" />
+</c:if>
+<c:if test="${empty sessionScope.loggedUser}">
+		<ui:include  src="errorView.xhtml"/>
+</c:if>
 </html>

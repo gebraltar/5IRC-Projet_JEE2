@@ -63,10 +63,10 @@ public class UtilisateurController {
 		    this.utilisateur = result.get(0);
 			// Retrieve the JSF memory space
 			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-			
 			Map<String, Object> sessionMap = externalContext.getSessionMap();
 			// Place the user in the JSF memory space
 			sessionMap.put("loggedUser", new UserSessionBean(utilisateur, new Date())); 
+			//FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("loggedUser",new UserSessionBean(utilisateur, new Date()));
 			res="Home.xhtml";	
 		}
 		if(res==""){

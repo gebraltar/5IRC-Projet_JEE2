@@ -61,7 +61,7 @@ public class NivScolaireController {
 	public void updateNivScolaire() {
 		dao.merge(this.selectedNivScolaire);
 		resetSelectedNivScolaire();
-        FacesMessage message = new FacesMessage( "Mise Ã  jour rÃ©ussie !" );
+        FacesMessage message = new FacesMessage( "Mise à jour réussie !" );
         message.setDetail("");
 		//message.setSeverity(javax.faces.application.FacesMessage.SEVERITY_ERROR);
         FacesContext.getCurrentInstance().addMessage( null, message );
@@ -69,7 +69,7 @@ public class NivScolaireController {
 	
 	public void removeNivScolaire(Niveau nivScolaire) {
 		dao.remove(nivScolaire);
-        FacesMessage message = new FacesMessage( "Suppression rÃ©ussie !" );
+        FacesMessage message = new FacesMessage( "Suppression réussie !" );
         message.setDetail("");
 		//message.setSeverity(javax.faces.application.FacesMessage.SEVERITY_ERROR);
         FacesContext.getCurrentInstance().addMessage( null, message );
@@ -85,7 +85,7 @@ public class NivScolaireController {
 		 this.nivScolaireToAdd.setCycle(this.cycleParent);
          dao.persist(this.nivScolaireToAdd);
          this.nivScolaireToAdd = new Niveau();
-         FacesMessage message = new FacesMessage( "Ajout rÃ©ussie !" );
+         FacesMessage message = new FacesMessage( "Ajout réussie !" );
          message.setDetail("");
  		 //message.setSeverity(javax.faces.application.FacesMessage.SEVERITY_ERROR);
          FacesContext.getCurrentInstance().addMessage( null, message );

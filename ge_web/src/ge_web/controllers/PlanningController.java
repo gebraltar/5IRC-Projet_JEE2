@@ -66,5 +66,9 @@ public class PlanningController extends HttpServlet {
 		fillPlanning();
 		return "planningView.xhtml?faces-redirect=true";
 	}
+	
+	public String gererClasses() {
+		return "classeView.xhtml?faces-redirect=true";
+	}
 
 }

@@ -63,10 +63,19 @@ public class AdminUtilisateurController {
 	public void updateUser() {
 		selectedUser.setRole(this.role);
 		dao.merge(this.selectedUser);
+		FacesMessage message;
+		message = new FacesMessage( "Mise à jour effecutée !" );
+        message.setDetail("");
+		FacesContext.getCurrentInstance().addMessage( null, message );
 	}
 	
 	public void removeUser(Utilisateur user) {
 		dao.remove(user);
+		FacesMessage message;
+		message = new FacesMessage( "L'utilisateur "+user.getUtiLogin()+" a été supprimé  !" );
+        message.setDetail("");
+		FacesContext.getCurrentInstance().addMessage( null, message );
+
 	}
 	
 	public List<Utilisateur> listUsers(){
@@ -79,7 +88,7 @@ public class AdminUtilisateurController {
 	
 	 public void addUser() {
 		 FacesMessage message;
-		 if(this.verifPass != null && this.verifPass == userToAdd.getUtiPass()){
+		 if(this.verifPass.equals(userToAdd.getUtiPass())){
 			 HashMap<String, Object> params = new HashMap<String, Object>();
 			 params.put("login", userToAdd.getUtiLogin());
 			 List<Utilisateur> exists = dao.list("SELECT u FROM Utilisateur u WHERE UTI_Login= :login",params);

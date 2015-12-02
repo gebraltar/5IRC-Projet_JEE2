@@ -70,14 +70,14 @@ public class EcoleController extends HttpServlet {
 	
 	public void addEcole() {
         dao.persist(ecole);
-        FacesMessage message = new FacesMessage( "Ajout rÃ©ussi !" );
+        FacesMessage message = new FacesMessage( "Ajout réussi !" );
         FacesContext.getCurrentInstance().addMessage( null, message );
         ecole = new Ecole();
     }
 	
 	public void updateEcole() {
         dao.merge(selectedEcole);
-        FacesMessage message = new FacesMessage( "Modification rÃ©ussie !" );
+        FacesMessage message = new FacesMessage( "Modification réussie !" );
         FacesContext.getCurrentInstance().addMessage( null, message );
     }
 	
@@ -88,7 +88,7 @@ public class EcoleController extends HttpServlet {
 	public void delete(Ecole e){
 		try{
 			dao.remove(e);
-			FacesMessage message = new FacesMessage( "Suppression rÃ©ussie !" );
+			FacesMessage message = new FacesMessage( "Suppression réussie !" );
 	        FacesContext.getCurrentInstance().addMessage( null, message );
 		}catch(Exception ex){
 			FacesMessage message = new FacesMessage( "Suppression impossible !" );

@@ -19,7 +19,7 @@
 			<link rel="stylesheet" type="text/css" href="./css/style.css" />
 		</h:head>
 	    <h:body>
-	    	<c:if test="${empty loggedUser}">
+	    	<c:if test="${empty sessionScope.loggedUser}">
 	    		<h3>Vous êtes deconnecté. Désolé, il faut être connecté pour accéder à cette page.</h3>
 	    		<h:form>
 		    		<div>
@@ -27,7 +27,7 @@
 		    		</div>
 	    		</h:form>
 	    	</c:if>
-	    	<c:if test="${not empty loggedUser}">
+	    	<c:if test="${not empty sessionScope.loggedUser}">
 	    		<h3>Désolé, vous ne disposez pas des droits nécessaires pour accéder à cette page.</h3>
 	    		<h4>Contacter votre administrateur pour obtenir ces droits.</h4>
 	    		<h:form>

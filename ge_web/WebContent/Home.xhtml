@@ -10,7 +10,7 @@
 
 	<title>Home</title>
 </h:head>
-<c:if test="${not empty loggedUser}">
+<c:if test="${not empty sessionScope.loggedUser}">
 <h:body>
 	<ui:include src="header.xhtml" />
 	
@@ -21,7 +21,7 @@
 	<ui:include src="footer.xhtml" />
 </h:body>
 </c:if>
-<c:if test="${empty loggedUser or loggedUsed.user.role.rolId != 1}">
+<c:if test="${empty sessionScope.loggedUser}">
 		<ui:include  src="errorView.xhtml"/>
 </c:if>
 </html>

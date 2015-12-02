@@ -4,6 +4,12 @@ body {
 	background: #F1F1F1;
 	font-family: verdana;
 }
+.fc-content{
+	width: 100%
+}
+.fc-day-header{
+	width: 14% !important;
+}
 .left
 {
 	float: left;

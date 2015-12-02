@@ -81,14 +81,14 @@ public class ClasseController extends HttpServlet {
 	public void addClasse() {
 		classe.setEcole(ecole);
 		daoClasse.persist(classe);
-		FacesMessage message = new FacesMessage("Ajout rÃ©ussi !");
+		FacesMessage message = new FacesMessage("Ajout réussi !");
 		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 
 	public void updateClasse() {
 		System.out.println(selectedClasse.getClsNumero());
 		daoClasse.merge(selectedClasse);
-		FacesMessage message = new FacesMessage("Modification rÃ©ussie !");
+		FacesMessage message = new FacesMessage("Modification réussie !");
 		FacesContext.getCurrentInstance().addMessage(null, message);
 		selectedClasse=null;
 	}
@@ -96,7 +96,7 @@ public class ClasseController extends HttpServlet {
 	public void deleteClasse(Classe classe) {
 		try{
 			daoClasse.remove(classe);
-			FacesMessage message = new FacesMessage( "Suppression rÃ©ussie !" );
+			FacesMessage message = new FacesMessage( "Suppression réussie !" );
 	        FacesContext.getCurrentInstance().addMessage( null, message );
 		}catch(Exception ex){
 			FacesMessage message = new FacesMessage( "Suppression impossible !" );

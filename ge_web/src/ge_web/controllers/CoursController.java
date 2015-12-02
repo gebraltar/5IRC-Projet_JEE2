@@ -93,7 +93,7 @@ public class CoursController extends HttpServlet {
 		cours.setCrenauHoraire(crenauTmp);
 		cours.setClasse(classe);
 		daoCours.persist(cours);
-		FacesMessage message = new FacesMessage("Ajout rÃ©ussi !");
+		FacesMessage message = new FacesMessage("Ajout réussi !");
 		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 

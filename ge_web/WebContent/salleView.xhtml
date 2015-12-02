@@ -10,6 +10,7 @@
 	<link rel="stylesheet" type="text/css" href="./css/style.css" />
 	<title>Gestion des salles de l'établissement: #{salleController.ecole.eclNom}</title>
 </h:head>
+<c:if test="${not empty sessionScope.loggedUser}">
 <h:body>
 	<ui:include src="header.xhtml" />
 	<div class='homeBox mainBox'>
@@ -29,25 +30,26 @@
 						<p:column headerText="Nom">
 							<h:outputText value="#{salle.salLabel}" />
 						</p:column>
-
-						<p:column headerText="Supprimer">
-							<p:commandButton icon="ui-icon-trash"
-								title="Suprimer cette classe" ajax="true"
-								actionListener="#{salleController.deleteSalle(salle)}"
-								update=":adminTabs:SalleTableForm :adminTabs:SalleListPanel">
-								<p:confirm header="Confirmation" message="Are you sure?"
-									icon="ui-icon-alert" />
-							</p:commandButton>
-						</p:column>
-
-						<p:column headerText="Modifier">
-							<p:commandButton icon="ui-icon-wrench"
-								title="Modifier cette salle" update=":adminTabs:salleDetailsPanel"
-								ajax="true">
-								<f:setPropertyActionListener value="#{salle}"
-									target="#{salleController.selectedSalle}" />
-							</p:commandButton>
-						</p:column>
+						<c:if test="${sessionScope.loggedUser.isAdmin == 1}">
+							<p:column headerText="Supprimer">
+								<p:commandButton icon="ui-icon-trash"
+									title="Suprimer cette classe" ajax="true"
+									actionListener="#{salleController.deleteSalle(salle)}"
+									update=":adminTabs:SalleTableForm :adminTabs:SalleListPanel">
+									<p:confirm header="Confirmation" message="Are you sure?"
+										icon="ui-icon-alert" />
+								</p:commandButton>
+							</p:column>
+	
+							<p:column headerText="Modifier">
+								<p:commandButton icon="ui-icon-wrench"
+									title="Modifier cette salle" update=":adminTabs:salleDetailsPanel"
+									ajax="true">
+									<f:setPropertyActionListener value="#{salle}"
+										target="#{salleController.selectedSalle}" />
+								</p:commandButton>
+							</p:column>
+						</c:if>
 					</p:dataTable>
 
 					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
@@ -58,60 +60,63 @@
 					</p:confirmDialog>
 				</h:form>
 			</p:panel>
-			<p:panel header="Détails de la salle" id="salleDetailsPanel">
-
-				<!-- UPDATE CLASSE FORM  C'EST ICI LA SUITE finir la modification de la classe user-->
-				<h:form id="salleUpdateForm"
-					rendered="#{not empty salleController.selectedSalle}">
-					<h2>Modifier cette salle</h2>
-					<h:panelGrid columns="2">
-						<p:outputLabel for="salLabel">Libellé de la salle:</p:outputLabel>
-						<p:inputText id="salLabel"
-							value="#{salleController.selectedSalle.salLabel}"
-							required="true"
-							requiredMessage="Vous devez renseigner le libellé de la salle."
-							size="30" maxlength="30">
-						</p:inputText>
-						<p:message showDetail="true" for="salLabel" errorClass="error" />
-					</h:panelGrid>
-					<div class="salleButton">
-						<p:commandButton value="Sauvegarder"
-							action="#{salleController.updateSalle()}"
-							ajax="false" icon="ui-icon-check" validateClient="true" />
-
-						<p:commandButton icon="ui-icon-close" value="Annuler" ajax="true"
-							immediate="true" update=":adminTabs:salleDetailsPanel"
-							actionListener="#{salleController.resetSalleSelected()}" />
-					</div>
-				</h:form>
-
-				<!-- ADD USER FORM -->
-				<h:form id="salleAddForm"
-					rendered="#{empty salleController.selectedSalle}">
-					<h2>Ajouter une salle</h2>
-					<h:panelGrid columns="2">
-						<p:outputLabel for="salLabel">Libellé de la salle:</p:outputLabel>
-						<p:inputText id="salLabel"
-							value="#{salleController.salle.salLabel}"
-							required="true"
-							requiredMessage="Vous devez renseigner le libellé de la salle."
-							size="30" maxlength="30">
-						</p:inputText>
-						<p:message showDetail="true" for="salLabel" errorClass="error" />
-					</h:panelGrid>
-					<div class="salleButton">
-						<p:commandButton value="Ajouter"
-							action="#{salleController.addSalle}" ajax="false"
-							icon="ui-icon-check" validateClient="true" />
-							
-						<p:commandButton icon="ui-icon-close" value="Réinitialiser" ajax="true"
-							immediate="true">
-							<p:ajax update=":adminTabs:salleDetailsPanel" resetValues="true" />
-						</p:commandButton>
-
-					</div>
-				</h:form>
-			</p:panel>
+			<c:if test="${sessionScope.loggedUser.isAdmin == 1}">
+				<p:panel header="Détails de la salle" id="salleDetailsPanel">
+					
+					<!-- UPDATE CLASSE FORM  C'EST ICI LA SUITE finir la modification de la classe user-->
+					<h:form id="salleUpdateForm"
+						rendered="#{not empty salleController.selectedSalle}">
+						<h2>Modifier cette salle</h2>
+						<h:panelGrid columns="2">
+							<p:outputLabel for="salLabel">Libellé de la salle:</p:outputLabel>
+							<p:inputText id="salLabel"
+								value="#{salleController.selectedSalle.salLabel}"
+								required="true"
+								requiredMessage="Vous devez renseigner le libellé de la salle."
+								size="30" maxlength="30">
+							</p:inputText>
+							<p:message showDetail="true" for="salLabel" errorClass="error" />
+						</h:panelGrid>
+						<div class="salleButton">
+							<p:commandButton value="Sauvegarder"
+								action="#{salleController.updateSalle()}"
+								ajax="false" icon="ui-icon-check" validateClient="true" />
+	
+							<p:commandButton icon="ui-icon-close" value="Annuler" ajax="true"
+								immediate="true" update=":adminTabs:salleDetailsPanel"
+								actionListener="#{salleController.resetSalleSelected()}" />
+						</div>
+					</h:form>
+	
+					<!-- ADD USER FORM -->
+					<h:form id="salleAddForm"
+						rendered="#{empty salleController.selectedSalle}">
+						<h2>Ajouter une salle</h2>
+						<h:panelGrid columns="2">
+							<p:outputLabel for="salLabel">Libellé de la salle:</p:outputLabel>
+							<p:inputText id="salLabel"
+								value="#{salleController.salle.salLabel}"
+								required="true"
+								requiredMessage="Vous devez renseigner le libellé de la salle."
+								size="30" maxlength="30">
+							</p:inputText>
+							<p:message showDetail="true" for="salLabel" errorClass="error" />
+						</h:panelGrid>
+						<div class="salleButton">
+							<p:commandButton value="Ajouter"
+								action="#{salleController.addSalle}" ajax="false"
+								icon="ui-icon-check" validateClient="true" />
+								
+							<p:commandButton icon="ui-icon-close" value="Réinitialiser" ajax="true"
+								immediate="true">
+								<p:ajax update=":adminTabs:salleDetailsPanel" resetValues="true" />
+							</p:commandButton>
+	
+						</div>
+					</h:form>
+				</p:panel>
+			</c:if>
+			
 			<p:commandButton value="Retour"
 								action="#{ecoleController.gererEcoles()}"
 								icon="ui-icon-arrowthick-1-w" validateClient="true" />
@@ -123,4 +128,8 @@
 	</div>
 	<ui:include src="footer.xhtml" />
 </h:body>
+</c:if>
+<c:if test="${empty sessionScope.loggedUser}">
+		<ui:include  src="errorView.xhtml"/>
+</c:if>
 </html>

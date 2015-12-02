@@ -12,7 +12,7 @@
 	<title>Adminstration des références</title>
 </h:head>
 
-<c:if test="${not empty loggedUser and loggedUser.user.role.rolId == 1}">
+<c:if test="${not empty sessionScope.loggedUser and sessionScope.loggedUser.isAdmin == 1}">
 <h:body>
 	<ui:include src="header.xhtml" />
 	<div class='homeBox mainBox'>
@@ -241,7 +241,7 @@
 	</h:body>
 	<ui:include src="footer.xhtml" />
 	</c:if>
-	<c:if test="${empty loggedUser or loggedUsed.user.role.rolId != 1}">
+	<c:if test="${empty sessionScope.loggedUser or sessionScope.loggedUser.isAdmin != 1}">
 		<ui:include  src="errorView.xhtml"/>
 	</c:if>
 
