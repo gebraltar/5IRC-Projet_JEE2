@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html">
+<h:head>
+	<ui:include src="header.xhtml" />
+	<title>Gestion des cours</title>
+</h:head>
+<h:body>
+
+	<div class='homeBox mainBox'>
+		<h:panelGroup>
+			<h:panelGrid columns="2" id="classePanelGrid"
+				columnClasses="customColumns">
+				<p:panel
+					header="Listes des cours pour la classe : #{coursController.classe.niveau} #{coursController.classe.clsNumero}"
+					id="CoursListPanel">
+					<h:form id="CoursTableForm">
+						<p:dataTable var="cours" value="#{coursController.listCours()}"
+							tableStyle="table-layout: auto; text-align: center;"
+							paginator="true"
+							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="10,15">
+							<p:column headerText="Nom du cours">
+								<h:outputText value="#{cours.nom}" />
+							</p:column>
+
+							<p:column headerText="Professeur">
+								<h:outputText
+									value="#{cours.professeur.civilite.civLabel} #{cours.professeur.prfNom}" />
+							</p:column>
+
+							<p:column headerText="Salle">
+								<h:outputText value="#{cours.salle.salLabel}" />
+							</p:column>
+
+							<p:column headerText="Crenaux">
+								<h:outputText
+									value="#{cours.crenauHoraire.crhDateHeureDebut}-#{cours.crenauHoraire.crhDateHeureFin}" />
+							</p:column>
+
+							<p:column headerText="Supprimer">
+								<p:commandButton icon="ui-icon-trash" title="Suprimer ce cours"
+									ajax="true"
+									actionListener="#{coursController.deleteCours(cours)}"
+									update=":CoursTableForm :CoursListPanel">
+									<p:confirm header="Confirmation"
+										message="Êtes vous sûr de vouloir supprimer ce cours?"
+										icon="ui-icon-alert" />
+								</p:commandButton>
+							</p:column>
+
+							<p:column headerText="Modifier">
+								<p:commandButton icon="ui-icon-wrench" title="Modifier ce cours"
+									update=":coursDetailsPanel" ajax="true">
+									<f:setPropertyActionListener value="#{cours}"
+										target="#{coursController.selectedCours}" />
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>
+
+						<div class="classeButton">
+							<p:commandButton value="Retour"
+								action="#{classeController.gererClasses(coursController.classe.ecole)}"
+								ajax="false" icon="ui-icon-arrowthick-1-w" validateClient="true" />
+						</div>
+
+						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+							<p:commandButton value="Yes" type="button"
+								styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+							<p:commandButton value="No" type="button"
+								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+						</p:confirmDialog>
+					</h:form>
+				</p:panel>
+				<p:panel header="Cours details" id="coursDetailsPanel">
+					<!-- Update -->
+					<h:form id="coursUpdateForm"
+						rendered="#{not empty coursController.selectedCours}">
+						<h2>Modifier ce cours</h2>
+						<h:panelGrid columns="3">
+
+							<p:outputLabel for="crsNom">Nom du cours:</p:outputLabel>
+							<p:inputText id="crsNom"
+								value="#{coursController.selectedCours.nom}" required="true"
+								requiredMessage="Vous devez renseigner le nom du cours."
+								size="30" maxlength="30">
+							</p:inputText>
+							<p:message showDetail="true" for="crsNom" errorClass="error" />
+
+							<h:outputLabel for="professeur">Professeur:<span
+									class="requis">*</span>
+							</h:outputLabel>
+							<h:selectOneMenu id="professeur"
+								value="#{coursController.selectedCours.professeur.prfId}">
+								<f:selectItems value="#{coursController.listProfesseur()}"
+									var="professeur" itemValue="#{professeur.prfId}"
+									itemValueAsString="#{professeur.prfId}"
+									itemLabel="#{professeur.civilite.civLabel} #{professeur.prfNom}" />
+							</h:selectOneMenu>
+							<br />
+
+							<h:outputLabel for="salle">Salle:<span
+									class="salle">*</span>
+							</h:outputLabel>
+							<h:selectOneMenu id="salle"
+								value="#{coursController.selectedCours.salle.salId}">
+								<f:selectItems value="#{coursController.listSalle()}"
+									var="salle" itemValue="#{salle.salId}"
+									itemValueAsString="#{salle.salId}"
+									itemLabel="#{salle.salLabel}" />
+							</h:selectOneMenu>
+							<br />
+
+							<h:outputLabel for="debut">debut:<span
+									class="debut">*</span>
+							</h:outputLabel>
+							<p:calendar id="debut" value="#{coursController.selectedCours.crenauHoraire.crhDateHeureDebut}"
+								pattern="MM/dd/yyyy HH" />
+							<br />
+
+							<h:outputLabel for="fin">fin:<span class="fin">*</span>
+							</h:outputLabel>
+							<p:calendar id="fin" value="#{coursController.selectedCours.crenauHoraire.crhDateHeureFin}"
+								pattern="MM/dd/yyyy HH" />
+							<br />
+
+
+						</h:panelGrid>
+						<div class="classeButton">
+							<p:commandButton value="Save"
+								action="#{coursController.updateCours()}" ajax="false"
+								icon="ui-icon-check" validateClient="true" />
+
+							<p:commandButton icon="ui-icon-close" value="Cancel" ajax="true"
+								immediate="true" update=":coursDetailsPanel"
+								actionListener="#{coursController.resetCoursSelected()}" />
+
+
+						</div>
+					</h:form>
+
+					<!-- ADD USER FORM -->
+					<h:form id="coursAddForm"
+						rendered="#{empty coursController.selectedCours}">
+						<h2>Ajouter un cours</h2>
+						<h:panelGrid columns="3">
+
+							<p:outputLabel for="crsNom">Nom du cours:</p:outputLabel>
+							<p:inputText id="crsNom" value="#{coursController.cours.nom}"
+								required="true"
+								requiredMessage="Vous devez renseigner le nom du cours."
+								size="30" maxlength="30">
+							</p:inputText>
+							<p:message showDetail="true" for="crsNom" errorClass="error" />
+
+							<h:outputLabel for="professeur">Professeur:<span
+									class="requis">*</span>
+							</h:outputLabel>
+							<h:selectOneMenu id="professeur"
+								value="#{coursController.cours.professeur.prfId}">
+								<f:selectItems value="#{coursController.listProfesseur()}"
+									var="professeur" itemValue="#{professeur.prfId}"
+									itemValueAsString="#{professeur.prfId}"
+									itemLabel="#{professeur.civilite.civLabel} #{professeur.prfNom}" />
+							</h:selectOneMenu>
+							<br />
+
+							<h:outputLabel for="salle">Salle:<span
+									class="salle">*</span>
+							</h:outputLabel>
+							<h:selectOneMenu id="salle"
+								value="#{coursController.cours.salle.salId}">
+								<f:selectItems value="#{coursController.listSalle()}"
+									var="salle" itemValue="#{salle.salId}"
+									itemValueAsString="#{salle.salId}"
+									itemLabel="#{salle.salLabel}" />
+							</h:selectOneMenu>
+							<br />
+
+							<h:outputLabel for="debut2">debut:<span
+									class="debut2">*</span>
+							</h:outputLabel>
+							<p:calendar id="debut2"
+								value="#{coursController.cours.crenauHoraire.crhDateHeureDebut}"
+								pattern="MM/dd/yyyy HH" />
+							<br />
+							<h:outputLabel>fin:<span class="fin2">*</span>
+							</h:outputLabel>
+							<p:calendar id="fin2"
+								value="#{coursController.cours.crenauHoraire.crhDateHeureFin}"
+								pattern="MM/dd/yyyy HH" />
+
+
+						</h:panelGrid>
+						<div class="classeButton">
+							<p:commandButton value="Add" action="#{coursController.addCours}"
+								ajax="false" icon="ui-icon-check" validateClient="true" />
+
+							<p:commandButton icon="ui-icon-close" value="Reset" ajax="true"
+								immediate="true">
+								<p:ajax update=":coursDetailsPanel" resetValues="true" />
+							</p:commandButton>
+
+						</div>
+					</h:form>
+				</p:panel>
+			</h:panelGrid>
+
+		</h:panelGroup>
+	</div>
+</h:body>
+<ui:include src="footer.xhtml" />
+</html>
