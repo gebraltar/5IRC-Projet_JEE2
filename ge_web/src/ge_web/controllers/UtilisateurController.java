@@ -25,7 +25,7 @@ import ge_jpa.entities.Utilisateur;
 import ge_web.sessionBeans.UserSessionBean;
 
 @ManagedBean
-public class UtilisateurController extends HttpServlet {
+public class UtilisateurController {
 
 	@Inject
 	private DaoInterface<Utilisateur> dao;
@@ -101,15 +101,5 @@ public class UtilisateurController extends HttpServlet {
 	public void setConnecte(boolean connecte) {
 		this.connecte = connecte;
 	}
-	
-	public String redirectToIndex(){
-		return "index.xhtml";
-	}
-
-	public String redirectToHome(){
-		return "Home.xhtml";
-	}
-	
-	
 
 }
