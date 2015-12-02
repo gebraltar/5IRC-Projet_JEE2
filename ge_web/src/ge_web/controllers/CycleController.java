@@ -2,9 +2,15 @@ package ge_web.controllers;
 
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.persistence.PersistenceException;
+import javax.transaction.RollbackException;
+import javax.validation.ConstraintViolationException;
+
 import dao.DaoInterface;
 import ge_jpa.entities.Cycle;
 
@@ -48,10 +54,19 @@ public class CycleController {
 	public void updateCycle() {
 		dao.merge(this.selectedCycle);
 		resetSelectedCycle();
+        FacesMessage message = new FacesMessage( "Mise à jour réussie !" );
+        message.setDetail("");
+		//message.setSeverity(javax.faces.application.FacesMessage.SEVERITY_ERROR);
+        FacesContext.getCurrentInstance().addMessage( null, message );
 	}
 	
 	public void removeCycle(Cycle cycle) {
+		FacesMessage message;
 		dao.remove(cycle);
+		message = new FacesMessage( "Suppression réussie !" );
+	    message.setDetail("");
+	    FacesContext.getCurrentInstance().addMessage( null, message );
+		
 	}
 	
 	public List<Cycle> listCycle(){
@@ -61,5 +76,9 @@ public class CycleController {
 	 public void addCycle() {
          dao.persist(this.cycleToAdd);
          this.cycleToAdd = new Cycle();
+         FacesMessage message = new FacesMessage( "Suppression réussie !" );
+         message.setDetail("");
+ 		 //message.setSeverity(javax.faces.application.FacesMessage.SEVERITY_ERROR);
+         FacesContext.getCurrentInstance().addMessage( null, message );
 	 }
 }
