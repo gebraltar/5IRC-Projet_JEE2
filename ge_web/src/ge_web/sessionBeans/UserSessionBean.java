@@ -6,7 +6,6 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.enterprise.context.SessionScoped;
-
 @SessionScoped
 public class UserSessionBean implements Serializable {
 
