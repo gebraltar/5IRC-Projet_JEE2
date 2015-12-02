@@ -53,7 +53,7 @@ public class PlanningController extends HttpServlet {
 			for(Cours c : listCours){
 				Date debut =c.getCrenauHoraire().getCrhDateHeureDebut();
 				Date fin =c.getCrenauHoraire().getCrhDateHeureFin();
-				planning.addEvent(new DefaultScheduleEvent(c.getNom(),debut,fin));
+				planning.addEvent(new DefaultScheduleEvent(c.getNom()+"\n"+c.getProfesseur().getPrfNom()+"\n"+c.getSalle().getSalLabel(),debut,fin));
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
