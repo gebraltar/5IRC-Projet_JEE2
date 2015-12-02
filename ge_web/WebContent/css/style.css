@@ -4,7 +4,10 @@ body {
 	background: #F1F1F1;
 	font-family: verdana;
 }
-
+.left
+{
+	float: left;
+}
 .top {
 	background: #4d7397;
 	height: 70px;
@@ -31,10 +34,12 @@ button#j_idt10 {
 }
 
 .mainBox {
-	min-height: 500px;
+	padding: 20px;
+	min-height: 600px;
 	background: #f9f9f9;
 	margin: 5% auto;
 	box-shadow: 0px 0px 21px -2px #4D7397;
+	min-height: 600px;
 }
 
 .mainBox h2 {
@@ -60,9 +65,12 @@ button#j_idt10 {
 }
 
 .leftSide {
-	float: left;
 	background: #f9f9f9;
 	border: 1px solid #ABABAB;
+	position: absolute;
+	top: 70px;
+	bottom: 0;
+	z-index: 0;
 }
 
 h3.ui-widget.ui-panelmenu-header.ui-state-default.ui-corner-all {
@@ -71,19 +79,77 @@ h3.ui-widget.ui-panelmenu-header.ui-state-default.ui-corner-all {
 	padding: 6px;
 	border-bottom: 1px solid #DEDEDE;
 }
-#menuMobile
-{
+
+#menuMobile {
 	display: none;
 }
 
-@media screen and (max-width: 900px) {
-	
-	#menuMobile
-{
-	display: block;
+.ui-widget-header {
+	background: white;
 }
- 
+
+footer {
+	background: #4D7397;
+	color: white;
+	padding: 20px;
+	min-height: 60px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+#adminTabs td {
+	display: table-cell;
+	vertical-align: top !important;
+}
+
+.ui-panel .ui-panel-titlebar {
+	padding: 0.5em 1em 0.3em;
+	border: none;
+	background: #F2F5F9;
+	color: #4D7397;
+	text-shadow: none;
+	border-left: 4px solid #4D7397;
+}
+
+.ui-widget .ui-widget {
+	border: none;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default,
+	.ui-widget-header .ui-state-default {
+	background: #F2F5F9;
+}
+
+@media screen and (max-width: 900px) {
+	.leftSide {
+		position: relative;
+		float: left;
+	}
+	#menuMobile {
+		display: block;
+		background: white;
+		border: none;
+		display: block;
+		padding: 6px 46px;
+		margin: 10px auto;
+		font-weight: bold;
+		color: #4D7397;
+		font-size: 16px;
+		border-left: 3px solid #4D7397;
+	}
 	.leftSide {
 		float: none;
 	}
+	.homeBox {
+		width: 100%;
+	}
+	.mainBox {
+		padding: 0px;
+	}
+	footer {
+		position: relative;
+	}
+}
 }
