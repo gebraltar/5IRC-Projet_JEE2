@@ -1,5 +1,6 @@
 package ge_web.controllers;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -28,11 +29,11 @@ public class ClasseController extends HttpServlet {
 	private Classe classe;
 	private Classe selectedClasse;
 	private Ecole ecole;
-	private Niveau niveau;
+	//private Niveau niveau;
 
 	public ClasseController() {
 		classe = new Classe();
-		niveau= new Niveau();
+		//niveau= new Niveau();
 	}
 
 	public Classe getSelectedClasse() {
@@ -50,16 +51,18 @@ public class ClasseController extends HttpServlet {
 	public void setClasse(Classe classe) {
 		this.classe = classe;
 	}
-	public Niveau getNiveau() {
+	/*public Niveau getNiveau() {
 		return niveau;
 	}
 
 	public void setNiveau(Niveau niveau) {
 		this.niveau = niveau;
-	}
+	}*/
 	public List<Classe> listClasse() {
 		try {
-			return daoClasse.list("SELECT c FROM Classe c",null);
+			HashMap<String,Object> params=new HashMap<String, Object>();
+			params.put("ecole", ecole.getEclId());
+			return daoClasse.list("SELECT c FROM Classe c WHERE ECL_ID=:ecole ",params);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return null;
@@ -84,22 +87,23 @@ public class ClasseController extends HttpServlet {
 
 	public void updateClasse() {
 		System.out.println(selectedClasse.getClsNumero());
-		selectedClasse.setNiveau(niveau);
+		//selectedClasse.setNiveau(niveau);
 		daoClasse.merge(selectedClasse);
 		FacesMessage message = new FacesMessage("Modification sauvegarder !");
 		FacesContext.getCurrentInstance().addMessage(null, message);
+		selectedClasse=null;
 	}
 
 	public void deleteClasse(Classe classe) {
-		// tobedone
+		daoClasse.remove(classe);
 	}
 
 	public void resetClasseSelected() {
-		classe = new Classe();
+		selectedClasse = null;
 	}
 
 	public String gererClasses(Ecole ecole) {
 		this.ecole = ecole;
-		return "ListeClasse.xhtml?faces-redirect=true";
+		return "classeView.xhtml?faces-redirect=true";
 	}
 }
