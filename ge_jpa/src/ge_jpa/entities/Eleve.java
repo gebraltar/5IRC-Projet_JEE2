@@ -34,6 +34,7 @@ public class Eleve implements java.io.Serializable {
 	private Set<Responsable> responsables = new HashSet<Responsable>(0);
 
 	public Eleve() {
+		this.classe =new Classe();
 	}
 
 	public Eleve(Classe classe) {
@@ -63,7 +64,7 @@ public class Eleve implements java.io.Serializable {
 		this.elvId = elvId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "CLA_ID", nullable = false)
 	public Classe getClasse() {
 		return this.classe;
@@ -109,7 +110,7 @@ public class Eleve implements java.io.Serializable {
 		this.elvDateNaissance = elvDateNaissance;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "eleve")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "eleve")
 	public Set<FraisInscription> getFraisInscriptions() {
 		return this.fraisInscriptions;
 	}
@@ -118,7 +119,7 @@ public class Eleve implements java.io.Serializable {
 		this.fraisInscriptions = fraisInscriptions;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "eleve")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "eleve")
 	public Set<Responsable> getResponsables() {
 		return this.responsables;
 	}
@@ -126,5 +127,6 @@ public class Eleve implements java.io.Serializable {
 	public void setResponsables(Set<Responsable> responsables) {
 		this.responsables = responsables;
 	}
+	
 
 }

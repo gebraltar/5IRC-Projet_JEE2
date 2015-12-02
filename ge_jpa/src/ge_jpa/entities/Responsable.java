@@ -31,6 +31,10 @@ public class Responsable implements java.io.Serializable {
 	private String rspNumSecu;
 
 	public Responsable() {
+		coordonnees= new Coordonnees();
+		eleve =new Eleve();
+		situationFamiliale = new SituationFamiliale();
+		civilite = new Civilite();
 	}
 
 	public Responsable(Civilite civilite, Coordonnees coordonnees, Eleve eleve, SituationFamiliale situationFamiliale) {
@@ -63,7 +67,7 @@ public class Responsable implements java.io.Serializable {
 		this.rspId = rspId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "CIV_ID", nullable = false)
 	public Civilite getCivilite() {
 		return this.civilite;
@@ -73,7 +77,7 @@ public class Responsable implements java.io.Serializable {
 		this.civilite = civilite;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "CRD_ID", nullable = false)
 	public Coordonnees getCoordonnees() {
 		return this.coordonnees;
@@ -93,7 +97,7 @@ public class Responsable implements java.io.Serializable {
 		this.eleve = eleve;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "SFA_ID", nullable = false)
 	public SituationFamiliale getSituationFamiliale() {
 		return this.situationFamiliale;

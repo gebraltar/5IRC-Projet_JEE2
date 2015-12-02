@@ -1,6 +1,7 @@
 package ge_web.controllers;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -13,6 +14,7 @@ import dao.DaoInterface;
 import ge_jpa.entities.Civilite;
 import ge_jpa.entities.Classe;
 import ge_jpa.entities.Coordonnees;
+import ge_jpa.entities.Ecole;
 import ge_jpa.entities.Eleve;
 import ge_jpa.entities.Responsable;
 import ge_jpa.entities.SituationFamiliale;
@@ -28,8 +30,7 @@ public class InscriptionEleveController {
 	private Eleve eleveToAdd;
 	private Responsable selectedResponsable;
 	private Responsable responsableToAdd;
-	
-	private Coordonnees selectedCoordonnees;
+
 	private Coordonnees coordonneesToAdd;
 	
 	private Classe classe;
@@ -88,7 +89,7 @@ public class InscriptionEleveController {
 		updateCoordonnees();
 		updateResponsable();
 		//selectedEleve.setClasse(this.classe);
-		//daoEl.merge(this.selectedEleve);
+		daoEl.merge(this.selectedEleve);
 		FacesMessage message = new FacesMessage( "Modification réussie !" );
         FacesContext.getCurrentInstance().addMessage( null, message );
         resetSelectedEleve();
@@ -96,8 +97,21 @@ public class InscriptionEleveController {
 	}
 	
 	public void removeEleve(Eleve eleve) {
-			
+		
+		
+		
+		Iterator<Responsable> i = eleve.getResponsables().iterator();
+		Responsable r = null;
+		while(i.hasNext()){
+			r =(Responsable) i.next();
+		}
+		
+		removeResponsable(r);
+		removeCoordonnees(r.getCoordonnees());	
 		daoEl.remove(eleve);
+		
+	
+		
 		FacesMessage message = new FacesMessage( "Suppresion réussie !" );
         FacesContext.getCurrentInstance().addMessage( null, message );
 	}
@@ -113,7 +127,7 @@ public class InscriptionEleveController {
 		            return null;
 		    }
 	}
-	
+	/*
 	public Coordonnees getRCoordonneesbyIdRes(int idRes)
 	{
 			try {
@@ -127,7 +141,7 @@ public class InscriptionEleveController {
 		            return null;
 		    }
 	}
-	
+	*/
 	public Responsable getSelectedResponsable() {
 		return selectedResponsable;
 		
@@ -150,7 +164,6 @@ public class InscriptionEleveController {
 	}
 
 	public void updateResponsable() {
-		selectedResponsable.setCoordonnees(selectedCoordonnees);
 		daoRes.merge(this.selectedResponsable);
 		FacesMessage message = new FacesMessage( "Modification réussie !" );
         FacesContext.getCurrentInstance().addMessage( null, message );
@@ -158,10 +171,8 @@ public class InscriptionEleveController {
 	
 	public void removeResponsable(Responsable responsable) {
 		daoRes.remove(responsable);
-		FacesMessage message = new FacesMessage( "Suppresion réussie !" );
-        FacesContext.getCurrentInstance().addMessage( null, message );
 	}
-	
+	/*
 	public Coordonnees getSelectedCoordonnees() {
 		return selectedCoordonnees;
 		
@@ -170,7 +181,7 @@ public class InscriptionEleveController {
 	public void setSelectedCoordonnees(Coordonnees coord) {
 		this.selectedCoordonnees = coord;
 	}
-	
+	*/
 	public Coordonnees getCoordonneesToAdd() {
 		return this.coordonneesToAdd;
 	}
@@ -178,13 +189,13 @@ public class InscriptionEleveController {
 	public void setCoordonneesToAdd(Coordonnees coord) {
 		this.coordonneesToAdd = coord;
 	}
-	
+	/*
 	public void resetSelectedCoordonnees() {
 		this.selectedCoordonnees = null;
 	}
-
+	 */
 	public void updateCoordonnees() {
-		daoCor.merge(this.selectedCoordonnees);
+		daoCor.merge(selectedResponsable.getCoordonnees());
 	}
 	
 	public void removeCoordonnees(Coordonnees coordonnes) {
@@ -194,7 +205,11 @@ public class InscriptionEleveController {
 	}
 	
 	public List<Eleve> listEleves(){
-		return daoEl.list("SELECT e FROM Eleve e",null); 
+		
+		 HashMap<String, Object> params = new HashMap<String, Object>();
+         params.put("id", classe.getClsId());
+         List<Eleve> liste= daoEl.list("SELECT e FROM Eleve e WHERE CLA_ID = :id ",params);
+         return liste; 
 	}
 	
 	public List<Classe> listClasse(){
@@ -211,10 +226,24 @@ public class InscriptionEleveController {
 	
 	 public void addEleve() {
 		 FacesMessage message;
-		
+		 	eleveToAdd.setClasse(classe);
 	         daoEl.persist(this.eleveToAdd);
-	//         daoCor.persist(this.coordonneesToAdd);
-	//         daoRes.persist(this.responsableToAdd);
+	         
+	         HashMap<String, Object> params = new HashMap<String, Object>();
+	            params.put("nom", eleveToAdd.getElvNom());
+	            params.put("prenom", eleveToAdd.getElvPrenom());
+	            List<Eleve> liste= daoEl.list("SELECT e FROM Eleve e WHERE ELV_Nom = :nom AND ELV_Prenom = :prenom ",params);
+	         responsableToAdd.setEleve(liste.get(0));
+	         
+	         daoCor.persist(this.coordonneesToAdd);
+	         
+	         HashMap<String, Object> params1 = new HashMap<String, Object>();
+	            params1.put("adr", coordonneesToAdd.getCrdAdresseLigne1());
+	            params1.put("cp", coordonneesToAdd.getCrdCodePostal());
+	            List<Coordonnees> listec= daoCor.list("SELECT c FROM Coordonnees c WHERE CRD_Adresse_Ligne_1 = :adr AND CRD_Code_Postal = :cp ",params1);
+	         responsableToAdd.setCoordonnees(listec.get(0));
+	         
+	         daoRes.persist(this.responsableToAdd);
 	         this.eleveToAdd = new Eleve();
 	         message = new FacesMessage( "Ajout réussi !" );
 	         message.setDetail("");
@@ -242,6 +271,10 @@ public class InscriptionEleveController {
 
 	public void setSituationFamiliale(SituationFamiliale sitFam) {
 		this.situationFamiliale = sitFam;
+	}
+	public String gererEleves(Classe classe) {
+		this.classe = classe;
+		return "eleveView.xhtml?faces-redirect=true";
 	}
 	 
 	 
