@@ -2,8 +2,10 @@ package ge_web.controllers;
 
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import dao.DaoInterface;
 import ge_jpa.entities.TypeEcole;
@@ -48,10 +50,18 @@ public class TypeEcoleController {
 	public void updateTypeEcole() {
 		dao.merge(this.selectedTypeEcole);
 		resetSelectedTypeEcole();
+        FacesMessage message = new FacesMessage( "Mise à jour réussie !" );
+        message.setDetail("");
+		//message.setSeverity(javax.faces.application.FacesMessage.SEVERITY_ERROR);
+        FacesContext.getCurrentInstance().addMessage( null, message );
 	}
 	
 	public void removeTypeEcole(TypeEcole typeEcole) {
 		dao.remove(typeEcole);
+		FacesMessage message = new FacesMessage( "Suppression réussie !" );
+		message.setDetail("");
+		//message.setSeverity(javax.faces.application.FacesMessage.SEVERITY_ERROR);
+		FacesContext.getCurrentInstance().addMessage( null, message );
 	}
 	
 	public List<TypeEcole> listTypeEcole(){
@@ -61,6 +71,11 @@ public class TypeEcoleController {
 	 public void addTypeEcole() {
          dao.persist(this.typeEcoleToAdd);
          this.typeEcoleToAdd = new TypeEcole();
+         
+         FacesMessage message = new FacesMessage( "Ajout réussie !" );
+         message.setDetail("");
+ 		 //message.setSeverity(javax.faces.application.FacesMessage.SEVERITY_ERROR);
+         FacesContext.getCurrentInstance().addMessage( null, message );
 	 }
 
 }

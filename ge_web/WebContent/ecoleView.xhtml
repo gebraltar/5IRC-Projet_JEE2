@@ -6,9 +6,13 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:h="http://xmlns.jcp.org/jsf/html">
 <h:head>
+	<link rel="stylesheet" type="text/css" href="./css/style.css" />
 	<title>Gestion des écoles</title>
 </h:head>
 <h:body>
+	<ui:include src="header.xhtml" />
+	<div class='homeBox mainBox'>
+		<p:growl id="msgs" showDetail="true" />
 	<h:panelGroup>
 		<h:panelGrid columns="2" id="ecolePanelGrid" columnClasses="customColumns">
 				<p:panel header="Liste des écoles" id="ecoleListPanel">
@@ -61,46 +65,56 @@
 				</p:panel>
 				<p:panel header="Détails de l'école" id="ecoleDetailsPanel">
 					<h:form id="ecoleAddForm" rendered="#{empty ecoleController.selectedEcole}">
-						<fieldset>
-				            <legend>Ajout d'une école</legend>
+						<h2>Ajouter d'une école</h2>
+						<h:panelGrid columns="3">
 				            <h:outputLabel for="nom">Nom<span class="requis">*</span></h:outputLabel>
 				            <h:inputText id="nom" value="#{ecoleController.ecole.eclNom}" required="true" size="20" maxlength="60" />
 				            <h:message id="nomMessage" for="nom" errorClass="erreur" />
-				            <br />
+				       	</h:panelGrid>
+				       	<h:panelGrid columns="3">
 				            <h:outputLabel for="typeEcoleId">Type<span class="requis">*</span></h:outputLabel>
 				            <h:selectOneMenu id="typeEcoleId" value="#{ecoleController.ecole.typeEcole.tecId}">
 					            <f:selectItems value="#{ecoleController.listTypeEcole()}" var="typeEcole" itemValue="#{typeEcole.tecId}" itemValueAsString="#{typeEcole.tecId}" itemLabel="#{typeEcole.tecLabel}" />
 				        	</h:selectOneMenu>
 				            <h:message id="typeEcoleMessage" for="typeEcoleId" errorClass="erreur" />
-				            <br /> 
+				         </h:panelGrid>
+				         <h:panelGrid columns="3">
 				            <h:outputLabel for="adresseLigne1">Adresse Ligne 1<span class="requis">*</span></h:outputLabel>
 				            <h:inputText id="adresseLigne1" value="#{ecoleController.ecole.coordonnees.crdAdresseLigne1}" required="true" size="20" maxlength="60" />
 				            <h:message id="adresseLigne1Message" for="adresseLigne1" errorClass="erreur" />
-				            <br />
+				         </h:panelGrid>
+				         <h:panelGrid columns="3">
 				            <h:outputLabel for="adresseLigne2">Adresse Ligne 2</h:outputLabel>
 				            <h:inputText id="adresseLigne2" value="#{ecoleController.ecole.coordonnees.crdAdresseLigne2}" size="20" maxlength="60" />
-				            <br />
+				         </h:panelGrid>
+				         <h:panelGrid columns="3">
 				            <h:outputLabel for="codePostal">Code Postal<span class="requis">*</span></h:outputLabel>
 				            <h:inputText id="codePostal" value="#{ecoleController.ecole.coordonnees.crdCodePostal}" required="true" size="20" maxlength="60" />
 				            <h:message id="codePostalMessage" for="codePostal" errorClass="erreur" />
-				            <br />
+				         </h:panelGrid>
+				         <h:panelGrid columns="3">
 				            <h:outputLabel for="ville">Ville<span class="requis">*</span></h:outputLabel>
 				            <h:inputText id="ville" value="#{ecoleController.ecole.coordonnees.crdVille}" required="true" size="20" maxlength="60" />
 				            <h:message id="villeMessage" for="ville" errorClass="erreur" />
-				            <br />
+				         </h:panelGrid>
+				         <h:panelGrid columns="3">
 				            <h:outputLabel for="telephone">Telephone<span class="requis">*</span></h:outputLabel>
 				            <h:inputText id="telephone" value="#{ecoleController.ecole.coordonnees.crdTelephone}" required="true" size="20" maxlength="60" />
 				            <h:message id="telephoneMessage" for="telephone" errorClass="erreur" />
-				            <br />
+				         </h:panelGrid>
+				         <h:panelGrid columns="3">   
 				            <h:outputLabel for="surface">Surface</h:outputLabel>
 				            <h:inputText id="surface" value="#{ecoleController.ecole.eclSurface}" size="20" maxlength="60" />
-				            <br />
+				         </h:panelGrid>
+				         <h:panelGrid columns="3"> 
 				            <h:outputLabel for="nbSalle">Nombre de salle</h:outputLabel>
 				            <h:inputText id="nbSalle" value="#{ecoleController.ecole.eclNombreSalle}"  size="20" maxlength="60" />
-				            <br />
+				         </h:panelGrid>
+				         <h:panelGrid columns="3"> 
 				            <h:outputLabel for="nomResponsable">Nom du Responsable</h:outputLabel>
 				            <h:inputText id="nomResponsable" value="#{ecoleController.ecole.eclNomResponsable}" size="20" maxlength="60" />
-				            <br />
+				         </h:panelGrid>
+				         <h:panelGrid columns="3"> 
 				            <div class="ecoleButtons">
 							<p:commandButton icon="ui-icon-close" value="Réinitialiser" ajax="true"
 								immediate="true"> <p:ajax update=":ecoleDetailsPanel" resetValues="true" />
@@ -110,50 +124,59 @@
 								action="#{ecoleController.addEcole}"
 								update=":ecoleTableForm" icon="ui-icon-check" />
 							</div>
-							
-						</fieldset>
+						</h:panelGrid> 
 					</h:form>
 					<h:form id="ecoleUpdateForm" rendered="#{not empty ecoleController.selectedEcole}">
-						<fieldset>
-				            <legend>Modification d'une école</legend>
+						<h2>Modification d'une école</h2>
+				         <h:panelGrid columns="3"> 
 				            <h:outputLabel for="nom">Nom<span class="requis">*</span></h:outputLabel>
 				            <h:inputText id="nom" value="#{ecoleController.selectedEcole.eclNom}" required="true" size="20" maxlength="60" />
 				            <h:message id="nomMessage" for="nom" errorClass="erreur" />
-				            <br />
+				         </h:panelGrid>
+				         <h:panelGrid columns="3"> 
 				            <h:outputLabel for="typeEcoleId">Type<span class="requis">*</span></h:outputLabel>
 				            <h:selectOneMenu id="typeEcoleId" value="#{ecoleController.selectedEcole.typeEcole.tecId}">
 					            <f:selectItems value="#{ecoleController.listTypeEcole()}" var="typeEcole" itemValue="#{typeEcole.tecId}" itemValueAsString="#{typeEcole.tecId}" itemLabel="#{typeEcole.tecLabel}" />
 				        	</h:selectOneMenu>
 				            <h:message id="typeEcoleMessage" for="typeEcoleId" errorClass="erreur" />
-				            <br /> 
+				         </h:panelGrid>
+				         <h:panelGrid columns="3"> 
 				            <h:outputLabel for="adresseLigne1">Adresse Ligne 1<span class="requis">*</span></h:outputLabel>
 				            <h:inputText id="adresseLigne1" value="#{ecoleController.selectedEcole.coordonnees.crdAdresseLigne1}" required="true" size="20" maxlength="60" />
 				            <h:message id="adresseLigne1Message" for="adresseLigne1" errorClass="erreur" />
-				            <br />
+				         </h:panelGrid>
+				         <h:panelGrid columns="3"> 
 				            <h:outputLabel for="adresseLigne2">Adresse Ligne 2</h:outputLabel>
 				            <h:inputText id="adresseLigne2" value="#{ecoleController.selectedEcole.coordonnees.crdAdresseLigne2}" size="20" maxlength="60" />
-				            <br />
+				         </h:panelGrid>
+				         <h:panelGrid columns="3"> 
 				            <h:outputLabel for="codePostal">Code Postal<span class="requis">*</span></h:outputLabel>
 				            <h:inputText id="codePostal" value="#{ecoleController.selectedEcole.coordonnees.crdCodePostal}" required="true" size="20" maxlength="60" />
 				            <h:message id="codePostalMessage" for="codePostal" errorClass="erreur" />
-				            <br />
+				         </h:panelGrid>
+				         <h:panelGrid columns="3"> 
 				            <h:outputLabel for="ville">Ville<span class="requis">*</span></h:outputLabel>
 				            <h:inputText id="ville" value="#{ecoleController.selectedEcole.coordonnees.crdVille}" required="true" size="20" maxlength="60" />
 				            <h:message id="villeMessage" for="ville" errorClass="erreur" />
-				            <br />
+				         </h:panelGrid>
+				         <h:panelGrid columns="3"> 
 				            <h:outputLabel for="telephone">Telephone<span class="requis">*</span></h:outputLabel>
 				            <h:inputText id="telephone" value="#{ecoleController.selectedEcole.coordonnees.crdTelephone}" required="true" size="20" maxlength="60" />
 				            <h:message id="telephoneMessage" for="telephone" errorClass="erreur" />
-				            <br />
+				         </h:panelGrid>
+				         <h:panelGrid columns="3"> 
 				            <h:outputLabel for="surface">Surface</h:outputLabel>
 				            <h:inputText id="surface" value="#{ecoleController.selectedEcole.eclSurface}" size="20" maxlength="60" />
-				            <br />
+				         </h:panelGrid>
+				         <h:panelGrid columns="3"> 
 				            <h:outputLabel for="nbSalle">Nombre de salle</h:outputLabel>
 				            <h:inputText id="nbSalle" value="#{ecoleController.selectedEcole.eclNombreSalle}" size="20" maxlength="60" />
-				            <br />
+				         </h:panelGrid>
+				         <h:panelGrid columns="3"> 
 				            <h:outputLabel for="nomResponsable">Nom du Responsable</h:outputLabel>
 				            <h:inputText id="nomResponsable" value="#{ecoleController.selectedEcole.eclNomResponsable}" size="20" maxlength="60" />
-				            <br />
+				         </h:panelGrid>
+				         <h:panelGrid columns="3"> 
 				            <div class="ecoleButtons">
 							<p:commandButton icon="ui-icon-close" value="Annuler" ajax="true"
 								immediate="true" update=":ecoleDetailsPanel"
@@ -163,8 +186,7 @@
 								action="#{ecoleController.updateEcole}"
 								update=":ecoleTableForm" icon="ui-icon-check" />
 							</div>
-							
-						</fieldset>
+						</h:panelGrid>
 					</h:form>
 				</p:panel>
 		</h:panelGrid>
@@ -172,5 +194,8 @@
 		<!--  <h:panelGroup rendered="#{empty loggedUser or !loggedUser.isAdmin}">
 			<h1>You can't access this page.</h1>
 		</h:panelGroup>-->
+		
+	</div>
+	<ui:include src="footer.xhtml" />
 </h:body>
 </html>
