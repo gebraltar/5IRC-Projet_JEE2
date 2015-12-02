@@ -48,9 +48,8 @@ public class ClasseService implements DaoInterface<Classe> {
 		try {
 			Classe c = this.findById(persistentInstance.getClsId());
 			entityManager.remove(c);
-			
 			log.debug("remove successful");
-		} catch (RuntimeException re) {
+		} catch (Exception re) {
 			log.error("remove failed", re);
 			throw re;
 		}

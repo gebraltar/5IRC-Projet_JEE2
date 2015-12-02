@@ -48,7 +48,6 @@ public class CrenauHoraireService implements DaoInterface<CrenauHoraire> {
 		try {
 			CrenauHoraire c = this.findById(persistentInstance.getCrhId());
 			entityManager.remove(c);
-			
 			log.debug("remove successful");
 		} catch (RuntimeException re) {
 			log.error("remove failed", re);
@@ -62,7 +61,7 @@ public class CrenauHoraireService implements DaoInterface<CrenauHoraire> {
 			CrenauHoraire result = entityManager.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
-		} catch (RuntimeException re) {
+		} catch (Exception re) {
 			log.error("merge failed", re);
 			throw re;
 		}

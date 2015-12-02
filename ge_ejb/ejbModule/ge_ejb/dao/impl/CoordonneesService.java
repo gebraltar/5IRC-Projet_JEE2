@@ -49,10 +49,9 @@ public class CoordonneesService implements DaoInterface<Coordonnees> {
 		log.debug("removing Coordonnees instance");
 		try {
 			Coordonnees c = this.findById(persistentInstance.getCrdId());
-			entityManager.remove(c);
-			
+			entityManager.remove(c);		
 			log.debug("remove successful");
-		} catch (RuntimeException re) {
+		} catch (Exception re) {
 			log.error("remove failed", re);
 			throw re;
 		}

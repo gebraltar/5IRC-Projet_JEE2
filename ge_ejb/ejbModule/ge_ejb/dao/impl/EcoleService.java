@@ -48,9 +48,8 @@ public class EcoleService implements DaoInterface<Ecole> {
 		try {
 			Ecole e = this.findById(persistentInstance.getEclId());
 			entityManager.remove(e);
-			log.debug("remove successful");
-			
-		} catch (RuntimeException re) {
+			log.debug("remove successful");	
+		} catch (Exception re) {
 			log.error("remove failed", re);
 			throw re;
 		}
@@ -62,7 +61,7 @@ public class EcoleService implements DaoInterface<Ecole> {
 			Ecole result = entityManager.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
-		} catch (RuntimeException re) {
+		} catch (Exception re) {
 			log.error("merge failed", re);
 			throw re;
 		}

@@ -87,15 +87,21 @@ public class ClasseController extends HttpServlet {
 
 	public void updateClasse() {
 		System.out.println(selectedClasse.getClsNumero());
-		//selectedClasse.setNiveau(niveau);
 		daoClasse.merge(selectedClasse);
-		FacesMessage message = new FacesMessage("Modification sauvegarder !");
+		FacesMessage message = new FacesMessage("Modification réussie !");
 		FacesContext.getCurrentInstance().addMessage(null, message);
 		selectedClasse=null;
 	}
 
 	public void deleteClasse(Classe classe) {
-		daoClasse.remove(classe);
+		try{
+			daoClasse.remove(classe);
+			FacesMessage message = new FacesMessage( "Suppression réussie !" );
+	        FacesContext.getCurrentInstance().addMessage( null, message );
+		}catch(Exception ex){
+			FacesMessage message = new FacesMessage( "Suppression impossible !" );
+	        FacesContext.getCurrentInstance().addMessage( null, message );
+		}
 	}
 
 	public void resetClasseSelected() {

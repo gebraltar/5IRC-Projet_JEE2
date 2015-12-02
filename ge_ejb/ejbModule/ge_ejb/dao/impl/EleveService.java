@@ -48,9 +48,8 @@ public class EleveService implements DaoInterface<Eleve>{
 		try {
 			Eleve e = this.findById(persistentInstance.getElvId());
 			entityManager.remove(e);
-			
 			log.debug("remove successful");
-		} catch (RuntimeException re) {
+		} catch (Exception re) {
 			log.error("remove failed", re);
 			throw re;
 		}

@@ -50,9 +50,8 @@ public class UtilisateurService implements DaoInterface<Utilisateur>{
 		try {
 			Utilisateur u = this.findById(persistentInstance.getUtiId());
 			entityManager.remove(u);
-			
 			log.debug("remove successful");
-		} catch (RuntimeException re) {
+		} catch (Exception re) {
 			log.error("remove failed", re);
 			throw re;
 		}

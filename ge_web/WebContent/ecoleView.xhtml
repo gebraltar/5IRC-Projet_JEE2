@@ -67,52 +67,54 @@
 					<h:form id="ecoleAddForm" rendered="#{empty ecoleController.selectedEcole}">
 						<h2>Ajouter d'une école</h2>
 						<h:panelGrid columns="3">
-				            <h:outputLabel for="nom">Nom<span class="requis">*</span></h:outputLabel>
-				            <h:inputText id="nom" value="#{ecoleController.ecole.eclNom}" required="true" size="20" maxlength="60" />
-				            <h:message id="nomMessage" for="nom" errorClass="erreur" />
+				            <p:outputLabel for="nom">Nom<span class="requis">*</span></p:outputLabel>
+				            <p:inputText id="nom" value="#{ecoleController.ecole.eclNom}" required="true" size="20" maxlength="60" />
+				            <p:message id="nomMessage" for="nom" errorClass="erreur" />
 				       	</h:panelGrid>
 				       	<h:panelGrid columns="3">
-				            <h:outputLabel for="typeEcoleId">Type<span class="requis">*</span></h:outputLabel>
+				            <p:outputLabel for="typeEcoleId">Type<span class="requis">*</span></p:outputLabel>
 				            <h:selectOneMenu id="typeEcoleId" value="#{ecoleController.ecole.typeEcole.tecId}">
 					            <f:selectItems value="#{ecoleController.listTypeEcole()}" var="typeEcole" itemValue="#{typeEcole.tecId}" itemValueAsString="#{typeEcole.tecId}" itemLabel="#{typeEcole.tecLabel}" />
 				        	</h:selectOneMenu>
-				            <h:message id="typeEcoleMessage" for="typeEcoleId" errorClass="erreur" />
+				            <p:message id="typeEcoleMessage" for="typeEcoleId" errorClass="erreur" />
 				         </h:panelGrid>
 				         <h:panelGrid columns="3">
-				            <h:outputLabel for="adresseLigne1">Adresse Ligne 1<span class="requis">*</span></h:outputLabel>
-				            <h:inputText id="adresseLigne1" value="#{ecoleController.ecole.coordonnees.crdAdresseLigne1}" required="true" size="20" maxlength="60" />
-				            <h:message id="adresseLigne1Message" for="adresseLigne1" errorClass="erreur" />
+				            <p:outputLabel for="adresseLigne1">Adresse Ligne 1<span class="requis">*</span></p:outputLabel>
+				            <p:inputText id="adresseLigne1" value="#{ecoleController.ecole.coordonnees.crdAdresseLigne1}" required="true" size="20" maxlength="60" />
+				            <p:message id="adresseLigne1Message" for="adresseLigne1" errorClass="erreur" />
 				         </h:panelGrid>
 				         <h:panelGrid columns="3">
-				            <h:outputLabel for="adresseLigne2">Adresse Ligne 2</h:outputLabel>
-				            <h:inputText id="adresseLigne2" value="#{ecoleController.ecole.coordonnees.crdAdresseLigne2}" size="20" maxlength="60" />
+				            <p:outputLabel for="adresseLigne2">Adresse Ligne 2</p:outputLabel>
+				            <p:inputText id="adresseLigne2" value="#{ecoleController.ecole.coordonnees.crdAdresseLigne2}" size="20" maxlength="60" />
 				         </h:panelGrid>
 				         <h:panelGrid columns="3">
-				            <h:outputLabel for="codePostal">Code Postal<span class="requis">*</span></h:outputLabel>
-				            <h:inputText id="codePostal" value="#{ecoleController.ecole.coordonnees.crdCodePostal}" required="true" size="20" maxlength="60" />
-				            <h:message id="codePostalMessage" for="codePostal" errorClass="erreur" />
+				            <p:outputLabel for="codePostal">Code Postal<span class="requis">*</span></p:outputLabel>
+				            <p:inputText id="codePostal" value="#{ecoleController.ecole.coordonnees.crdCodePostal}" required="true" size="20" maxlength="60" />
+				            <p:message id="codePostalMessage" for="codePostal" errorClass="erreur" />
 				         </h:panelGrid>
 				         <h:panelGrid columns="3">
-				            <h:outputLabel for="ville">Ville<span class="requis">*</span></h:outputLabel>
-				            <h:inputText id="ville" value="#{ecoleController.ecole.coordonnees.crdVille}" required="true" size="20" maxlength="60" />
-				            <h:message id="villeMessage" for="ville" errorClass="erreur" />
+				            <p:outputLabel for="ville">Ville<span class="requis">*</span></p:outputLabel>
+				            <p:inputText id="ville" value="#{ecoleController.ecole.coordonnees.crdVille}" required="true" size="20" maxlength="60" />
+				            <p:message id="villeMessage" for="ville" errorClass="erreur" />
 				         </h:panelGrid>
 				         <h:panelGrid columns="3">
-				            <h:outputLabel for="telephone">Telephone<span class="requis">*</span></h:outputLabel>
-				            <h:inputText id="telephone" value="#{ecoleController.ecole.coordonnees.crdTelephone}" required="true" size="20" maxlength="60" />
-				            <h:message id="telephoneMessage" for="telephone" errorClass="erreur" />
+				            <p:outputLabel for="telephone">Telephone<span class="requis">*</span></p:outputLabel>
+				             <p:inputText id="telephone" value="#{ecoleController.ecole.coordonnees.crdTelephone}" required="true" size="20" maxlength="60">
+				            	<f:validator validatorId="validators.telephone"></f:validator>
+				            </p:inputText>
+				            <p:message id="telephoneMessage" showDetail="true" for="telephone" errorClass="erreur" />
 				         </h:panelGrid>
 				         <h:panelGrid columns="3">   
-				            <h:outputLabel for="surface">Surface</h:outputLabel>
-				            <h:inputText id="surface" value="#{ecoleController.ecole.eclSurface}" size="20" maxlength="60" />
+				            <p:outputLabel for="surface">Surface</p:outputLabel>
+				            <p:inputText id="surface" value="#{ecoleController.ecole.eclSurface}" size="20" maxlength="60" />
 				         </h:panelGrid>
 				         <h:panelGrid columns="3"> 
-				            <h:outputLabel for="nbSalle">Nombre de salle</h:outputLabel>
-				            <h:inputText id="nbSalle" value="#{ecoleController.ecole.eclNombreSalle}"  size="20" maxlength="60" />
+				            <p:outputLabel for="nbSalle">Nombre de salle</p:outputLabel>
+				            <p:inputText id="nbSalle" value="#{ecoleController.ecole.eclNombreSalle}"  size="20" maxlength="60" />
 				         </h:panelGrid>
 				         <h:panelGrid columns="3"> 
-				            <h:outputLabel for="nomResponsable">Nom du Responsable</h:outputLabel>
-				            <h:inputText id="nomResponsable" value="#{ecoleController.ecole.eclNomResponsable}" size="20" maxlength="60" />
+				            <p:outputLabel for="nomResponsable">Nom du Responsable</p:outputLabel>
+				            <p:inputText id="nomResponsable" value="#{ecoleController.ecole.eclNomResponsable}" size="20" maxlength="60" />
 				         </h:panelGrid>
 				         <h:panelGrid columns="3"> 
 				            <div class="ecoleButtons">
@@ -129,52 +131,54 @@
 					<h:form id="ecoleUpdateForm" rendered="#{not empty ecoleController.selectedEcole}">
 						<h2>Modification d'une école</h2>
 				         <h:panelGrid columns="3"> 
-				            <h:outputLabel for="nom">Nom<span class="requis">*</span></h:outputLabel>
-				            <h:inputText id="nom" value="#{ecoleController.selectedEcole.eclNom}" required="true" size="20" maxlength="60" />
-				            <h:message id="nomMessage" for="nom" errorClass="erreur" />
+				            <p:outputLabel for="nom">Nom<span class="requis">*</span></p:outputLabel>
+				            <p:inputText id="nom" value="#{ecoleController.selectedEcole.eclNom}" required="true" size="20" maxlength="60" />
+				            <p:message id="nomMessage" for="nom" errorClass="erreur" />
 				         </h:panelGrid>
 				         <h:panelGrid columns="3"> 
-				            <h:outputLabel for="typeEcoleId">Type<span class="requis">*</span></h:outputLabel>
+				            <p:outputLabel for="typeEcoleId">Type<span class="requis">*</span></p:outputLabel>
 				            <h:selectOneMenu id="typeEcoleId" value="#{ecoleController.selectedEcole.typeEcole.tecId}">
 					            <f:selectItems value="#{ecoleController.listTypeEcole()}" var="typeEcole" itemValue="#{typeEcole.tecId}" itemValueAsString="#{typeEcole.tecId}" itemLabel="#{typeEcole.tecLabel}" />
 				        	</h:selectOneMenu>
-				            <h:message id="typeEcoleMessage" for="typeEcoleId" errorClass="erreur" />
+				            <p:message id="typeEcoleMessage" for="typeEcoleId" errorClass="erreur" />
 				         </h:panelGrid>
 				         <h:panelGrid columns="3"> 
-				            <h:outputLabel for="adresseLigne1">Adresse Ligne 1<span class="requis">*</span></h:outputLabel>
-				            <h:inputText id="adresseLigne1" value="#{ecoleController.selectedEcole.coordonnees.crdAdresseLigne1}" required="true" size="20" maxlength="60" />
-				            <h:message id="adresseLigne1Message" for="adresseLigne1" errorClass="erreur" />
+				            <p:outputLabel for="adresseLigne1">Adresse Ligne 1<span class="requis">*</span></p:outputLabel>
+				            <p:inputText id="adresseLigne1" value="#{ecoleController.selectedEcole.coordonnees.crdAdresseLigne1}" required="true" size="20" maxlength="60" />
+				            <p:message id="adresseLigne1Message" for="adresseLigne1" errorClass="erreur" />
 				         </h:panelGrid>
 				         <h:panelGrid columns="3"> 
-				            <h:outputLabel for="adresseLigne2">Adresse Ligne 2</h:outputLabel>
-				            <h:inputText id="adresseLigne2" value="#{ecoleController.selectedEcole.coordonnees.crdAdresseLigne2}" size="20" maxlength="60" />
+				            <p:outputLabel for="adresseLigne2">Adresse Ligne 2</p:outputLabel>
+				            <p:inputText id="adresseLigne2" value="#{ecoleController.selectedEcole.coordonnees.crdAdresseLigne2}" size="20" maxlength="60" />
 				         </h:panelGrid>
 				         <h:panelGrid columns="3"> 
-				            <h:outputLabel for="codePostal">Code Postal<span class="requis">*</span></h:outputLabel>
-				            <h:inputText id="codePostal" value="#{ecoleController.selectedEcole.coordonnees.crdCodePostal}" required="true" size="20" maxlength="60" />
-				            <h:message id="codePostalMessage" for="codePostal" errorClass="erreur" />
+				            <p:outputLabel for="codePostal">Code Postal<span class="requis">*</span></p:outputLabel>
+				            <p:inputText id="codePostal" value="#{ecoleController.selectedEcole.coordonnees.crdCodePostal}" required="true" size="20" maxlength="60" />
+				            <p:message id="codePostalMessage" for="codePostal" errorClass="erreur" />
 				         </h:panelGrid>
 				         <h:panelGrid columns="3"> 
-				            <h:outputLabel for="ville">Ville<span class="requis">*</span></h:outputLabel>
-				            <h:inputText id="ville" value="#{ecoleController.selectedEcole.coordonnees.crdVille}" required="true" size="20" maxlength="60" />
-				            <h:message id="villeMessage" for="ville" errorClass="erreur" />
+				            <p:outputLabel for="ville">Ville<span class="requis">*</span></p:outputLabel>
+				            <p:inputText id="ville" value="#{ecoleController.selectedEcole.coordonnees.crdVille}" required="true" size="20" maxlength="60" />
+				            <p:message id="villeMessage" for="ville" errorClass="erreur" />
 				         </h:panelGrid>
 				         <h:panelGrid columns="3"> 
-				            <h:outputLabel for="telephone">Telephone<span class="requis">*</span></h:outputLabel>
-				            <h:inputText id="telephone" value="#{ecoleController.selectedEcole.coordonnees.crdTelephone}" required="true" size="20" maxlength="60" />
-				            <h:message id="telephoneMessage" for="telephone" errorClass="erreur" />
+				            <p:outputLabel for="telephone">Telephone<span class="requis">*</span></p:outputLabel>
+				            <p:inputText id="telephone" value="#{ecoleController.selectedEcole.coordonnees.crdTelephone}" required="true" size="20" maxlength="60">
+				            	<f:validator validatorId="validators.telephone"></f:validator>
+				            </p:inputText>
+				            <p:message id="telephoneMessage" showDetail="true" for="telephone" errorClass="erreur" />
 				         </h:panelGrid>
 				         <h:panelGrid columns="3"> 
-				            <h:outputLabel for="surface">Surface</h:outputLabel>
-				            <h:inputText id="surface" value="#{ecoleController.selectedEcole.eclSurface}" size="20" maxlength="60" />
+				            <p:outputLabel for="surface">Surface</p:outputLabel>
+				            <p:inputText id="surface" value="#{ecoleController.selectedEcole.eclSurface}" size="20" maxlength="60" />
 				         </h:panelGrid>
 				         <h:panelGrid columns="3"> 
-				            <h:outputLabel for="nbSalle">Nombre de salle</h:outputLabel>
-				            <h:inputText id="nbSalle" value="#{ecoleController.selectedEcole.eclNombreSalle}" size="20" maxlength="60" />
+				            <p:outputLabel for="nbSalle">Nombre de salle</p:outputLabel>
+				            <p:inputText id="nbSalle" value="#{ecoleController.selectedEcole.eclNombreSalle}" size="20" maxlength="60" />
 				         </h:panelGrid>
 				         <h:panelGrid columns="3"> 
-				            <h:outputLabel for="nomResponsable">Nom du Responsable</h:outputLabel>
-				            <h:inputText id="nomResponsable" value="#{ecoleController.selectedEcole.eclNomResponsable}" size="20" maxlength="60" />
+				            <p:outputLabel for="nomResponsable">Nom du Responsable</p:outputLabel>
+				            <p:inputText id="nomResponsable" value="#{ecoleController.selectedEcole.eclNomResponsable}" size="20" maxlength="60" />
 				         </h:panelGrid>
 				         <h:panelGrid columns="3"> 
 				            <div class="ecoleButtons">
@@ -191,9 +195,6 @@
 				</p:panel>
 		</h:panelGrid>
 	</h:panelGroup>
-		<!--  <h:panelGroup rendered="#{empty loggedUser or !loggedUser.isAdmin}">
-			<h1>You can't access this page.</h1>
-		</h:panelGroup>-->
 		
 	</div>
 	<ui:include src="footer.xhtml" />
